@@ -6,6 +6,7 @@
   "style": "dist/index.css",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
+  "repository": "strandls/naksha-components-react",
   "scripts": {
     "dev": "microbundle watch --jsx react --format cjs",
     "build": "microbundle --jsx react --format cjs",
