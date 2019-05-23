@@ -1,0 +1,58 @@
+{
+  "name": "naksha-components-react",
+  "version": "1.0.0",
+  "description": "Mapbox GL Components for Biodiv",
+  "main": "dist/index.js",
+  "style": "dist/index.css",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "microbundle watch --jsx react --format cjs",
+    "build": "microbundle --jsx react --format cjs",
+    "storybook": "start-storybook -p 6006",
+    "build:storybook": "build-storybook"
+  },
+  "keywords": [
+    "maps",
+    "mapbox gl",
+    "react",
+    "india",
+    "biodiversity"
+  ],
+  "author": "Harsh Zalavadiya <harsh@foobars.in> (twitter: @zhnebula)",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-knobs": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addon-storysource": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
+    "@storybook/react": "^5.0.11",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4",
+    "@types/storybook__addon-actions": "^3.4.2",
+    "@types/storybook__addon-links": "^3.3.4",
+    "@types/storybook__react": "^4.0.1",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.1.0",
+    "microbundle": "^0.11.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "dependencies": {
+    "@uifabric/fluent-theme": "^0.16.9",
+    "axios": "^0.18.0",
+    "control-statements": "^1.0.2",
+    "immutable": "^4.0.0-rc.12",
+    "office-ui-fabric-react": "^6.183.0",
+    "outstated": "^2.0.1",
+    "react-map-gl": "^4.1.2",
+    "viewport-mercator-project": "^6.1.1",
+    "xml-js": "^1.6.11"
+  }
+}

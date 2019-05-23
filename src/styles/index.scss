@@ -1,0 +1,137 @@
+.ncr {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .float-right {
+    float: right;
+  }
+
+  .float-left {
+    float: left;
+  }
+
+  .overlays {
+    cursor: default !important;
+  }
+
+  .naksha--component {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .nav {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    padding: 10px;
+  }
+
+  .info-panel,
+  .control-panel {
+    color: #323130;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 380px;
+    z-index: 99;
+  }
+
+  .info-panel {
+    left: initial;
+    right: 0;
+  }
+
+  .info--layer-name {
+    font-size: 20px;
+    margin-left: 12px;
+    font-weight: lighter;
+  }
+
+  .infobar-close,
+  .sidebar-close {
+    float: right;
+    z-index: 9;
+    margin-top: 0.25rem;
+  }
+
+  .infobar-open,
+  .sidebar-open {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    margin: 20px;
+    margin-top: calc(20px + 0.25rem);
+    border-radius: 4px !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .infobar-open {
+    left: initial;
+    right: 0;
+  }
+
+  .info-panel .content,
+  .control-panel .content {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  .info-panel .overlay,
+  .control-panel .overlay {
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tooltip {
+    position: absolute;
+    margin: 8px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    max-width: 300px;
+    font-size: 10px;
+    z-index: 9;
+    pointer-events: none;
+  }
+
+  .layers--layer {
+    display: flex;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .layers--layer .thumb {
+    flex-shrink: 0;
+    border: 1px solid #a6a6a6;
+  }
+
+  .layers--layer .title {
+    line-height: 1em;
+    font-weight: 600;
+  }
+
+  .layers--layer p {
+    margin: 0;
+    font-size: 0.9em;
+  }
+
+  .info-panel .title {
+    padding: 10px 12px;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .layers--layer .description {
+    width: 100%;
+  }
+}
