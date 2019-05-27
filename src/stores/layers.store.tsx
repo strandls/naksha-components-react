@@ -64,9 +64,10 @@ export default function LayersStore() {
    * If add = true then adds layer otherwise removes it
    */
   const setSelectedLayers = (item, add = true) => {
-    _setSelectedLayers(a =>
-      add ? [...a, item] : selectedLayers.filter(i => i.name !== item.name)
-    );
+    _setSelectedLayers(a => {
+      const filtered = a.filter(i => i.name !== item.name);
+      return add ? [...filtered, item] : filtered;
+    });
   };
 
   const selectedLayersNames = () => {
