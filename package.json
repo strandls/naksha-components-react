@@ -47,12 +47,15 @@
   },
   "dependencies": {
     "@uifabric/fluent-theme": "^0.16.9",
-    "axios": "^0.18.0",
+    "bootstrap-4-grid": "^2.4.1",
     "control-statements": "^1.0.2",
     "immutable": "^4.0.0-rc.12",
     "office-ui-fabric-react": "^6.183.0",
     "outstated": "^2.0.1",
+    "react-dropzone": "^10.1.5",
     "react-map-gl": "^4.1.2",
+    "shapefile": "^0.6.6",
+    "superagent": "^5.0.5",
     "viewport-mercator-project": "^6.1.1",
     "xml-js": "^1.6.11"
   }

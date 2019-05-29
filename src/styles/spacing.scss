@@ -3,6 +3,7 @@
  * more at https://getbootstrap.com/docs/4.0/utilities/spacing/
  */
 .ncr {
+  @import "~bootstrap-4-grid/scss/grid.scss";
   .m-0 {
     margin: 0 !important;
   }

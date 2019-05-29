@@ -5,8 +5,11 @@ import { themes } from "@storybook/theming";
 // Option defaults.
 addParameters({
   options: {
-    name: "Theme",
-    theme: themes.normal
+    theme: {
+      ...themes.light,
+      brandTitle: "Naksha Components React"
+    },
+    showPanel: false
   }
 });
 
