@@ -7,7 +7,7 @@ import {
   PivotLinkSize
 } from "office-ui-fabric-react/lib/Pivot";
 import { useStore } from "outstated";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDropzone from "react-dropzone";
 
 import UploadStore from "../../stores/upload.store";
@@ -55,7 +55,11 @@ export default function Form({ endpoint }) {
             headerButtonProps={{ disabled: false }}
             itemKey="1"
           >
-            <UploadTable meta={uploadStore.dbfFile.meta} />
+            <UploadTable
+              meta={uploadStore.dbfFile.meta}
+              formData={uploadStore.formData}
+              setFormData={uploadStore.setFormData}
+            />
           </PivotItem>
         </Pivot>
       </div>

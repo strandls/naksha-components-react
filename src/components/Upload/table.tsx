@@ -1,31 +1,45 @@
 import { DatePicker } from "office-ui-fabric-react/lib/DatePicker";
-import { DetailsList, DetailsListLayoutMode, SelectionMode } from "office-ui-fabric-react/lib/DetailsList";
+import {
+  DetailsList,
+  DetailsListLayoutMode,
+  SelectionMode
+} from "office-ui-fabric-react/lib/DetailsList";
 import { Dropdown } from "office-ui-fabric-react/lib/Dropdown";
-import { FocusZone, FocusZoneDirection } from "office-ui-fabric-react/lib/FocusZone";
+import {
+  FocusZone,
+  FocusZoneDirection
+} from "office-ui-fabric-react/lib/FocusZone";
 import { TextField } from "office-ui-fabric-react/lib/TextField";
 import React, { useEffect, useState } from "react";
 
-import { LAYER_TYPE_OPTIONS, LICENSE_TYPE_OPTIONS, UPLOADER_COLUMNS } from "./table.constants";
+import {
+  LAYER_TYPE_OPTIONS,
+  LICENSE_TYPE_OPTIONS,
+  UPLOADER_COLUMNS
+} from "./table.constants";
 import TableRow from "./table.row";
 
-export default function UploadTable({ meta }) {
+export default function UploadTable({ meta, formData, setFormData }) {
   const [items, setItems] = useState([] as any);
 
-  useEffect(() => {
-    if (meta.hasOwnProperty("keys")) {
-      setItems(
-        meta.keys.map((o, id) => ({
-          id,
-          key: o,
-          title: o,
-          text: o,
-          sample1: meta.rows[o][0],
-          sample2: meta.rows[o][1],
-          sample3: meta.rows[o][2]
-        }))
-      );
-    }
-  }, [meta.keys]);
+  useEffect(
+    () => {
+      if (meta.hasOwnProperty("keys")) {
+        setItems(
+          meta.keys.map((o, id) => ({
+            id,
+            key: o,
+            title: o,
+            text: o,
+            sample1: meta.rows[o][0],
+            sample2: meta.rows[o][1],
+            sample3: meta.rows[o][2]
+          }))
+        );
+      }
+    },
+    [meta.keys]
+  );
 
   const onKeySelected = (e, isChecked) => {
     console.log(e, isChecked);
@@ -50,45 +64,88 @@ export default function UploadTable({ meta }) {
             </div>
           </div>
           <div className="col-md-4 upload--form">
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
             <Dropdown
               placeholder="Select an option"
               label="Layer Type"
               disabled={true}
-              defaultSelectedKey={LAYER_TYPE_OPTIONS[0].key}
+              defaultSelectedKey={formData.layerType}
               options={LAYER_TYPE_OPTIONS}
+              onChange={(e, v) => {
+                setFormData(null, v, "layerType");
+              }}
             />
             <Dropdown
               placeholder="Select an option"
               label="Title Column"
-              defaultSelectedKey={items[0].key}
+              defaultSelectedKey={formData.titleColumn}
               options={items}
+              onChange={(e, v) => {
+                setFormData(null, v, "titleColumn");
+              }}
             />
             <Dropdown
               placeholder="Select Summary Columns"
               label="Summary Columns"
               multiSelect
               options={items}
+              onChange={(e, v: any) => {
+                const _v = formData.summeryColumns.filter(k => k !== v.key);
+                setFormData(
+                  null,
+                  v.selected ? [..._v, v.key] : _v,
+                  "summeryColumns"
+                );
+              }}
             />
             <Dropdown
               placeholder="Select an option"
               label="Default Styling Column"
-              defaultSelectedKey={items[0].key}
+              defaultSelectedKey={formData.defaultStylingColumn}
               options={items}
+              onChange={(e, v) => {
+                setFormData(null, v, "defaultStylingColumn");
+              }}
             />
-            <TextField label="Layer Name" />
-            <TextField label="Layer Description" multiline rows={4} />
-            <TextField label="Contributor" />
-            <TextField label="Attribution" />
-            <TextField label="Tags" />
+            <TextField
+              label="Layer Name"
+              name="layerName"
+              onChange={setFormData}
+            />
+            <TextField
+              label="Layer Description"
+              multiline
+              rows={4}
+              name="layerDescription"
+              onChange={setFormData}
+            />
+            <TextField
+              label="Contributor"
+              name="contributor"
+              onChange={setFormData}
+            />
+            <TextField
+              label="Attribution"
+              name="attribution"
+              onChange={setFormData}
+            />
+            <TextField label="Tags" name="tags" onChange={setFormData} />
             <Dropdown
               label="License"
-              defaultSelectedKey={LICENSE_TYPE_OPTIONS[0].key}
+              defaultSelectedKey={formData.license}
               options={LICENSE_TYPE_OPTIONS}
+              onChange={(e, v) => {
+                setFormData(null, v, "license");
+              }}
             />
             <DatePicker
-              label="Data "
+              label="Data Curation Date"
               placeholder="Select a date..."
               ariaLabel="Select a date"
+              value={formData.dataCurationDate}
+              onSelectDate={(v: any) => {
+                setFormData(null, v, "dataCurationDate");
+              }}
             />
           </div>
         </div>

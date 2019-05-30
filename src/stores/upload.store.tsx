@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { openDbf, openShp } from "shapefile";
 
 import { FILE_TYPES } from "../utils/constants";
+import {
+  LICENSE_TYPE_OPTIONS,
+  LAYER_TYPE_OPTIONS
+} from "../components/Upload/table.constants";
 
 export default function UploadStore() {
   const [dbfFile, setDbfFile] = useState({ file: null, meta: {} } as any);
@@ -11,13 +15,34 @@ export default function UploadStore() {
   const [titleColumn, setTitleColumn] = useState();
   const [summeryColumn, setSummeryColumn] = useState();
   const [allFilesUploaded, setAllFilesUploaded] = useState(false);
+  const [formData, _setFormData] = useState({
+    layerType: LAYER_TYPE_OPTIONS[0].key,
+    titleColumn: null,
+    summeryColumns: [],
+    defaultStylingColumn: null,
+    layerName: null,
+    layerDescription: null,
+    contributor: null,
+    attribution: null,
+    tags: null,
+    license: LICENSE_TYPE_OPTIONS[0].key,
+    dataCurationDate: new Date()
+  });
 
-  useEffect(() => {
-    console.log("check");
-    if (dbfFile.file && shpFile.file && shxFile.file) {
-      setAllFilesUploaded(true);
-    }
-  }, [dbfFile.file, shpFile.file, shxFile.file]);
+  const setFormData = (e, v, key?) => {
+    const _k = e ? e.target.name : key;
+    _setFormData({ ...formData, [_k]: v.key || v });
+  };
+
+  useEffect(
+    () => {
+      console.log("check");
+      if (dbfFile.file && shpFile.file && shxFile.file) {
+        setAllFilesUploaded(true);
+      }
+    },
+    [dbfFile.file, shpFile.file, shxFile.file]
+  );
 
   const _parseShp = file => {
     const readerShp = new FileReader();
@@ -39,6 +64,11 @@ export default function UploadStore() {
           meta.keys = Object.keys(_r);
           meta.headings = Object.keys(_r);
           meta.rows = meta.keys.reduce((o, k) => ({ ...o, [k]: [] }), {});
+          _setFormData({
+            ...formData,
+            defaultStylingColumn: meta.keys[0],
+            titleColumn: meta.keys[0]
+          });
         }
         meta.keys.forEach(k => {
           meta.rows[k].push(_r[k]);
@@ -77,6 +107,9 @@ export default function UploadStore() {
     titleColumn,
     setTitleColumn,
     summeryColumn,
-    setSummeryColumn
+    setSummeryColumn,
+
+    formData,
+    setFormData
   };
 }
