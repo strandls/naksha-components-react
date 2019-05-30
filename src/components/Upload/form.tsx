@@ -59,6 +59,8 @@ export default function Form({ endpoint }) {
               meta={uploadStore.dbfFile.meta}
               formData={uploadStore.formData}
               setFormData={uploadStore.setFormData}
+              submitData={uploadStore.submitData}
+              setTitleColumn={uploadStore.setTitleColumn}
             />
           </PivotItem>
         </Pivot>

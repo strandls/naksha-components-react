@@ -12,7 +12,7 @@ export default function UploadStore() {
   const [shpFile, setShpFile] = useState({ file: null, meta: {} } as any);
   const [shxFile, setShxFile] = useState({ file: null, meta: {} } as any);
   const [selectedKey, setSelectedKey] = useState("0");
-  const [titleColumn, setTitleColumn] = useState();
+  const [titleColumn, _setTitleColumn] = useState([] as string[]);
   const [summeryColumn, setSummeryColumn] = useState();
   const [allFilesUploaded, setAllFilesUploaded] = useState(false);
   const [formData, _setFormData] = useState({
@@ -29,6 +29,13 @@ export default function UploadStore() {
     dataCurationDate: new Date()
   });
 
+  const setTitleColumn = (id, v) => {
+    _setTitleColumn(o => {
+      o[id] = v;
+      return o;
+    });
+  };
+
   const setFormData = (e, v, key?) => {
     const _k = e ? e.target.name : key;
     _setFormData({ ...formData, [_k]: v.key || v });
@@ -36,7 +43,6 @@ export default function UploadStore() {
 
   useEffect(
     () => {
-      console.log("check");
       if (dbfFile.file && shpFile.file && shxFile.file) {
         setAllFilesUploaded(true);
       }
@@ -64,6 +70,7 @@ export default function UploadStore() {
           meta.keys = Object.keys(_r);
           meta.headings = Object.keys(_r);
           meta.rows = meta.keys.reduce((o, k) => ({ ...o, [k]: [] }), {});
+          _setTitleColumn(meta.headings);
           _setFormData({
             ...formData,
             defaultStylingColumn: meta.keys[0],
@@ -81,6 +88,10 @@ export default function UploadStore() {
 
   const _parseShx = file => {
     setShxFile({ file, meta: {} });
+  };
+
+  const submitData = () => {
+    console.log("submitted");
   };
 
   const preProcessFiles = files => {
@@ -110,6 +121,7 @@ export default function UploadStore() {
     setSummeryColumn,
 
     formData,
-    setFormData
+    setFormData,
+    submitData
   };
 }

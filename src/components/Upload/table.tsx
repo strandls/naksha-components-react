@@ -11,15 +11,21 @@ import {
 } from "office-ui-fabric-react/lib/FocusZone";
 import { TextField } from "office-ui-fabric-react/lib/TextField";
 import React, { useEffect, useState } from "react";
+import { CompoundButton } from "office-ui-fabric-react";
 
 import {
   LAYER_TYPE_OPTIONS,
   LICENSE_TYPE_OPTIONS,
   UPLOADER_COLUMNS
 } from "./table.constants";
-import TableRow from "./table.row";
 
-export default function UploadTable({ meta, formData, setFormData }) {
+export default function UploadTable({
+  meta,
+  formData,
+  setFormData,
+  setTitleColumn,
+  submitData
+}) {
   const [items, setItems] = useState([] as any);
 
   useEffect(
@@ -41,8 +47,23 @@ export default function UploadTable({ meta, formData, setFormData }) {
     [meta.keys]
   );
 
-  const onKeySelected = (e, isChecked) => {
-    console.log(e, isChecked);
+  const TableRow = (item, index, column) => {
+    const fieldContent = item[column.fieldName];
+    switch (column.key) {
+      case "title":
+        return (
+          <TextField
+            name={item.id}
+            onChange={(e, v) => {
+              setTitleColumn(item.id, v);
+            }}
+            value={fieldContent}
+          />
+        );
+
+      default:
+        return fieldContent;
+    }
   };
 
   return (
@@ -64,7 +85,6 @@ export default function UploadTable({ meta, formData, setFormData }) {
             </div>
           </div>
           <div className="col-md-4 upload--form">
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
             <Dropdown
               placeholder="Select an option"
               label="Layer Type"
@@ -147,6 +167,14 @@ export default function UploadTable({ meta, formData, setFormData }) {
                 setFormData(null, v, "dataCurationDate");
               }}
             />
+            <CompoundButton
+              primary={true}
+              className="naksha--upload-next mt-2"
+              secondaryText="Upload dataset to server"
+              onClick={submitData}
+            >
+              Submit &rarr;
+            </CompoundButton>
           </div>
         </div>
       )}

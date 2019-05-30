@@ -19,7 +19,7 @@ $info: #605e5c;
   }
 
   .upload--form {
-    div {
+    > div {
       margin-bottom: 0.5rem;
     }
   }
@@ -57,7 +57,8 @@ $info: #605e5c;
   }
 
   .upload--table {
-    max-height: 300px;
+    max-height: 890px;
+    margin-bottom: 2rem;
     overflow-y: scroll;
   }
 }
