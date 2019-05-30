@@ -4,11 +4,13 @@ import React from "react";
 
 import { Upload } from "../..";
 
+const postfix = "/naksha/layer/uploadshp";
+
 storiesOf("Upload", module).add("Upload", () => (
   <Upload
     endpoint={text(
       "Endpoint",
-      process.env.STORYBOOK_ENDPOINT || "https://indiabiodiversity.org"
+      process.env.STORYBOOK_ENDPOINT + postfix || "https://example.com"
     )}
   />
 ));

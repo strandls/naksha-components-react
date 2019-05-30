@@ -6,12 +6,15 @@ import {
   LICENSE_TYPE_OPTIONS,
   LAYER_TYPE_OPTIONS
 } from "../components/Upload/table.constants";
+import { toTxtDate } from "../utils/basic";
+import request from "superagent";
 
 export default function UploadStore() {
   const [dbfFile, setDbfFile] = useState({ file: null, meta: {} } as any);
   const [shpFile, setShpFile] = useState({ file: null, meta: {} } as any);
   const [shxFile, setShxFile] = useState({ file: null, meta: {} } as any);
   const [selectedKey, setSelectedKey] = useState("0");
+  const [endpoint, setEndpoint] = useState(null);
   const [titleColumn, _setTitleColumn] = useState([] as string[]);
   const [summeryColumn, setSummeryColumn] = useState();
   const [allFilesUploaded, setAllFilesUploaded] = useState(false);
@@ -20,11 +23,11 @@ export default function UploadStore() {
     titleColumn: null,
     summeryColumns: [],
     defaultStylingColumn: null,
-    layerName: null,
-    layerDescription: null,
-    contributor: null,
-    attribution: null,
-    tags: null,
+    layerName: "",
+    layerDescription: "",
+    contributor: "",
+    attribution: "",
+    tags: "",
     license: LICENSE_TYPE_OPTIONS[0].key,
     dataCurationDate: new Date()
   });
@@ -91,6 +94,15 @@ export default function UploadStore() {
   };
 
   const submitData = () => {
+    const req = request.post(endpoint);
+    const txtFile = generateTxt();
+
+    req.attach("dbf", dbfFile.file);
+    req.attach("shp", shpFile.file);
+    req.attach("shx", shxFile.file);
+    req.attach("metadata", txtFile);
+
+    req.end();
     console.log("submitted");
   };
 
@@ -103,6 +115,30 @@ export default function UploadStore() {
       } else if (file.name.endsWith(FILE_TYPES.SHX)) {
         _parseShx(file);
       }
+    });
+  };
+
+  const generateTxt = () => {
+    const txt = `*Meta_Layer
+title_column : '${formData.titleColumn}'
+summary_columns : '${formData.summeryColumns.join("','")}'
+color_by : ${formData.defaultStylingColumn}
+layer_name : '${formData.layerName}'
+layer_description : '${formData.layerDescription}'
+layer_type : '${formData.layerType}'
+created_by : '${formData.contributor}'
+attribution : '${formData.attribution}'
+tags : '${formData.tags}'
+license : '${formData.license}'
+created_date : '${toTxtDate(formData.dataCurationDate)}'
+layer_tablename : '${dbfFile.file.name}'
+status : 1
+
+$Layer_Column_Description
+${dbfFile.meta.keys.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")}`;
+    return new File([txt.replace(/\'\'/g, "")], "blob", {
+      type: "text/plain",
+      lastModified: new Date().getTime()
     });
   };
 
@@ -120,6 +156,7 @@ export default function UploadStore() {
     summeryColumn,
     setSummeryColumn,
 
+    setEndpoint,
     formData,
     setFormData,
     submitData

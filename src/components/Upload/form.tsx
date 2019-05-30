@@ -7,7 +7,7 @@ import {
   PivotLinkSize
 } from "office-ui-fabric-react/lib/Pivot";
 import { useStore } from "outstated";
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDropzone from "react-dropzone";
 
 import UploadStore from "../../stores/upload.store";
@@ -17,6 +17,13 @@ import UploadTable from "./table";
 
 export default function Form({ endpoint }) {
   const uploadStore = useStore(UploadStore);
+
+  useEffect(
+    () => {
+      uploadStore.setEndpoint(endpoint);
+    },
+    [endpoint]
+  );
 
   return (
     <div className="ncr naksha--dropzone-root">
