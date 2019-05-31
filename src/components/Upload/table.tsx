@@ -1,3 +1,4 @@
+import { CompoundButton } from "office-ui-fabric-react";
 import { DatePicker } from "office-ui-fabric-react/lib/DatePicker";
 import {
   DetailsList,
@@ -9,9 +10,9 @@ import {
   FocusZone,
   FocusZoneDirection
 } from "office-ui-fabric-react/lib/FocusZone";
+import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator";
 import { TextField } from "office-ui-fabric-react/lib/TextField";
 import React, { useEffect, useState } from "react";
-import { CompoundButton } from "office-ui-fabric-react";
 
 import {
   LAYER_TYPE_OPTIONS,
@@ -24,28 +25,27 @@ export default function UploadTable({
   formData,
   setFormData,
   setTitleColumn,
-  submitData
+  submitData,
+  isLoading,
+  uploadPersentage
 }) {
   const [items, setItems] = useState([] as any);
 
-  useEffect(
-    () => {
-      if (meta.hasOwnProperty("keys")) {
-        setItems(
-          meta.keys.map((o, id) => ({
-            id,
-            key: o,
-            title: o,
-            text: o,
-            sample1: meta.rows[o][0],
-            sample2: meta.rows[o][1],
-            sample3: meta.rows[o][2]
-          }))
-        );
-      }
-    },
-    [meta.keys]
-  );
+  useEffect(() => {
+    if (meta.hasOwnProperty("keys")) {
+      setItems(
+        meta.keys.map((o, id) => ({
+          id,
+          key: o,
+          title: o,
+          text: o,
+          sample1: meta.rows[o][0],
+          sample2: meta.rows[o][1],
+          sample3: meta.rows[o][2]
+        }))
+      );
+    }
+  }, [meta.keys]);
 
   const TableRow = (item, index, column) => {
     const fieldContent = item[column.fieldName];
@@ -68,7 +68,14 @@ export default function UploadTable({
 
   return (
     <div className="mt-4">
-      {items.length > 0 && (
+      {isLoading && (
+        <ProgressIndicator
+          label={uploadPersentage === 100 ? "Processing..." : "Uploading..."}
+          description="Please wait we are uploading your data to server"
+          percentComplete={uploadPersentage}
+        />
+      )}
+      {items.length > 0 && !isLoading && (
         <div className="row">
           <div className="col-md-8">
             <div className="upload--table">

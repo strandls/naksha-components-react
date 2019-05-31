@@ -1,9 +1,9 @@
 import React from "react";
 
-const dbfIcon = require("../../images/icon.dbf.svg");
-const shpIcon = require("../../images/icon.shp.svg");
-const shxIcon = require("../../images/icon.shx.svg");
-const unknownIcon = require("../../images/icon.unknown.svg");
+import dbfIcon from "../../images/icon.dbf";
+import shpIcon from "../../images/icon.shp";
+import shxIcon from "../../images/icon.shx";
+import unknownIcon from "../../images/icon.unknown";
 
 export const UPLOADER_COLUMNS = [
   {
@@ -99,7 +99,7 @@ export const UPLOAD_FILES_TABLE_COLUMNS = [
     key: "column2",
     name: "Name",
     fieldName: "name",
-    minWidth: 210,
+    minWidth: 200,
     isRowHeader: true,
     isResizable: true,
     isSorted: true,

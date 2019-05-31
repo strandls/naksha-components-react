@@ -18,12 +18,9 @@ import UploadTable from "./table";
 export default function Form({ endpoint }) {
   const uploadStore = useStore(UploadStore);
 
-  useEffect(
-    () => {
-      uploadStore.setEndpoint(endpoint);
-    },
-    [endpoint]
-  );
+  useEffect(() => {
+    uploadStore.setEndpoint(endpoint);
+  }, [endpoint]);
 
   return (
     <div className="ncr naksha--dropzone-root">
@@ -68,6 +65,8 @@ export default function Form({ endpoint }) {
               setFormData={uploadStore.setFormData}
               submitData={uploadStore.submitData}
               setTitleColumn={uploadStore.setTitleColumn}
+              isLoading={uploadStore.isLoading}
+              uploadPersentage={uploadStore.uploadPersentage}
             />
           </PivotItem>
         </Pivot>

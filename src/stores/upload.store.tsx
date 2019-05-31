@@ -13,6 +13,8 @@ export default function UploadStore() {
   const [dbfFile, setDbfFile] = useState({ file: null, meta: {} } as any);
   const [shpFile, setShpFile] = useState({ file: null, meta: {} } as any);
   const [shxFile, setShxFile] = useState({ file: null, meta: {} } as any);
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadPersentage, setUploadPersentage] = useState(0);
   const [selectedKey, setSelectedKey] = useState("0");
   const [endpoint, setEndpoint] = useState(null);
   const [titleColumn, _setTitleColumn] = useState([] as string[]);
@@ -44,14 +46,11 @@ export default function UploadStore() {
     _setFormData({ ...formData, [_k]: v.key || v });
   };
 
-  useEffect(
-    () => {
-      if (dbfFile.file && shpFile.file && shxFile.file) {
-        setAllFilesUploaded(true);
-      }
-    },
-    [dbfFile.file, shpFile.file, shxFile.file]
-  );
+  useEffect(() => {
+    if (dbfFile.file && shpFile.file && shxFile.file) {
+      setAllFilesUploaded(true);
+    }
+  }, [dbfFile.file, shpFile.file, shxFile.file]);
 
   const _parseShp = file => {
     const readerShp = new FileReader();
@@ -94,6 +93,7 @@ export default function UploadStore() {
   };
 
   const submitData = () => {
+    setIsLoading(true);
     const req = request.post(endpoint);
     const txtFile = generateTxt();
 
@@ -101,9 +101,18 @@ export default function UploadStore() {
     req.attach("shp", shpFile.file);
     req.attach("shx", shxFile.file);
     req.attach("metadata", txtFile);
+    req.on("progress", p => {
+      setUploadPersentage(p.percent);
+    });
 
-    req.end();
-    console.log("submitted");
+    req.then(response => {
+      if (response.text === "0") {
+        alert("Layer Uploaded");
+      } else {
+        alert("Failed to upload layer");
+      }
+      setIsLoading(false);
+    });
   };
 
   const preProcessFiles = files => {
@@ -159,6 +168,8 @@ ${dbfFile.meta.keys.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")}`;
     setEndpoint,
     formData,
     setFormData,
-    submitData
+    submitData,
+    isLoading,
+    uploadPersentage
   };
 }
