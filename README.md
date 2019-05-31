@@ -1,6 +1,7 @@
 # Naksha Components React 🗺️
 
 ![Dependencies](https://img.shields.io/david/strandls/naksha-components-react.svg)
+
 ![Bundle Size](https://img.shields.io/bundlephobia/minzip/naksha-components-react.svg)
 
 Mapbox GL Components for IndiaBiodiversity
@@ -39,11 +40,15 @@ yarn build:storybook
 import "naksha-components-react/dist/index.css";
 
 // Layers
-import { Layers } from "naksha-components-react";
+import { Layers, Upload } from "naksha-components-react";
 
+// Layers
 <Layers
   mapboxToken="pk.xxx"
-  endpoint="https://indiabiodiversity.org"
+  endpoint="https://example.com"
   layersPanelClosed={true}
 />;
+
+// Uploader
+<Upload endpoint="https://example.com/naksha/layer/uploadshp" />;
 ```

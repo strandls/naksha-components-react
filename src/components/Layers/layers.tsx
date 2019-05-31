@@ -19,7 +19,7 @@ export default function Layers({ mapboxToken, endpoint, layersPanelClosed }) {
   };
 
   return (
-    <div className="ncr">
+    <div className="ncr naksha--layers">
       <ReactMapGL
         {...layerStore.viewport}
         mapStyle={layerStore.mapStyle}

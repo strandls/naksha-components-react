@@ -1,6 +1,6 @@
-import axios from "axios";
 import { fromJS } from "immutable";
 import { useEffect, useState } from "react";
+import superagent from "superagent";
 import WebMercatorViewport from "viewport-mercator-project";
 import { xml2js } from "xml-js";
 
@@ -79,10 +79,10 @@ export default function LayersStore() {
    */
   const getAllLayers = () => {
     setIsLoading(true);
-    axios
+    superagent
       .get(`${endpoint + ENDPOINT_GEOSERVER}/layers/biodiv/wfs`)
       .then(response => {
-        const _json = xml2js(response.data, {
+        const _json = xml2js(response.text, {
           compact: true,
           captureSpacesBetweenElements: true
         });
@@ -211,7 +211,7 @@ export default function LayersStore() {
     }
 
     if (!_layerMeta[layerStyle].isLoaded) {
-      const r2 = await axios.get(
+      const r2 = await superagent.get(
         `${endpoint + ENDPOINT_GEOSERVER}/styles/${layerStyle}.json`
       );
       const layerJsonName = r2.data.layers[0].id;
@@ -273,11 +273,11 @@ export default function LayersStore() {
     }
 
     try {
-      const response = await axios.get(
+      const response = await superagent.get(
         `${endpoint + ENDPOINT_GEOSERVER}/layers/${layerName}/styles`
       );
       const layerStyleNames = {};
-      response.data.forEach(s => {
+      response.forEach(s => {
         layerStyleNames[s.styleName] = {
           styleTitle: s.styleTitle,
           isLoaded: false

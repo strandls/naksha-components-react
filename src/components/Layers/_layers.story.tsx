@@ -12,7 +12,7 @@ storiesOf("Layers", module).add("Layers", () => (
     )}
     endpoint={text(
       "Endpoint",
-      process.env.STORYBOOK_ENDPOINT || "https://indiabiodiversity.org"
+      process.env.STORYBOOK_ENDPOINT || "https://example.com"
     )}
     layersPanelClosed={boolean("Layers Panel Closed", false)}
   />
