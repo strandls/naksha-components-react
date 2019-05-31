@@ -214,14 +214,14 @@ export default function LayersStore() {
       const r2 = await superagent.get(
         `${endpoint + ENDPOINT_GEOSERVER}/styles/${layerStyle}.json`
       );
-      const layerJsonName = r2.data.layers[0].id;
-      r2.data.sources[layerJsonName].tiles = r2.data.sources[
+      const layerJsonName = r2.body.layers[0].id;
+      r2.body.sources[layerJsonName].tiles = r2.body.sources[
         layerJsonName
       ].tiles.map(t => `${endpoint}${t}`);
       _layerMeta[layerStyle] = {
         ..._layerMeta[layerStyle],
-        sources: r2.data.sources[layerJsonName],
-        layers: r2.data.layers[0],
+        sources: r2.body.sources[layerJsonName],
+        layers: r2.body.layers[0],
         name: layerJsonName,
         isLoaded: true
       };
@@ -277,7 +277,7 @@ export default function LayersStore() {
         `${endpoint + ENDPOINT_GEOSERVER}/layers/${layerName}/styles`
       );
       const layerStyleNames = {};
-      response.forEach(s => {
+      response.body.forEach(s => {
         layerStyleNames[s.styleName] = {
           styleTitle: s.styleTitle,
           isLoaded: false
