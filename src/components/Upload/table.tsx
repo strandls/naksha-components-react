@@ -57,7 +57,7 @@ export default function UploadTable({
             onChange={(e, v) => {
               setTitleColumn(item.id, v);
             }}
-            value={fieldContent}
+            defaultValue={fieldContent}
           />
         );
 
