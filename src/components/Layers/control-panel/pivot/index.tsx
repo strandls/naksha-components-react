@@ -29,10 +29,12 @@ export default function PivotComponent({
     // eslint-disable-next-line
   }, [layers]);
 
-  const onFilter = (text = "") => {
+  const onFilter = (event?, text = "") => {
     setLItems(
       text
-        ? layers.filter(i => i.title.toLowerCase().indexOf(text) > -1)
+        ? layers.filter(
+            i => i.title.toLowerCase().indexOf(text.toLowerCase()) > -1
+          )
         : layers
     );
   };
