@@ -26,9 +26,9 @@ export default function LayerItem({
   useEffect(() => {
     // All Style names for drtopdown
     setlayerStyles(
-      Object.entries(layersMeta.get(item.name)).map(([styleName, style]) => ({
+      Object.entries(layersMeta.get(item.name)).map(([styleName, style]: [string, any]) => ({
         key: styleName,
-        text: style["styleTitle"]
+        text: style.styleTitle
       }))
     );
     // eslint-disable-next-line

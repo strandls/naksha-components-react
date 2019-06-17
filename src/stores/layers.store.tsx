@@ -244,11 +244,11 @@ export default function LayersStore() {
           layers.filter(l => l.name === f.layer.id)[0] || { title: f.layer.id }
         ).title;
         const properties = Object.entries(layerMeta).reduce(
-          (o, [k, v]) => [
+          (o, [k, v]: [string, any]) => [
             ...o,
             {
               key: k,
-              name: v["styleTitle"],
+              name: v.styleTitle,
               value: f.properties[k.replace(`${f.layer.id}_`, "")]
             }
           ],

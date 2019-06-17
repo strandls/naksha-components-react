@@ -29,7 +29,7 @@ export default function PivotComponent({
     // eslint-disable-next-line
   }, [layers]);
 
-  const onFilter = (e = null, text = "") => {
+  const onFilter = (event?, text = "") => {
     setLItems(
       text
         ? layers.filter(
