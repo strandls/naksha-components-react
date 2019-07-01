@@ -106,7 +106,7 @@ export default function UploadStore() {
     });
 
     req.then(response => {
-      if (response.text === "0") {
+      if (response.body.responseCode === 0) {
         alert("Layer Uploaded");
       } else {
         alert("Failed to upload layer");
@@ -129,18 +129,18 @@ export default function UploadStore() {
 
   const generateTxt = () => {
     const txt = `*Meta_Layer
-title_column : '${formData.titleColumn}'
-summary_columns : '${formData.summeryColumns.join("','")}'
+title_column : ${formData.titleColumn}
+summary_columns : '${formData.summeryColumns.join("', '")}'
 color_by : ${formData.defaultStylingColumn}
-layer_name : '${formData.layerName}'
-layer_description : '${formData.layerDescription}'
-layer_type : '${formData.layerType}'
-created_by : '${formData.contributor}'
-attribution : '${formData.attribution}'
-tags : '${formData.tags}'
-license : '${formData.license}'
-created_date : '${toTxtDate(formData.dataCurationDate)}'
-layer_tablename : '${dbfFile.file.name}'
+layer_name : ${formData.layerName}
+layer_description : ${formData.layerDescription}
+layer_type : ${formData.layerType}
+created_by : ${formData.contributor}
+attribution : ${formData.attribution}
+tags : ${formData.tags}
+license : ${formData.license}
+created_date : ${toTxtDate(formData.dataCurationDate)}
+layer_tablename : ${dbfFile.file.name}
 status : 1
 
 $Layer_Column_Description
