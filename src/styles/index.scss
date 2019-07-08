@@ -136,4 +136,10 @@
   .layers--layer .description {
     width: 100%;
   }
+
+  .more-less {
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 0.5em;
+  }
 }

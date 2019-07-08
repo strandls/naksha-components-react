@@ -1,6 +1,7 @@
 import { Checkbox } from "office-ui-fabric-react/lib/Checkbox";
 import { Image } from "office-ui-fabric-react/lib/Image";
-import React from "react";
+import React, { useState } from "react";
+import Highlighter from "react-highlight-words";
 
 import { ENDPOINT_GEOSERVER } from "../../../../utils/constants";
 
@@ -8,8 +9,24 @@ export default function LayerItem({
   item,
   selectedLayersNames,
   setSelectedLayers,
-  endpoint
+  endpoint,
+  searchWords
 }) {
+  const CHAR_LIMIT = 150;
+  const [truncated, setTruncated] = useState(true);
+  const abstract = item.abstract || "";
+
+  const toggleTruncate = e => {
+    e.preventDefault();
+    setTruncated(!truncated);
+  };
+
+  const getThumbUrl = item => {
+    return `${endpoint + ENDPOINT_GEOSERVER}/thumbnails/biodiv/${
+      item.name
+    }?bbox=${item.bbox[0].toString()},${item.bbox[1].toString()}&height=80&width=80&srs=EPSG:4326`;
+  };
+
   return (
     <div className="layers--layer py-2" key={item.id}>
       <Checkbox
@@ -19,15 +36,36 @@ export default function LayerItem({
       />
       <Image
         className="thumb mr-2"
-        src={`${endpoint + ENDPOINT_GEOSERVER}/thumbnails/${
-          item.name
-        }_thumb.gif`}
+        src={getThumbUrl(item)}
         width={50}
         height={50}
       />
       <div>
-        <span className="title">{item.title}</span>
-        <p className="pt-1 pb-0">{item.abstract}</p>
+        <span className="title">
+          <Highlighter
+            searchWords={searchWords}
+            autoEscape={true}
+            textToHighlight={item.title}
+          />
+        </span>
+        <p className="pt-1 pb-0">
+          <Highlighter
+            searchWords={searchWords}
+            autoEscape={true}
+            textToHighlight={abstract.substr(
+              0,
+              truncated ? CHAR_LIMIT : abstract.length
+            )}
+          />
+          {abstract.length > CHAR_LIMIT && (
+            <>
+              {truncated ? "..." : ""}
+              <a href="#" className="more-less" onClick={toggleTruncate}>
+                {truncated ? "More" : "Less"}
+              </a>
+            </>
+          )}
+        </p>
       </div>
     </div>
   );
