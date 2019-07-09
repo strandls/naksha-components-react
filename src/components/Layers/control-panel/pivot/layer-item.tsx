@@ -3,6 +3,8 @@ import { Image } from "office-ui-fabric-react/lib/Image";
 import React, { useState } from "react";
 import Highlighter from "react-highlight-words";
 
+import { bBoxAspectRatio, calculateSize } from "bbox-aspect-ratio";
+
 import { ENDPOINT_GEOSERVER } from "../../../../utils/constants";
 
 export default function LayerItem({
@@ -24,7 +26,10 @@ export default function LayerItem({
   const getThumbUrl = item => {
     return `${endpoint + ENDPOINT_GEOSERVER}/thumbnails/biodiv/${
       item.name
-    }?bbox=${item.bbox[0].toString()},${item.bbox[1].toString()}&height=80&width=80&srs=EPSG:4326`;
+    }?bbox=${item.bbox[0].toString()},${item.bbox[1].toString()}&height=50&width=${calculateSize(
+      bBoxAspectRatio(item.bbox.flat()),
+      50
+    )}&srs=EPSG:4326`;
   };
 
   return (
@@ -34,12 +39,7 @@ export default function LayerItem({
         defaultChecked={selectedLayersNames.includes(item.name)}
         onChange={(e, isChecked) => setSelectedLayers(item, isChecked)}
       />
-      <Image
-        className="thumb mr-2"
-        src={getThumbUrl(item)}
-        width={50}
-        height={50}
-      />
+      <Image className="thumb mr-2" src={getThumbUrl(item)} height={50} />
       <div>
         <span className="title">
           <Highlighter
