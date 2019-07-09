@@ -114,6 +114,11 @@
   .layers--layer .thumb {
     flex-shrink: 0;
     border: 1px solid #a6a6a6;
+    width: 50px;
+    text-align: center;
+    img {
+      display: inline-block;
+    }
   }
 
   .layers--layer .title {
@@ -135,5 +140,11 @@
 
   .layers--layer .description {
     width: 100%;
+  }
+
+  .more-less {
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 0.5em;
   }
 }

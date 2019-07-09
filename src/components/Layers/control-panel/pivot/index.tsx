@@ -23,6 +23,7 @@ export default function PivotComponent({
   endpoint
 }) {
   const [LItems, setLItems] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     onFilter();
@@ -30,10 +31,14 @@ export default function PivotComponent({
   }, [layers]);
 
   const onFilter = (event?, text = "") => {
+    setSearchText(text);
     setLItems(
       text
         ? layers.filter(
-            i => i.title.toLowerCase().indexOf(text.toLowerCase()) > -1
+            i =>
+              JSON.stringify(i)
+                .toLowerCase()
+                .indexOf(text.toLowerCase()) > -1
           )
         : layers
     );
@@ -70,6 +75,7 @@ export default function PivotComponent({
                 endpoint={endpoint}
                 selectedLayersNames={selectedLayersNames}
                 setSelectedLayers={setSelectedLayers}
+                searchWords={searchText.split(" ")}
               />
             )}
           />
