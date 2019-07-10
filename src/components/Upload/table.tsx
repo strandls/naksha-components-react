@@ -1,17 +1,15 @@
-import { CompoundButton } from "office-ui-fabric-react";
-import { DatePicker } from "office-ui-fabric-react/lib/DatePicker";
 import {
+  CompoundButton,
+  DatePicker,
   DetailsList,
   DetailsListLayoutMode,
-  SelectionMode
-} from "office-ui-fabric-react/lib/DetailsList";
-import { Dropdown } from "office-ui-fabric-react/lib/Dropdown";
-import {
+  Dropdown,
   FocusZone,
-  FocusZoneDirection
-} from "office-ui-fabric-react/lib/FocusZone";
-import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator";
-import { TextField } from "office-ui-fabric-react/lib/TextField";
+  FocusZoneDirection,
+  ProgressIndicator,
+  SelectionMode,
+  TextField
+} from "office-ui-fabric-react";
 import React, { useEffect, useState } from "react";
 
 import {

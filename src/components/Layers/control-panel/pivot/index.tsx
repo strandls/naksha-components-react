@@ -1,11 +1,12 @@
-import { Dropdown } from "office-ui-fabric-react/lib/Dropdown";
 import {
+  Dropdown,
   FocusZone,
-  FocusZoneDirection
-} from "office-ui-fabric-react/lib/FocusZone";
-import { List } from "office-ui-fabric-react/lib/List";
-import { Pivot, PivotItem } from "office-ui-fabric-react/lib/Pivot";
-import { SearchBox } from "office-ui-fabric-react/lib/SearchBox";
+  FocusZoneDirection,
+  List,
+  Pivot,
+  PivotItem,
+  SearchBox
+} from "office-ui-fabric-react";
 import React, { useEffect, useState } from "react";
 
 import { STYLES } from "../../../../map-styles";

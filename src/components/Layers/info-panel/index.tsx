@@ -1,9 +1,9 @@
-import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
+import { Depths } from "@uifabric/fluent-theme";
 import { If } from "control-statements";
 import React, { useEffect, useState } from "react";
 
+import { InfobarClosed, InfobarOpened } from "./extras/infobar-buttons";
 import InfoItem from "./info-item";
-import { InfobarOpened, InfobarClosed } from "./extras/infobar-buttons";
 
 export default function InfoPanel({
   highlightLayers,

@@ -1,4 +1,4 @@
-import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
+import { Depths } from "@uifabric/fluent-theme";
 import { If } from "control-statements";
 import React from "react";
 

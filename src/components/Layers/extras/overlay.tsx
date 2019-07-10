@@ -1,5 +1,4 @@
-import { Overlay } from "office-ui-fabric-react/lib/Overlay";
-import { Spinner } from "office-ui-fabric-react/lib/Spinner";
+import { Overlay, Spinner } from "office-ui-fabric-react";
 import React from "react";
 
 export default function OverlayComponent({ isLoading }) {

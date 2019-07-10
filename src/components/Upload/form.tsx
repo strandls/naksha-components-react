@@ -1,11 +1,7 @@
 import "../../styles/spacing.scss";
 import "../../styles/upload.scss";
 
-import {
-  Pivot,
-  PivotItem,
-  PivotLinkSize
-} from "office-ui-fabric-react/lib/Pivot";
+import { Pivot, PivotItem, PivotLinkSize } from "office-ui-fabric-react";
 import { useStore } from "outstated";
 import React, { useEffect } from "react";
 import ReactDropzone from "react-dropzone";

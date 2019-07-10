@@ -1,9 +1,9 @@
-import { CompoundButton } from "office-ui-fabric-react";
 import {
+  CompoundButton,
   DetailsList,
   DetailsListLayoutMode,
   SelectionMode
-} from "office-ui-fabric-react/lib/DetailsList";
+} from "office-ui-fabric-react";
 import React, { useEffect, useState } from "react";
 
 import { FILE_TYPES } from "../../utils/constants";

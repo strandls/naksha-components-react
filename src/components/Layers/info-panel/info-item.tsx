@@ -2,9 +2,9 @@ import { If } from "control-statements";
 import {
   DetailsList,
   DetailsListLayoutMode,
+  Link,
   SelectionMode
-} from "office-ui-fabric-react/lib/DetailsList";
-import { Link } from "office-ui-fabric-react/lib/Link";
+} from "office-ui-fabric-react";
 import React, { useState } from "react";
 
 export default function InfoItem({ f, index }) {

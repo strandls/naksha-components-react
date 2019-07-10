@@ -1,8 +1,11 @@
-import { SharedColors } from "@uifabric/fluent-theme/lib/fluent/FluentColors";
-import { PrimaryButton } from "office-ui-fabric-react/lib/Button";
-import { Dropdown, IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
-import { Image } from "office-ui-fabric-react/lib/Image";
-import { Toggle } from "office-ui-fabric-react/lib/Toggle";
+import { SharedColors } from "@uifabric/fluent-theme";
+import {
+  Dropdown,
+  IDropdownOption,
+  Image,
+  PrimaryButton,
+  Toggle
+} from "office-ui-fabric-react";
 import React, { useEffect, useState } from "react";
 
 import { ENDPOINT_GEOSERVER } from "../../../../utils/constants";
@@ -26,10 +29,12 @@ export default function LayerItem({
   useEffect(() => {
     // All Style names for drtopdown
     setlayerStyles(
-      Object.entries(layersMeta.get(item.name)).map(([styleName, style]: [string, any]) => ({
-        key: styleName,
-        text: style.styleTitle
-      }))
+      Object.entries(layersMeta.get(item.name)).map(
+        ([styleName, style]: [string, any]) => ({
+          key: styleName,
+          text: style.styleTitle
+        })
+      )
     );
     // eslint-disable-next-line
   }, [layersMeta.get(item.name)]);

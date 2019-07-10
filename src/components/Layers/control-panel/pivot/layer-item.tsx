@@ -1,9 +1,7 @@
-import { Checkbox } from "office-ui-fabric-react/lib/Checkbox";
-import { Image } from "office-ui-fabric-react/lib/Image";
+import { bBoxAspectRatio, calculateSize } from "bbox-aspect-ratio";
+import { Checkbox, Image } from "office-ui-fabric-react";
 import React, { useState } from "react";
 import Highlighter from "react-highlight-words";
-
-import { bBoxAspectRatio, calculateSize } from "bbox-aspect-ratio";
 
 import { ENDPOINT_GEOSERVER } from "../../../../utils/constants";
 

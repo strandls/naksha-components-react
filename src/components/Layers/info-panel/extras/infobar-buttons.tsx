@@ -1,4 +1,4 @@
-import { IconButton } from "office-ui-fabric-react/lib/Button";
+import { IconButton } from "office-ui-fabric-react";
 import React from "react";
 
 export function InfobarClosed({ isInfobar, toggleInfobar }) {
