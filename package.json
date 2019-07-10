@@ -1,15 +1,16 @@
 {
   "name": "naksha-components-react",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "Mapbox GL Components for Biodiv",
-  "main": "dist/index.js",
-  "style": "dist/index.css",
+  "main": "dist/naksha-components-react.js",
+  "umd:main": "dist/naksha-components-react.umd.js",
+  "module": "dist/naksha-components-react.m.js",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "repository": "strandls/naksha-components-react",
   "scripts": {
     "dev": "microbundle watch --jsx react --format cjs",
-    "build": "microbundle --jsx react --format cjs",
+    "build": "microbundle -o dist/ --sourcemap false --compress false",
     "storybook": "start-storybook -p 6006",
     "build:storybook": "build-storybook"
   },
