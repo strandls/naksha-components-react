@@ -26,7 +26,7 @@ export default function LayerItem({
   const getThumbUrl = item => {
     return `${endpoint + ENDPOINT_GEOSERVER}/thumbnails/biodiv/${
       item.name
-    }?bbox=${item.bbox[0].toString()},${item.bbox[1].toString()}&height=50&width=${calculateSize(
+    }?bbox=${item.bbox[0].toString()},${item.bbox[1].toString()}&width=50&height=${calculateSize(
       bBoxAspectRatio(item.bbox.flat()),
       50
     )}&srs=EPSG:4326`;
@@ -39,7 +39,7 @@ export default function LayerItem({
         defaultChecked={selectedLayersNames.includes(item.name)}
         onChange={(e, isChecked) => setSelectedLayers(item, isChecked)}
       />
-      <Image className="thumb mr-2" src={getThumbUrl(item)} height={50} />
+      <Image className="thumb mr-2" src={getThumbUrl(item)} />
       <div>
         <span className="title">
           <Highlighter
