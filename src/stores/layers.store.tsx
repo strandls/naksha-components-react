@@ -96,7 +96,7 @@ export default function LayersStore() {
         }
 
         setLayers(
-          layers.map((f, index) => ({
+          _layers.map((f, index) => ({
             id: index,
             value: index,
             name: f.Name._text.split(":")[1],
