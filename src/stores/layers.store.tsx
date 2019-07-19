@@ -87,22 +87,28 @@ export default function LayersStore() {
           captureSpacesBetweenElements: true
         });
 
+        let _layers = (
+          _json["wfs:WFS_Capabilities"].FeatureTypeList || { FeatureType: [] }
+        ).FeatureType;
+
+        if (!Array.isArray(_layers)) {
+          _layers = [_layers];
+        }
+
         setLayers(
-          _json["wfs:WFS_Capabilities"].FeatureTypeList.FeatureType.map(
-            (f, index) => ({
-              id: index,
-              value: index,
-              name: f.Name._text.split(":")[1],
-              title: f.Title._text,
-              abstract: f.Abstract._text,
-              bbox: parseBbox(f),
-              isAdded: false
-            })
-          ) || []
+          layers.map((f, index) => ({
+            id: index,
+            value: index,
+            name: f.Name._text.split(":")[1],
+            title: f.Title._text,
+            abstract: f.Abstract._text,
+            bbox: parseBbox(f),
+            isAdded: false
+          })) || []
         );
       })
       .finally(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
       });
   };
 

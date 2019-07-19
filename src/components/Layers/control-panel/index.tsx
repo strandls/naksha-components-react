@@ -30,7 +30,7 @@ export default function ControlPanel({
         <div className="control-panel" style={{ boxShadow: Depths.depth64 }}>
           <div className="content">
             <SidebarOpened toggleSidebar={toggleSidebar} />
-            <OverlayComponent isLoading={isLoading || layers.length <= 0} />
+            <OverlayComponent isLoading={isLoading} />
             <PivotComponent
               layers={layers}
               endpoint={endpoint}
