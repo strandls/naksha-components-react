@@ -45,7 +45,7 @@ import { Layers, Upload } from "naksha-components-react";
 // Layers
 <Layers
   mapboxToken="pk.xxx"
-  endpoint="https://example.com"
+  endpoint="https://example.com/naksha"
   layersPanelClosed={true}
 />;
 
