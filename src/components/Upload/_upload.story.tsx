@@ -4,7 +4,7 @@ import React from "react";
 
 import { Upload } from "../..";
 
-const postfix = "/naksha/layer/uploadshp";
+const postfix = "/layer/uploadshp";
 
 storiesOf("Upload", module).add("Upload", () => (
   <Upload
