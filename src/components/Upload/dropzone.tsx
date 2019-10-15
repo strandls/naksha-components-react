@@ -5,7 +5,6 @@ import {
   SelectionMode
 } from "office-ui-fabric-react";
 import React, { useEffect, useState } from "react";
-
 import { FILE_TYPES } from "../../utils/constants";
 import { UPLOAD_FILES_TABLE_COLUMNS } from "./table.constants";
 
@@ -16,7 +15,9 @@ export default function Dropzone({
   setSelectedKey,
   dbfFile,
   shpFile,
-  shxFile
+  shxFile,
+  csvFile,
+  excelFile
 }) {
   const [rows, setRows] = useState([]);
 
@@ -35,8 +36,14 @@ export default function Dropzone({
     if (shxFile.file) {
       _rows.push({ name: shxFile.file.name });
     }
+    if(csvFile.file){
+      _rows.push({ name: csvFile.file.name });
+    }
+    if(excelFile.file){
+      _rows.push({ name: excelFile.file.name });
+    }
     setRows(_rows);
-  }, [dbfFile.file, shpFile.file, shxFile.file]);
+  }, [dbfFile.file, shpFile.file, shxFile.file,csvFile.file,excelFile.file]);
 
   return (
     <div className="row mt-4">
