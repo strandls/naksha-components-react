@@ -42,9 +42,8 @@ export default function UploadTable({
   const [items, setItems] = useState([] as any);
   const [data, setData] = useState([] as any);
   const [Header, setCsvHeader] = useState([] as any);
-  const [findLatLong, setFindLatLong] = useState([] as any);
   const [dropdown, setdropdown] = useState([] as any);
-  const [arrOptions, setArrOptions] = useState(LATLONG_TYPE_OPTIONS);
+  const [arrOptions, setArrOptions] = useState(LATLONG_TYPE_OPTIONS as any);
 
   useEffect(() => {
     if (meta.hasOwnProperty("keys")) {
@@ -61,15 +60,6 @@ export default function UploadTable({
       );
     }
     if (getMeta.hasOwnProperty("headings")) {
-      const filterLatLong = getMeta.headings.filter(o => {
-        return o === "latitude" || o == "longitude";
-      });
-      setFindLatLong(
-        filterLatLong.map((o, id) => ({
-          key: o,
-          text: o
-        }))
-      );
       setCsvHeader(
         getMeta.headings.map((o, id) => ({
           id,
@@ -97,7 +87,6 @@ export default function UploadTable({
   };
 
   const _getErrorMessageLong = value => {
-    //let regex=/^[0-9]+\.[0-9]$/;
     let regex = /^[0-9]*\.[0-9]/;
     if (!value.match(regex)) {
       setAllFilesUploaded(false);
@@ -134,17 +123,13 @@ export default function UploadTable({
         />
       );
     }
-    let makeArr: any = [];
     const handleChange = (e, item, col) => {
-      if (!makeArr.includes(item)) {
-        makeArr.push(item);
-        setdropdown(makeArr);
-        setArrOptions(dropdown);
+      if (!dropdown.includes(item)) {
+        dropdown.push(item);
+        setdropdown(dropdown);
       } else {
         setArrOptions(arrOptions);
       }
-      console.log(dropdown);
-      //setArrOptions(dropdown);
     };
 
     switch (row) {
@@ -152,7 +137,8 @@ export default function UploadTable({
         return (
           <Dropdown
             options={arrOptions}
-            // selectedKey={selectedItem ? selectedItem.key : ""}
+            //selectedKey={selectedItem ? selectedItem.key : ""}
+            //placeHolder={"Mark Column"}
             defaultSelectedKey={
               column.key === "latitude"
                 ? "latitude"
@@ -171,9 +157,7 @@ export default function UploadTable({
             onChange={(e, v) => {
               setDescriptionRow(column.id, v);
             }}
-            //onGetErrorMessage={_getErrorMessageLong}
             defaultValue={column.key}
-            //validateOnLoad={false}
             disabled={false}
           />
         );
@@ -264,6 +248,8 @@ export default function UploadTable({
                 options={items}
                 onChange={(e, v: any) => {
                   const _v = formData.summeryColumns.filter(k => k !== v.key);
+                  console.log(_v);
+
                   setFormData(
                     null,
                     v.selected ? [..._v, v.key] : _v,

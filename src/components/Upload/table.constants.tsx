@@ -81,15 +81,18 @@ export const LICENSE_TYPE_OPTIONS = [
 export const LATLONG_TYPE_OPTIONS = [
   {
     key: "Mark Column",
-    text: "Mark Column"
+    text: "Mark Column",
+    selected: true
   },
   {
     key: "latitude",
-    text: "latitude"
+    text: "latitude",
+    selected: false
   },
   {
     key: "longitude",
-    text: "longitude"
+    text: "longitude",
+    selected: false
   }
 ];
 

@@ -189,19 +189,6 @@ export default function UploadStore() {
   };
   let fileReader;
   const storeMeta: any = { keys: [], headings: [], file: null };
-  // const pushData: any = {
-  //   createdon: "kiran1",
-  //   habitatname: "kiran2",
-  //   latitude: "kiran3",
-  //   location: "kiran4",
-  //   locationaccuracy: "kiran5",
-  //   longitude: "kiran6",
-  //   placename: "kiran7",
-  //   reversegeocodedname: "kiran8",
-  //   speciesgroupname: "kiran9",
-  //   topology: "kiran10",
-  //   usergroupname: "kiran11"
-  // };
   const _parseCsv = file => {
     fileReader = new FileReader();
     fileReader.onload = async () => {
@@ -209,7 +196,6 @@ export default function UploadStore() {
       const sourceCsvs = sourceCsv;
       const stringifyData = JSON.stringify(sourceCsvs);
       const objData = JSON.parse(stringifyData);
-      //const objData = modifyData.concat(pushData);
       setUpdateDataLatLong(objData);
       setCsvFile({ file });
       setCsvExcelData(objData);
