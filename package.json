@@ -52,6 +52,7 @@
     "bootstrap-4-grid": "^2.4.1",
     "control-statements": "^1.0.2",
     "immutable": "^4.0.0-rc.12",
+    "neat-csv": "^5.1.0",
     "office-ui-fabric-react": "^7.8.1",
     "outstated": "^2.1.0",
     "react-dropzone": "^10.1.5",
@@ -60,6 +61,7 @@
     "shapefile": "^0.6.6",
     "superagent": "^5.1.0",
     "viewport-mercator-project": "^6.1.1",
+    "xlsx": "^0.15.1",
     "xml-js": "^1.6.11"
   }
 }
