@@ -3,15 +3,15 @@ export const FILE_TYPES = {
   DBF: ".dbf",
   SHP: ".shp",
   SHX: ".shx",
-  CSV:".csv",
-  XLSX:".xlsx"
+  CSV: ".csv",
+  XLSX: ".xlsx"
 };
-export const SHAPE_FILE_TYPES= {
+export const SHAPE_FILE_TYPES = {
   DBF: ".dbf",
   SHP: ".shp",
-  SHX: ".shx",
-}
-export const CSV_FILE_TYPES={
-  CSV:".csv",
-  XLSX:".xlsx"
-}
+  SHX: ".shx"
+};
+export const CSV_FILE_TYPES = {
+  CSV: ".csv",
+  XLSX: ".xlsx"
+};

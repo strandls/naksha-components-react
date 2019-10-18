@@ -66,16 +66,16 @@ export default function Form({ endpoint }) {
               isLoading={uploadStore.isLoading}
               uploadPersentage={uploadStore.uploadPersentage}
               csvData={uploadStore.csvExcelData}
-              renderTable = {uploadStore.renderTable}
-              allFilesUploaded = {uploadStore.allFilesUploaded}
-              setLongColumn = {uploadStore.setLongColumn}
-              setLatColumn ={uploadStore.setLatColumn}
-              setAllFilesUploaded = {uploadStore.setAllFilesUploaded}
+              renderTable={uploadStore.renderTable}
+              allFilesUploaded={uploadStore.allFilesUploaded}
+              setLongColumn={uploadStore.setLongColumn}
+              setLatColumn={uploadStore.setLatColumn}
+              setAllFilesUploaded={uploadStore.setAllFilesUploaded}
               setDescriptionRow={uploadStore.setDescriptionRow}
-              setCsvFormData = {uploadStore.setCsvFormData}
+              setCsvFormData={uploadStore.setCsvFormData}
               csvFormData={uploadStore.csvFormData}
               submitCsvData={uploadStore.submitCsvData}
-              getMeta = {uploadStore.meta}
+              getMeta={uploadStore.meta}
             />
           </PivotItem>
         </Pivot>

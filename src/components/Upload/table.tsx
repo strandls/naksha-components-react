@@ -42,8 +42,6 @@ export default function UploadTable({
   const [items, setItems] = useState([] as any);
   const [data, setData] = useState([] as any);
   const [Header, setCsvHeader] = useState([] as any);
-  const [dropdown, setdropdown] = useState([] as any);
-  const [arrOptions, setArrOptions] = useState(LATLONG_TYPE_OPTIONS as any);
 
   useEffect(() => {
     if (meta.hasOwnProperty("keys")) {
@@ -76,7 +74,6 @@ export default function UploadTable({
     setData(csvData);
   }, [meta.keys][getMeta.headings]);
   const _getErrorMessageLat = value => {
-    //let regex = /^[0-9]+$/;
     let regex = /^[0-9]*\.[0-9]/;
     if (!value.match(regex)) {
       setAllFilesUploaded(false);
@@ -90,7 +87,7 @@ export default function UploadTable({
     let regex = /^[0-9]*\.[0-9]/;
     if (!value.match(regex)) {
       setAllFilesUploaded(false);
-      return "Numbers is allowed";
+      return "Numbers is allowed with decimal point";
     } else {
       setAllFilesUploaded(true);
     }
@@ -123,22 +120,11 @@ export default function UploadTable({
         />
       );
     }
-    const handleChange = (e, item, col) => {
-      if (!dropdown.includes(item)) {
-        dropdown.push(item);
-        setdropdown(dropdown);
-      } else {
-        setArrOptions(arrOptions);
-      }
-    };
-
     switch (row) {
       case 0:
         return (
           <Dropdown
-            options={arrOptions}
-            //selectedKey={selectedItem ? selectedItem.key : ""}
-            //placeHolder={"Mark Column"}
+            options={LATLONG_TYPE_OPTIONS}
             defaultSelectedKey={
               column.key === "latitude"
                 ? "latitude"
@@ -147,7 +133,6 @@ export default function UploadTable({
                 : LATLONG_TYPE_OPTIONS[0].key
             }
             styles={{ dropdown: { width: 160 } }}
-            onChange={(e, item) => handleChange(e, item, column)}
           />
         );
       case 1:
@@ -248,8 +233,6 @@ export default function UploadTable({
                 options={items}
                 onChange={(e, v: any) => {
                   const _v = formData.summeryColumns.filter(k => k !== v.key);
-                  console.log(_v);
-
                   setFormData(
                     null,
                     v.selected ? [..._v, v.key] : _v,
@@ -311,7 +294,6 @@ export default function UploadTable({
                 className="naksha--upload-next mt-2"
                 secondaryText="Upload dataset to server"
                 onClick={submitData}
-                //disabled={!allFilesUploaded}
               >
                 Submit &rarr;
               </CompoundButton>

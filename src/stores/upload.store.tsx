@@ -16,7 +16,6 @@ export default function UploadStore() {
   const [shxFile, setShxFile] = useState({ file: null } as any);
   const [csvFile, setCsvFile] = useState({ file: null } as any);
   const [meta, setMeta] = useState({} as any);
-  const [modifyFile, setModifyFile] = useState({ file: null } as any);
   const [csvExcelData, setCsvExcelData] = useState([] as string[]);
   const [excelFile, setExcelFile] = useState({ file: null } as any);
   const [isLoading, setIsLoading] = useState(false);
@@ -181,15 +180,10 @@ export default function UploadStore() {
         });
       }
     }
-    for (let j = 0; j < prepareData.length; j++) {
-      meta.headings.forEach((k, o) => {
-        meta.keys.push(prepareData[j][k]);
-      });
-    }
   };
-  let fileReader;
   const storeMeta: any = { keys: [], headings: [], file: null };
   const _parseCsv = file => {
+    let fileReader;
     fileReader = new FileReader();
     fileReader.onload = async () => {
       const sourceCsv = await neatCsv(fileReader.result);
@@ -205,15 +199,14 @@ export default function UploadStore() {
     fileReader.readAsText(file);
     setRenderTable("csvTable");
   };
-  let reader;
   const _parseExcel = file => {
+    let reader, excelData, first_sheet_name, worksheet;
     reader = new FileReader();
     reader.onload = async evt => {
       const bstr = evt.target.result;
       const workbook = XLSX.read(bstr, { type: "binary" });
-      let first_sheet_name = workbook.SheetNames[0];
-      let worksheet = workbook.Sheets[first_sheet_name];
-      let excelData;
+      first_sheet_name = workbook.SheetNames[0];
+      worksheet = workbook.Sheets[first_sheet_name];
       excelData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       setUpdateDataLatLong(excelData);
       setExcelFile({ file });
@@ -225,20 +218,16 @@ export default function UploadStore() {
     setRenderTable("csvTable");
   };
 
-  const Excelexport = updateDataLatLong => {
+  const excelCsvExport = updateDataLatLong => {
     const ws = XLSX.utils.json_to_sheet(updateDataLatLong);
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-
     if (meta.file.name.endsWith(FILE_TYPES.XLSX)) {
-      //const arrayOfObj = Object.entries(meta).map((e) => ( { [e[0]]: e[1] } ));
       const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-      //console.log(FileSaver.saveAs(data, 'excel' + fileExtension));
       let blob = new Blob([excelBuffer]);
       return new File([blob], meta.file.name, {
         type: meta.file.type,
         lastModified: new Date().getTime()
       });
-      //return form.append("upload", fileOfBlob);
     } else if (meta.file.name.endsWith(FILE_TYPES.CSV)) {
       const excelBuffer = XLSX.write(wb, { bookType: "csv", type: "array" });
       let blob = new Blob([excelBuffer]);
@@ -272,7 +261,7 @@ export default function UploadStore() {
 
   const submitCsvData = () => {
     setIsLoading(true);
-    const saveExportedData = Excelexport(updateDataLatLong);
+    const saveExportedData = excelCsvExport(updateDataLatLong);
     const req = request.post(endpoint);
     const txtFile = generateCsvTxt();
     if (meta.file.name.endsWith(FILE_TYPES.XLSX)) {
