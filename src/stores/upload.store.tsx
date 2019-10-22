@@ -1,14 +1,15 @@
-import neatCsv from "neat-csv";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { openDbf, openShp } from "shapefile";
-import request from "superagent";
-import XLSX from "xlsx";
+
+import { FILE_TYPES } from "../utils/constants";
 import {
   LAYER_TYPE_OPTIONS,
   LICENSE_TYPE_OPTIONS
 } from "../components/Upload/table.constants";
 import { toTxtDate } from "../utils/basic";
-import { FILE_TYPES } from "../utils/constants";
+import request from "superagent";
+import neatCsv from "neat-csv";
+import XLSX from "xlsx";
 
 export default function UploadStore() {
   const [dbfFile, setDbfFile] = useState({ file: null, meta: {} } as any);
@@ -23,8 +24,7 @@ export default function UploadStore() {
   const [selectedKey, setSelectedKey] = useState("0");
   const [renderTable, setRenderTable] = useState("");
   const [endpoint, setEndpoint] = useState(null);
-  const [titleColumn, _setTitleColumn] = useState([] as string[]);
-  const [descriptionRow, _setDescriptionRow] = useState([] as string[]);
+  const [titleColumn, updateTitleColumn] = useState([] as string[]);
   const [updateDataLatLong, setUpdateDataLatLong] = useState([] as string[]);
   const [summeryColumn, setSummeryColumn] = useState();
   const [allFilesUploaded, setAllFilesUploaded] = useState(false);
@@ -42,82 +42,28 @@ export default function UploadStore() {
     dataCurationDate: new Date()
   });
 
-  const [csvFormData, _setCsvFormData] = useState({
-    layerType: LAYER_TYPE_OPTIONS[0].key,
-    titleColumn: null,
-    summeryColumns: [],
-    defaultStylingColumn: null,
-    layerName: "",
-    layerDescription: "",
-    contributor: "",
-    attribution: "",
-    tags: "",
-    license: LICENSE_TYPE_OPTIONS[0].key,
-    dataCurationDate: new Date()
-  });
-
   const setTitleColumn = (id, v) => {
-    _setTitleColumn(o => {
+    updateTitleColumn(o => {
       o[id] = v;
       return o;
     });
   };
-  const setDescriptionRow = (id, v) => {
-    _setDescriptionRow(o => {
-      o[id] = v;
-      return o;
-    });
-  };
-  const setLatColumn = (id, v) => {
+
+  const setLatLongColumn = (id, v, column) => {
     setUpdateDataLatLong(obj => {
-      (obj[id] as any).latitude = Number(v);
+      if (column.fieldName === "latitude") {
+        (obj[id] as any).latitude = Number(v);
+      } else if (column.fieldName === "longitude") {
+        (obj[id] as any).longitude = Number(v);
+      }
       return obj;
     });
   };
-  const setLongColumn = (id, v) => {
-    setUpdateDataLatLong(obj => {
-      (obj[id] as any).longitude = Number(v);
-      return obj;
-    });
-  };
+
   const setFormData = (e, v, key?) => {
     const _k = e ? e.target.name : key;
     _setFormData({ ...formData, [_k]: v.key || v });
   };
-
-  const setCsvFormData = (e, v, key) => {
-    const _k = e ? e.target.name : key;
-    _setCsvFormData({ ...csvFormData, [_k]: v.key || v });
-  };
-
-  useEffect(() => {
-    if (
-      (dbfFile.file &&
-        shpFile.file &&
-        shxFile.file &&
-        (csvFile.file || excelFile.file)) ||
-      (dbfFile.file && (csvFile.file || excelFile.file)) ||
-      (shpFile.file && (csvFile.file || excelFile.file)) ||
-      (shxFile.file && (csvFile.file || excelFile.file))
-    ) {
-      setAllFilesUploaded(false);
-    } else if (
-      (dbfFile.file && shpFile.file && shxFile.file && excelFile.file) ||
-      (dbfFile.file && excelFile.file) ||
-      (shpFile.file && excelFile.file) ||
-      (shxFile.file && excelFile.file)
-    ) {
-      setAllFilesUploaded(false);
-    } else if (csvFile.file && excelFile.file) {
-      setAllFilesUploaded(false);
-    } else if (csvFile.file) {
-      setAllFilesUploaded(true);
-    } else if (excelFile.file) {
-      setAllFilesUploaded(true);
-    } else if (dbfFile.file && shpFile.file && shxFile.file) {
-      setAllFilesUploaded(true);
-    }
-  }, [dbfFile.file, shpFile.file, shxFile.file, csvFile.file, excelFile.file]);
 
   const _parseShp = file => {
     const readerShp = new FileReader();
@@ -140,7 +86,7 @@ export default function UploadStore() {
           meta.keys = Object.keys(_r);
           meta.headings = Object.keys(_r);
           meta.rows = meta.keys.reduce((o, k) => ({ ...o, [k]: [] }), {});
-          _setTitleColumn(meta.headings);
+          updateTitleColumn(meta.headings);
           _setFormData({
             ...formData,
             defaultStylingColumn: meta.keys[0],
@@ -164,7 +110,7 @@ export default function UploadStore() {
 
   const csvExcel = (prepareData, meta, file) => {
     let obj1;
-    for (let key in prepareData) {
+    for (const key in prepareData) {
       obj1 = prepareData[0];
     }
     const getKeys = Object.keys(obj1);
@@ -172,16 +118,17 @@ export default function UploadStore() {
       if (i == 0) {
         meta.headings = Object.keys(obj1);
         meta.file = file;
-        _setDescriptionRow(getKeys);
-        _setCsvFormData({
-          ...csvFormData,
+        updateTitleColumn(getKeys);
+        _setFormData({
+          ...formData,
           defaultStylingColumn: meta.headings[0],
           titleColumn: meta.headings[0]
         });
       }
     }
   };
-  const storeMeta: any = { keys: [], headings: [], file: null };
+
+  const storeMeta: any = { headings: [], file: null };
   const _parseCsv = file => {
     let fileReader;
     fileReader = new FileReader();
@@ -199,14 +146,16 @@ export default function UploadStore() {
     fileReader.readAsText(file);
     setRenderTable("csvTable");
   };
+
   const _parseExcel = file => {
-    let reader, excelData, first_sheet_name, worksheet;
+    let reader;
+    let excelData;
     reader = new FileReader();
     reader.onload = async evt => {
       const bstr = evt.target.result;
       const workbook = XLSX.read(bstr, { type: "binary" });
-      first_sheet_name = workbook.SheetNames[0];
-      worksheet = workbook.Sheets[first_sheet_name];
+      const first_sheet_name = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[first_sheet_name];
       excelData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
       setUpdateDataLatLong(excelData);
       setExcelFile({ file });
@@ -223,14 +172,14 @@ export default function UploadStore() {
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     if (meta.file.name.endsWith(FILE_TYPES.XLSX)) {
       const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-      let blob = new Blob([excelBuffer]);
+      const blob = new Blob([excelBuffer]);
       return new File([blob], meta.file.name, {
         type: meta.file.type,
         lastModified: new Date().getTime()
       });
     } else if (meta.file.name.endsWith(FILE_TYPES.CSV)) {
       const excelBuffer = XLSX.write(wb, { bookType: "csv", type: "array" });
-      let blob = new Blob([excelBuffer]);
+      const blob = new Blob([excelBuffer]);
       return new File([blob], meta.file.name, {
         type: meta.file.type,
         lastModified: new Date().getTime()
@@ -241,32 +190,17 @@ export default function UploadStore() {
   const submitData = () => {
     setIsLoading(true);
     const req = request.post(endpoint);
-    const txtFile = generateTxt();
-    req.attach("dbf", dbfFile.file);
-    req.attach("shp", shpFile.file);
-    req.attach("shx", shxFile.file);
-    req.attach("metadata", txtFile);
-    req.on("progress", p => {
-      setUploadPersentage(p.percent);
-    });
-    req.then(response => {
-      if (response.body.responseCode === 0) {
-        alert("Layer Uploaded");
-      } else {
-        alert("Failed to upload layer");
-      }
-      setIsLoading(false);
-    });
-  };
-
-  const submitCsvData = () => {
-    setIsLoading(true);
-    const saveExportedData = excelCsvExport(updateDataLatLong);
-    const req = request.post(endpoint);
-    const txtFile = generateCsvTxt();
-    if (meta.file.name.endsWith(FILE_TYPES.XLSX)) {
+    const txtFile = generateTxt(dbfFile, meta);
+    let saveExportedData;
+    if (dbfFile.file !== null) {
+      req.attach("dbf", dbfFile.file);
+      req.attach("shp", shpFile.file);
+      req.attach("shx", shxFile.file);
+    } else if (meta.file.name.endsWith(FILE_TYPES.XLSX)) {
+      saveExportedData = excelCsvExport(updateDataLatLong);
       req.attach("xlsx", saveExportedData);
     } else if (meta.file.name.endsWith(FILE_TYPES.CSV)) {
+      saveExportedData = excelCsvExport(updateDataLatLong);
       req.attach("csv", saveExportedData);
     }
     req.attach("metadata", txtFile);
@@ -299,7 +233,7 @@ export default function UploadStore() {
     });
   };
 
-  const generateTxt = () => {
+  const generateTxt = (dbfFile, meta) => {
     const txt = `*Meta_Layer
 title_column : ${formData.titleColumn}
 summary_columns : '${formData.summeryColumns.join("', '")}'
@@ -312,34 +246,14 @@ attribution : ${formData.attribution}
 tags : ${formData.tags}
 license : ${formData.license}
 created_date : ${toTxtDate(formData.dataCurationDate)}
-layer_tablename : ${dbfFile.file.name}
+layer_tablename : ${dbfFile.file == null ? meta.file.name : dbfFile.file.name}
 status : 1
 $Layer_Column_Description
-${dbfFile.meta.keys.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")}`;
-    return new File([txt.replace(/\'\'/g, "")], "blob", {
-      type: "text/plain",
-      lastModified: new Date().getTime()
-    });
-  };
-
-  const generateCsvTxt = () => {
-    const txt = `*Meta_Layer
-    title_column : ${csvFormData.titleColumn}
-    summary_columns : '${csvFormData.summeryColumns.join("', '")}'
-    color_by : ${csvFormData.defaultStylingColumn}
-    layer_name : ${csvFormData.layerName}
-    layer_description : ${csvFormData.layerDescription}
-    layer_type : ${csvFormData.layerType}
-    created_by : ${csvFormData.contributor}
-    attribution : ${csvFormData.attribution}
-    tags : ${csvFormData.tags}
-    license : ${csvFormData.license}
-    created_date : ${toTxtDate(csvFormData.dataCurationDate)}
-    layer_tablename : ${meta.file.name}
-    status : 1
-
-$Layer_Column_Description
-${meta.headings.map((k, i) => `${k} : ${descriptionRow[i]}`).join("\n")}`;
+${
+  dbfFile.file == null
+    ? meta.headings
+    : dbfFile.meta.keys.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")
+}`;
     return new File([txt.replace(/\'\'/g, "")], "blob", {
       type: "text/plain",
       lastModified: new Date().getTime()
@@ -367,13 +281,7 @@ ${meta.headings.map((k, i) => `${k} : ${descriptionRow[i]}`).join("\n")}`;
     uploadPersentage,
     setAllFilesUploaded,
     renderTable,
-    setRenderTable,
-    setLatColumn,
-    setLongColumn,
-    setDescriptionRow,
-    setCsvFormData,
-    csvFormData,
-    submitCsvData,
+    setLatLongColumn,
     meta,
     csvExcelData
   };

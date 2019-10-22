@@ -29,18 +29,12 @@ export default function UploadTable({
   uploadPersentage,
   renderTable,
   allFilesUploaded,
-  csvData,
-  setLatColumn,
-  setLongColumn,
-  setDescriptionRow,
+  csvExcelData,
+  setLatLongColumn,
   setAllFilesUploaded,
-  setCsvFormData,
-  csvFormData,
-  submitCsvData,
   getMeta
 }) {
   const [items, setItems] = useState([] as any);
-  const [data, setData] = useState([] as any);
   const [Header, setCsvHeader] = useState([] as any);
 
   useEffect(() => {
@@ -56,8 +50,7 @@ export default function UploadTable({
           sample3: meta.rows[o][2]
         }))
       );
-    }
-    if (getMeta.hasOwnProperty("headings")) {
+    } else if (getMeta.hasOwnProperty("headings")) {
       setCsvHeader(
         getMeta.headings.map((o, id) => ({
           id,
@@ -70,11 +63,12 @@ export default function UploadTable({
           isPadded: false
         }))
       );
+      setItems(csvExcelData);
     }
-    setData(csvData);
   }, [meta.keys][getMeta.headings]);
-  const _getErrorMessageLat = value => {
-    let regex = /^[0-9]*\.[0-9]/;
+
+  const _getErrorMessage = value => {
+    const regex = /^[0-9]*\.[0-9]/;
     if (!value.match(regex)) {
       setAllFilesUploaded(false);
       return "Numbers is allowed with decimal point";
@@ -83,55 +77,38 @@ export default function UploadTable({
     }
   };
 
-  const _getErrorMessageLong = value => {
-    let regex = /^[0-9]*\.[0-9]/;
-    if (!value.match(regex)) {
-      setAllFilesUploaded(false);
-      return "Numbers is allowed with decimal point";
+  const setDefaultKey = column => {
+    if (column.key === "latitude" || column.key === "longitude") {
+      return column.key;
     } else {
-      setAllFilesUploaded(true);
+      return LATLONG_TYPE_OPTIONS[0].key;
     }
   };
 
-  const displayTable = (item, row, column) => {
+  const displayTable = (item, index, column) => {
     const fieldContent = item[column.fieldName];
-    if (column.key === "latitude" && row !== 0 && row !== 1) {
+    if (
+      (column.key === "latitude" || column.key === "longitude") &&
+      index > 1
+    ) {
       return (
         <TextField
           name={column.id}
           onChange={(e, v) => {
-            setLatColumn(row, v);
+            setLatLongColumn(index, v, column);
           }}
-          onGetErrorMessage={_getErrorMessageLat}
-          defaultValue={row == 1 ? "latitude" : fieldContent}
-          validateOnLoad={false}
-        />
-      );
-    } else if (column.key === "longitude" && row !== 0 && row !== 1) {
-      return (
-        <TextField
-          name={column.id}
-          onChange={(e, v) => {
-            setLongColumn(row, v);
-          }}
-          onGetErrorMessage={_getErrorMessageLong}
-          defaultValue={row == 1 ? "longitude" : fieldContent}
+          onGetErrorMessage={_getErrorMessage}
+          defaultValue={fieldContent}
           validateOnLoad={false}
         />
       );
     }
-    switch (row) {
+    switch (index) {
       case 0:
         return (
           <Dropdown
             options={LATLONG_TYPE_OPTIONS}
-            defaultSelectedKey={
-              column.key === "latitude"
-                ? "latitude"
-                : column.key === "longitude"
-                ? "longitude"
-                : LATLONG_TYPE_OPTIONS[0].key
-            }
+            defaultSelectedKey={setDefaultKey(column)}
             styles={{ dropdown: { width: 160 } }}
           />
         );
@@ -140,7 +117,7 @@ export default function UploadTable({
           <TextField
             name={column.id}
             onChange={(e, v) => {
-              setDescriptionRow(column.id, v);
+              setTitleColumn(column.id, v);
             }}
             defaultValue={column.key}
             disabled={false}
@@ -150,6 +127,7 @@ export default function UploadTable({
         return fieldContent;
     }
   };
+
   const TableRow = (item, index, column) => {
     const fieldContent = item[column.fieldName];
     switch (column.key) {
@@ -163,7 +141,6 @@ export default function UploadTable({
             defaultValue={fieldContent}
           />
         );
-
       default:
         return fieldContent;
     }
@@ -178,223 +155,119 @@ export default function UploadTable({
           percentComplete={uploadPersentage}
         />
       )}
-      {(items.length > 0 || data.length > 0) && !isLoading && (
+      {items.length > 0 && !isLoading && (
         <div className="row">
           <div className="col-md-8">
             <div className="upload--table">
               <FocusZone direction={FocusZoneDirection.vertical}>
-                {renderTable === "shapeTable" ? (
-                  <DetailsList
-                    items={items}
-                    columns={UPLOADER_COLUMNS}
-                    selectionMode={SelectionMode.none}
-                    onRenderItemColumn={TableRow}
-                    setKey="key"
-                    layoutMode={DetailsListLayoutMode.fixedColumns}
-                  />
-                ) : (
-                  <DetailsList
-                    items={data}
-                    columns={Header}
-                    selectionMode={SelectionMode.none}
-                    onRenderItemColumn={displayTable}
-                    setKey="key"
-                    layoutMode={DetailsListLayoutMode.fixedColumns}
-                  />
-                )}
+                <DetailsList
+                  items={items}
+                  columns={
+                    renderTable === "shapeTable" ? UPLOADER_COLUMNS : Header
+                  }
+                  selectionMode={SelectionMode.none}
+                  onRenderItemColumn={
+                    renderTable === "shapeTable" ? TableRow : displayTable
+                  }
+                  setKey="key"
+                  layoutMode={DetailsListLayoutMode.fixedColumns}
+                />
               </FocusZone>
             </div>
           </div>
-          {renderTable === "shapeTable" ? (
-            <div className="col-md-4 upload--form">
-              <Dropdown
-                placeholder="Select an option"
-                label="Layer Type"
-                disabled={true}
-                defaultSelectedKey={formData.layerType}
-                options={LAYER_TYPE_OPTIONS}
-                onChange={(e, v) => {
-                  setFormData(null, v, "layerType");
-                }}
-              />
-              <Dropdown
-                placeholder="Select an option"
-                label="Title Column"
-                defaultSelectedKey={formData.titleColumn}
-                options={items}
-                onChange={(e, v) => {
-                  setFormData(null, v, "titleColumn");
-                }}
-              />
-              <Dropdown
-                placeholder="Select Summary Columns"
-                label="Summary Columns"
-                multiSelect
-                options={items}
-                onChange={(e, v: any) => {
-                  const _v = formData.summeryColumns.filter(k => k !== v.key);
-                  setFormData(
-                    null,
-                    v.selected ? [..._v, v.key] : _v,
-                    "summeryColumns"
-                  );
-                }}
-              />
-              <Dropdown
-                placeholder="Select an option"
-                label="Default Styling Column"
-                defaultSelectedKey={formData.defaultStylingColumn}
-                options={items}
-                onChange={(e, v) => {
-                  setFormData(null, v, "defaultStylingColumn");
-                }}
-              />
-              <TextField
-                label="Layer Name"
-                name="layerName"
-                onChange={setFormData}
-              />
-              <TextField
-                label="Layer Description"
-                multiline
-                rows={4}
-                name="layerDescription"
-                onChange={setFormData}
-              />
-              <TextField
-                label="Contributor"
-                name="contributor"
-                onChange={setFormData}
-              />
-              <TextField
-                label="Attribution"
-                name="attribution"
-                onChange={setFormData}
-              />
-              <TextField label="Tags" name="tags" onChange={setFormData} />
-              <Dropdown
-                label="License"
-                defaultSelectedKey={formData.license}
-                options={LICENSE_TYPE_OPTIONS}
-                onChange={(e, v) => {
-                  setFormData(null, v, "license");
-                }}
-              />
-              <DatePicker
-                label="Data Curation Date"
-                placeholder="Select a date..."
-                ariaLabel="Select a date"
-                value={formData.dataCurationDate}
-                onSelectDate={(v: any) => {
-                  setFormData(null, v, "dataCurationDate");
-                }}
-              />
-              <CompoundButton
-                primary={true}
-                className="naksha--upload-next mt-2"
-                secondaryText="Upload dataset to server"
-                onClick={submitData}
-              >
-                Submit &rarr;
-              </CompoundButton>
-            </div>
-          ) : (
-            <div className="col-md-4 upload--form">
-              <Dropdown
-                placeholder="Select an option"
-                label="Layer Type"
-                disabled={true}
-                defaultSelectedKey={csvFormData.layerType}
-                options={LAYER_TYPE_OPTIONS}
-                onChange={(e, v) => {
-                  setFormData(null, v, "layerType");
-                }}
-              />
-              <Dropdown
-                placeholder="Select an option"
-                label="Title Column"
-                defaultSelectedKey={csvFormData.titleColumn}
-                options={Header}
-                onChange={(e, v) => {
-                  setCsvFormData(null, v, "titleColumn");
-                }}
-              />
-              <Dropdown
-                placeholder="Select Summary Columns"
-                label="Summary Columns"
-                multiSelect
-                options={Header}
-                onChange={(e, v: any) => {
-                  const _v = csvFormData.summeryColumns.filter(
-                    k => k !== v.key
-                  );
-                  setCsvFormData(
-                    null,
-                    v.selected ? [..._v, v.key] : _v,
-                    "summeryColumns"
-                  );
-                }}
-              />
-              <Dropdown
-                placeholder="Select an option"
-                label="Default Styling Column"
-                defaultSelectedKey={csvFormData.defaultStylingColumn}
-                options={Header}
-                onChange={(e, v) => {
-                  setCsvFormData(null, v, "defaultStylingColumn");
-                }}
-              />
-              <TextField
-                label="Layer Name"
-                name="layerName"
-                onChange={setCsvFormData}
-              />
-              <TextField
-                label="Layer Description"
-                multiline
-                rows={4}
-                name="layerDescription"
-                onChange={setCsvFormData}
-              />
-              <TextField
-                label="Contributor"
-                name="contributor"
-                onChange={setCsvFormData}
-              />
-              <TextField
-                label="Attribution"
-                name="attribution"
-                onChange={setCsvFormData}
-              />
-              <TextField label="Tags" name="tags" onChange={setCsvFormData} />
-              <Dropdown
-                label="License"
-                defaultSelectedKey={setCsvFormData.license}
-                options={LICENSE_TYPE_OPTIONS}
-                onChange={(e, v) => {
-                  setCsvFormData(null, v, "license");
-                }}
-              />
-              <DatePicker
-                label="Data Curation Date"
-                placeholder="Select a date..."
-                ariaLabel="Select a date"
-                value={csvFormData.dataCurationDate}
-                onSelectDate={(v: any) => {
-                  setCsvFormData(null, v, "dataCurationDate");
-                }}
-              />
-              <CompoundButton
-                primary={true}
-                className="naksha--upload-next mt-2"
-                secondaryText="Upload dataset to server"
-                onClick={submitCsvData}
-                disabled={!allFilesUploaded}
-              >
-                Submit &rarr;
-              </CompoundButton>
-            </div>
-          )}
+          <div className="col-md-4 upload--form">
+            <Dropdown
+              placeholder="Select an option"
+              label="Layer Type"
+              disabled={true}
+              defaultSelectedKey={formData.layerType}
+              options={LAYER_TYPE_OPTIONS}
+              onChange={(e, v) => {
+                setFormData(null, v, "layerType");
+              }}
+            />
+            <Dropdown
+              placeholder="Select an option"
+              label="Title Column"
+              defaultSelectedKey={formData.titleColumn}
+              options={renderTable === "shapeTable" ? items : Header}
+              onChange={(e, v) => {
+                setFormData(null, v, "titleColumn");
+              }}
+            />
+            <Dropdown
+              placeholder="Select Summary Columns"
+              label="Summary Columns"
+              multiSelect
+              options={renderTable === "shapeTable" ? items : Header}
+              onChange={(e, v: any) => {
+                const _v = formData.summeryColumns.filter(k => k !== v.key);
+                setFormData(
+                  null,
+                  v.selected ? [..._v, v.key] : _v,
+                  "summeryColumns"
+                );
+              }}
+            />
+            <Dropdown
+              placeholder="Select an option"
+              label="Default Styling Column"
+              defaultSelectedKey={formData.defaultStylingColumn}
+              options={renderTable === "shapeTable" ? items : Header}
+              onChange={(e, v) => {
+                setFormData(null, v, "defaultStylingColumn");
+              }}
+            />
+            <TextField
+              label="Layer Name"
+              name="layerName"
+              onChange={setFormData}
+            />
+            <TextField
+              label="Layer Description"
+              multiline
+              rows={4}
+              name="layerDescription"
+              onChange={setFormData}
+            />
+            <TextField
+              label="Contributor"
+              name="contributor"
+              onChange={setFormData}
+            />
+            <TextField
+              label="Attribution"
+              name="attribution"
+              onChange={setFormData}
+            />
+            <TextField label="Tags" name="tags" onChange={setFormData} />
+            <Dropdown
+              label="License"
+              defaultSelectedKey={formData.license}
+              options={LICENSE_TYPE_OPTIONS}
+              onChange={(e, v) => {
+                setFormData(null, v, "license");
+              }}
+            />
+            <DatePicker
+              label="Data Curation Date"
+              placeholder="Select a date..."
+              ariaLabel="Select a date"
+              value={formData.dataCurationDate}
+              onSelectDate={(v: any) => {
+                setFormData(null, v, "dataCurationDate");
+              }}
+            />
+            <CompoundButton
+              primary={true}
+              className="naksha--upload-next mt-2"
+              secondaryText="Upload dataset to server"
+              onClick={submitData}
+              disabled={!allFilesUploaded}
+            >
+              Submit &rarr;
+            </CompoundButton>
+          </div>
         </div>
       )}
     </div>

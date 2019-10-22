@@ -42,6 +42,7 @@ export default function Form({ endpoint }) {
                   {...props}
                   setSelectedKey={uploadStore.setSelectedKey}
                   allFilesUploaded={uploadStore.allFilesUploaded}
+                  setAllFilesUploaded={uploadStore.setAllFilesUploaded}
                   dbfFile={uploadStore.dbfFile}
                   shpFile={uploadStore.shpFile}
                   shxFile={uploadStore.shxFile}
@@ -65,16 +66,11 @@ export default function Form({ endpoint }) {
               setTitleColumn={uploadStore.setTitleColumn}
               isLoading={uploadStore.isLoading}
               uploadPersentage={uploadStore.uploadPersentage}
-              csvData={uploadStore.csvExcelData}
+              csvExcelData={uploadStore.csvExcelData}
               renderTable={uploadStore.renderTable}
               allFilesUploaded={uploadStore.allFilesUploaded}
-              setLongColumn={uploadStore.setLongColumn}
-              setLatColumn={uploadStore.setLatColumn}
+              setLatLongColumn={uploadStore.setLatLongColumn}
               setAllFilesUploaded={uploadStore.setAllFilesUploaded}
-              setDescriptionRow={uploadStore.setDescriptionRow}
-              setCsvFormData={uploadStore.setCsvFormData}
-              csvFormData={uploadStore.csvFormData}
-              submitCsvData={uploadStore.submitCsvData}
               getMeta={uploadStore.meta}
             />
           </PivotItem>
