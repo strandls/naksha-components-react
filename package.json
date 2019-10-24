@@ -14,7 +14,7 @@
     "storybook": "start-storybook -p 6006",
     "build:storybook": "build-storybook",
     "prettier": "prettier --write \"{,!(node_modules|dist|build|coverage)/**/}*.{js,jsx,ts,tsx,json}\"",
-    "pre-commit": "yarn tslint:fix && yarn prettier && yarn build && yarn test",
+    "pre-commit": "yarn tslint:fix && yarn prettier && yarn build",
     "tslint": "tslint --project tsconfig.json",
     "tslint:fix": "tslint --project tsconfig.json --fix"
   },

@@ -46,9 +46,9 @@ export default function Dropzone({
     }
     setRows(_rows);
   }, [dbfFile.file, shpFile.file, shxFile.file, csvFile.file, excelFile.file]);
-  if (rows.length == 3 && (dbfFile.file && shpFile.file && shxFile.file)) {
+  if (rows.length === 3 && (dbfFile.file && shpFile.file && shxFile.file)) {
     setAllFilesUploaded(true);
-  } else if (rows.length == 1 && (csvFile.file || excelFile.file)) {
+  } else if (rows.length === 1 && (csvFile.file || excelFile.file)) {
     setAllFilesUploaded(true);
   } else {
     setAllFilesUploaded(false);

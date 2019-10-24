@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { openDbf, openShp } from "shapefile";
 
-import { FILE_TYPES } from "../utils/constants";
+import neatCsv from "neat-csv";
+import request from "superagent";
+import XLSX from "xlsx";
 import {
   LAYER_TYPE_OPTIONS,
   LICENSE_TYPE_OPTIONS
 } from "../components/Upload/table.constants";
 import { toTxtDate } from "../utils/basic";
-import request from "superagent";
-import neatCsv from "neat-csv";
-import XLSX from "xlsx";
+import { FILE_TYPES } from "../utils/constants";
 
 export default function UploadStore() {
   const [dbfFile, setDbfFile] = useState({ file: null, meta: {} } as any);
@@ -109,14 +109,10 @@ export default function UploadStore() {
   };
 
   const csvExcel = (prepareData, meta, file) => {
-    let obj1;
-    for (const key in prepareData) {
-      obj1 = prepareData[0];
-    }
-    const getKeys = Object.keys(obj1);
+    const getKeys = Object.keys(prepareData[0]);
     for (let i = 0; i < 11; i++) {
-      if (i == 0) {
-        meta.headings = Object.keys(obj1);
+      if (i === 0) {
+        meta.headings = Object.keys(prepareData[0]);
         meta.file = file;
         updateTitleColumn(getKeys);
         _setFormData({

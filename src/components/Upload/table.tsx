@@ -10,13 +10,13 @@ import {
   SelectionMode,
   TextField
 } from "office-ui-fabric-react";
-
 import React, { useEffect, useState } from "react";
+
 import {
+  LATLONG_TYPE_OPTIONS,
   LAYER_TYPE_OPTIONS,
   LICENSE_TYPE_OPTIONS,
-  UPLOADER_COLUMNS,
-  LATLONG_TYPE_OPTIONS
+  UPLOADER_COLUMNS
 } from "./table.constants";
 
 export default function UploadTable({
@@ -65,7 +65,7 @@ export default function UploadTable({
       );
       setItems(csvExcelData);
     }
-  }, [meta.keys][getMeta.headings]);
+  }, [meta.keys, getMeta.headings]);
 
   const _getErrorMessage = value => {
     const regex = /^[0-9]*\.[0-9]/;
