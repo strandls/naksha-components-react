@@ -66,7 +66,7 @@ export default function Form({ endpoint }) {
               setTitleColumn={uploadStore.setTitleColumn}
               isLoading={uploadStore.isLoading}
               uploadPersentage={uploadStore.uploadPersentage}
-              csvExcelData={uploadStore.csvExcelData}
+              fileData={uploadStore.fileData}
               renderTable={uploadStore.renderTable}
               allFilesUploaded={uploadStore.allFilesUploaded}
               setLatLongColumn={uploadStore.setLatLongColumn}

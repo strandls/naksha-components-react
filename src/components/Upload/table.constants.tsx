@@ -7,48 +7,6 @@ import shxIcon from "../../images/icon.shx";
 import unknownIcon from "../../images/icon.unknown";
 import xlsxIcon from "../../images/icon.xls";
 
-export const UPLOADER_COLUMNS = [
-  {
-    key: "key",
-    name: "Key",
-    fieldName: "key",
-    minWidth: 100,
-    isResizable: true
-  },
-  {
-    key: "title",
-    name: "Title",
-    fieldName: "title",
-    minWidth: 150,
-    isResizable: true,
-    isPadded: false
-  },
-  {
-    key: "sample1",
-    name: "Example 1",
-    fieldName: "sample1",
-    minWidth: 120,
-    isResizable: true,
-    isPadded: false
-  },
-  {
-    key: "sample2",
-    name: "Example 2",
-    fieldName: "sample2",
-    minWidth: 120,
-    isResizable: true,
-    isPadded: false
-  },
-  {
-    key: "sample3",
-    name: "Example 3",
-    fieldName: "sample3",
-    minWidth: 120,
-    isResizable: true,
-    isPadded: false
-  }
-];
-
 export const LAYER_TYPE_OPTIONS = [
   {
     key: "POINT",

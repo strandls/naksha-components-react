@@ -17,7 +17,7 @@ export default function UploadStore() {
   const [shxFile, setShxFile] = useState({ file: null } as any);
   const [csvFile, setCsvFile] = useState({ file: null } as any);
   const [meta, setMeta] = useState({} as any);
-  const [csvExcelData, setCsvExcelData] = useState([] as string[]);
+  const [fileData, setFilelData] = useState([] as any);
   const [excelFile, setExcelFile] = useState({ file: null } as any);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadPersentage, setUploadPersentage] = useState(0);
@@ -85,19 +85,19 @@ export default function UploadStore() {
         if (i === 0) {
           meta.keys = Object.keys(_r);
           meta.headings = Object.keys(_r);
-          meta.rows = meta.keys.reduce((o, k) => ({ ...o, [k]: [] }), {});
           updateTitleColumn(meta.headings);
-          _setFormData({
-            ...formData,
-            defaultStylingColumn: meta.keys[0],
-            titleColumn: meta.keys[0]
-          });
         }
+        _setFormData({
+          ...formData,
+          defaultStylingColumn: meta.keys[0],
+          titleColumn: meta.keys[0]
+        });
         meta.keys.forEach(k => {
-          meta.rows[k].push(_r[k]);
+          meta.rows.push({ [k]: _r[k] });
         });
       }
       setDbfFile({ file, meta });
+      setFilelData(meta.rows);
     };
     readerDbf.readAsArrayBuffer(file);
     setRenderTable("shapeTable");
@@ -110,18 +110,14 @@ export default function UploadStore() {
 
   const csvExcel = (prepareData, meta, file) => {
     const getKeys = Object.keys(prepareData[0]);
-    for (let i = 0; i < 11; i++) {
-      if (i === 0) {
-        meta.headings = Object.keys(prepareData[0]);
-        meta.file = file;
-        updateTitleColumn(getKeys);
-        _setFormData({
-          ...formData,
-          defaultStylingColumn: meta.headings[0],
-          titleColumn: meta.headings[0]
-        });
-      }
-    }
+    meta.headings = Object.keys(prepareData[0]);
+    meta.file = file;
+    updateTitleColumn(getKeys);
+    _setFormData({
+      ...formData,
+      defaultStylingColumn: meta.headings[0],
+      titleColumn: meta.headings[0]
+    });
   };
 
   const storeMeta: any = { headings: [], file: null };
@@ -135,12 +131,12 @@ export default function UploadStore() {
       const objData = JSON.parse(stringifyData);
       setUpdateDataLatLong(objData);
       setCsvFile({ file });
-      setCsvExcelData(objData);
+      setFilelData(objData);
       setMeta(storeMeta);
       csvExcel(objData, storeMeta, file);
     };
     fileReader.readAsText(file);
-    setRenderTable("csvTable");
+    setRenderTable("csvEcxelTable");
   };
 
   const _parseExcel = file => {
@@ -157,10 +153,10 @@ export default function UploadStore() {
       setExcelFile({ file });
       csvExcel(excelData, storeMeta, file);
       setMeta(storeMeta);
-      setCsvExcelData(excelData);
+      setFilelData(excelData);
     };
     reader.readAsBinaryString(file);
-    setRenderTable("csvTable");
+    setRenderTable("csvEcxelTable");
   };
 
   const excelCsvExport = updateDataLatLong => {
@@ -247,7 +243,7 @@ status : 1
 $Layer_Column_Description
 ${
   dbfFile.file == null
-    ? meta.headings
+    ? meta.headings.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")
     : dbfFile.meta.keys.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")
 }`;
     return new File([txt.replace(/\'\'/g, "")], "blob", {
@@ -279,6 +275,6 @@ ${
     renderTable,
     setLatLongColumn,
     meta,
-    csvExcelData
+    fileData
   };
 }
