@@ -6,11 +6,16 @@ import LayersStore from "../../stores/layers.store";
 import ControlPanel from "./control-panel";
 import InfoPanel from "./info-panel";
 
-export default function Layers({ mapboxToken, endpoint, layersPanelClosed }) {
+export default function Layers({
+  mapboxToken,
+  endpoint,
+  layersPanelClosed,
+  defaultLayers
+}) {
   const layerStore = useStore(LayersStore);
 
   useEffect(() => {
-    layerStore.init(endpoint, layersPanelClosed);
+    layerStore.init(endpoint, layersPanelClosed, defaultLayers);
     // eslint-disable-next-line
   }, [mapboxToken, endpoint, layersPanelClosed]);
 

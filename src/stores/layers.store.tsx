@@ -15,6 +15,7 @@ export default function LayersStore() {
   const [isLoading, setIsLoading] = useState(false);
   const [layers, setLayers] = useState([] as any);
   const [highlightLayers, _setHighlightLayers] = useState([] as any);
+  const [defaultLayers, setDefaultLayers] = useState([] as any);
   const [selectedLayers, _setSelectedLayers] = useState([] as any);
   const [layersMeta, setLayersMeta] = useState(new Map());
   const [mapStyleIndex, setMapStyleIndex] = useState(0);
@@ -44,7 +45,16 @@ export default function LayersStore() {
     // eslint-disable-next-line
   }, [endpoint]);
 
-  const init = (endpoint, layersPanelClosed) => {
+  useEffect(() => {
+    if (layers.length > 0) {
+      layers
+        .filter(l => defaultLayers.includes(l.name))
+        .map(l => setSelectedLayers(l));
+    }
+  }, [layers]);
+
+  const init = (endpoint, layersPanelClosed, defaultLayers) => {
+    setDefaultLayers(defaultLayers);
     setEndpoint(endpoint);
     setIsSidebar(!layersPanelClosed);
   };

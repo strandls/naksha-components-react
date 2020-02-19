@@ -9,7 +9,12 @@ import React from "react";
 import LayersStore from "../../stores/layers.store";
 import Layers1 from "./layers";
 
-export function Layers({ mapboxToken, endpoint, layersPanelClosed = false }) {
+export function Layers({
+  mapboxToken,
+  endpoint,
+  layersPanelClosed = false,
+  defaultLayers = [] as String[]
+}) {
   initializeIcons();
 
   return (
@@ -19,6 +24,7 @@ export function Layers({ mapboxToken, endpoint, layersPanelClosed = false }) {
           mapboxToken={mapboxToken}
           endpoint={endpoint}
           layersPanelClosed={layersPanelClosed}
+          defaultLayers={defaultLayers}
         />
       </Provider>
     </Customizer>
