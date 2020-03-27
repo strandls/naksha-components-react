@@ -11,11 +11,11 @@ import {
   TextField
 } from "office-ui-fabric-react";
 import React, { useEffect, useState } from "react";
-import ContentEditable from "react-contenteditable";
 import {
   LATLONG_TYPE_OPTIONS,
   LAYER_TYPE_OPTIONS,
-  LICENSE_TYPE_OPTIONS
+  LICENSE_TYPE_OPTIONS,
+  UPLOADER_COLUMNS
 } from "./table.constants";
 
 export default function UploadTable({
@@ -28,29 +28,25 @@ export default function UploadTable({
   uploadPersentage,
   renderTable,
   allFilesUploaded,
-  fileData,
-  setLatLongColumn,
-  setAllFilesUploaded,
-  getMeta
+  getMeta,
+  csvExcelData
 }) {
   const [items, setItems] = useState([] as any);
   const [Header, setHeader] = useState([] as any);
 
   useEffect(() => {
     if (meta.hasOwnProperty("keys")) {
-      setHeader(
+      setItems(
         meta.keys.map((o, id) => ({
           id,
-          text: o,
           key: o,
-          fieldName: o,
-          name: o,
-          minWidth: 160,
-          isResizable: true,
-          isPadded: false
+          title: o,
+          text: o,
+          sample1: meta.rows[o][0],
+          sample2: meta.rows[o][1],
+          sample3: meta.rows[o][2]
         }))
       );
-      setItems(fileData);
     } else if (getMeta.hasOwnProperty("headings")) {
       setHeader(
         getMeta.headings.map((o, id) => ({
@@ -64,26 +60,9 @@ export default function UploadTable({
           isPadded: false
         }))
       );
-      setItems(fileData);
+      setItems(csvExcelData);
     }
   }, [meta.keys, getMeta.headings]);
-
-  const handleChange = (evt, column, item) => {
-    const objIndex = fileData.findIndex(obj => obj === item);
-    fileData[objIndex][column.fieldName] = evt.target.value;
-    setItems(fileData);
-    setTitleColumn(column.id, evt.target.value);
-  };
-
-  const _getErrorMessage = value => {
-    const regex = /^[0-9]*\.[0-9]/;
-    if (!value.match(regex)) {
-      setAllFilesUploaded(false);
-      return "Numbers is allowed with decimal point";
-    } else {
-      setAllFilesUploaded(true);
-    }
-  };
 
   const setDefaultKey = column => {
     if (column.key === "latitude" || column.key === "longitude") {
@@ -95,22 +74,6 @@ export default function UploadTable({
 
   const displayTable = (item, index, column) => {
     const fieldContent = item[column.fieldName];
-    if (
-      (column.key === "latitude" || column.key === "longitude") &&
-      index > 1
-    ) {
-      return (
-        <TextField
-          name={column.id}
-          onChange={(e, v) => {
-            setLatLongColumn(index, v, column);
-          }}
-          onGetErrorMessage={_getErrorMessage}
-          defaultValue={fieldContent}
-          validateOnLoad={false}
-        />
-      );
-    }
     switch (index) {
       case 0:
         return (
@@ -138,13 +101,21 @@ export default function UploadTable({
 
   const TableRow = (item, index, column) => {
     const fieldContent = item[column.fieldName];
-    return (
-      <ContentEditable
-        html={fieldContent === undefined ? "" : String(fieldContent)}
-        disabled={false}
-        onChange={evt => handleChange(evt, column, item)}
-      />
-    );
+    switch (column.key) {
+      case "title":
+        return (
+          <TextField
+            name={item.id}
+            onChange={(e, v) => {
+              setTitleColumn(item.id, v);
+            }}
+            defaultValue={fieldContent}
+          />
+        );
+
+      default:
+        return fieldContent;
+    }
   };
 
   return (
@@ -163,7 +134,9 @@ export default function UploadTable({
               <FocusZone direction={FocusZoneDirection.vertical}>
                 <DetailsList
                   items={items}
-                  columns={Header}
+                  columns={
+                    renderTable === "shapeTable" ? UPLOADER_COLUMNS : Header
+                  }
                   selectionMode={SelectionMode.none}
                   onRenderItemColumn={
                     renderTable === "shapeTable" ? TableRow : displayTable
@@ -189,7 +162,7 @@ export default function UploadTable({
               placeholder="Select an option"
               label="Title Column"
               defaultSelectedKey={formData.titleColumn}
-              options={Header}
+              options={renderTable === "shapeTable" ? items : Header}
               onChange={(e, v) => {
                 setFormData(null, v, "titleColumn");
               }}
@@ -198,7 +171,7 @@ export default function UploadTable({
               placeholder="Select Summary Columns"
               label="Summary Columns"
               multiSelect
-              options={Header}
+              options={renderTable === "shapeTable" ? items : Header}
               onChange={(e, v: any) => {
                 const _v = formData.summeryColumns.filter(k => k !== v.key);
                 setFormData(
@@ -212,7 +185,7 @@ export default function UploadTable({
               placeholder="Select an option"
               label="Default Styling Column"
               defaultSelectedKey={formData.defaultStylingColumn}
-              options={Header}
+              options={renderTable === "shapeTable" ? items : Header}
               onChange={(e, v) => {
                 setFormData(null, v, "defaultStylingColumn");
               }}

@@ -1,6 +1,6 @@
 .ncr {
   &.naksha--layers {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
   }
@@ -34,7 +34,7 @@
   .control-panel {
     color: #323130;
     background: #fff;
-    position: absolute;
+    // position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
@@ -144,10 +144,58 @@
   .layers--layer .description {
     width: 100%;
   }
-
+  .selected {
+    background: rgba(255, 0, 0, 0.1);
+  }
+  .hide {
+    display: none;
+  }
+  .col-8.addVertiScroll {
+    max-height: 40%;
+    overflow-x: auto;
+    position: absolute;
+    right: 0;
+  }
+  .addHoriScroll {
+    display: inline-block;
+  }
+  div[data-item-key="__mlocate__id"] {
+    display: none;
+  }
+  div[data-item-key="itemId"] {
+    display: none;
+  }
+  .ms-Toggle {
+    width: 10%;
+  }
   .more-less {
     cursor: pointer;
     text-decoration: underline;
     margin-left: 0.5em;
+  }
+  .pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+  }
+  .page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+  }
+  .page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  .page-link:not(:disabled):not(.disabled) {
+    cursor: pointer;
   }
 }

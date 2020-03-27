@@ -11,7 +11,6 @@ import Layers1 from "./layers";
 
 export function Layers({ mapboxToken, endpoint, layersPanelClosed = false }) {
   initializeIcons();
-
   return (
     <Customizer {...FluentCustomizations}>
       <Provider stores={[LayersStore]}>

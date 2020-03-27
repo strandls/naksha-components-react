@@ -35,7 +35,7 @@ export default function LayerItem({
       <Checkbox
         className="mr-1"
         defaultChecked={selectedLayersNames.includes(item.name)}
-        onChange={(e, isChecked) => setSelectedLayers(item, isChecked)}
+        onChange={(e, isChecked) => setSelectedLayers(e, item, isChecked)}
       />
       <Image className="thumb mr-2" src={getThumbUrl(item)} />
       <div>

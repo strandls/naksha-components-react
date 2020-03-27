@@ -17,7 +17,7 @@ export default function UploadStore() {
   const [shxFile, setShxFile] = useState({ file: null } as any);
   const [csvFile, setCsvFile] = useState({ file: null } as any);
   const [meta, setMeta] = useState({} as any);
-  const [fileData, setFilelData] = useState([] as any);
+  const [csvExcelData, setCsvExcelData] = useState([] as any);
   const [excelFile, setExcelFile] = useState({ file: null } as any);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadPersentage, setUploadPersentage] = useState(0);
@@ -25,7 +25,6 @@ export default function UploadStore() {
   const [renderTable, setRenderTable] = useState("");
   const [endpoint, setEndpoint] = useState(null);
   const [titleColumn, updateTitleColumn] = useState([] as string[]);
-  const [updateDataLatLong, setUpdateDataLatLong] = useState([] as string[]);
   const [summeryColumn, setSummeryColumn] = useState();
   const [allFilesUploaded, setAllFilesUploaded] = useState(false);
   const [formData, _setFormData] = useState({
@@ -46,17 +45,6 @@ export default function UploadStore() {
     updateTitleColumn(o => {
       o[id] = v;
       return o;
-    });
-  };
-
-  const setLatLongColumn = (id, v, column) => {
-    setUpdateDataLatLong(obj => {
-      if (column.fieldName === "latitude") {
-        (obj[id] as any).latitude = Number(v);
-      } else if (column.fieldName === "longitude") {
-        (obj[id] as any).longitude = Number(v);
-      }
-      return obj;
     });
   };
 
@@ -85,6 +73,8 @@ export default function UploadStore() {
         if (i === 0) {
           meta.keys = Object.keys(_r);
           meta.headings = Object.keys(_r);
+          meta.keys = Object.keys(_r);
+          meta.rows = meta.keys.reduce((o, k) => ({ ...o, [k]: [] }), {});
           updateTitleColumn(meta.headings);
         }
         _setFormData({
@@ -93,11 +83,11 @@ export default function UploadStore() {
           titleColumn: meta.keys[0]
         });
         meta.keys.forEach(k => {
-          meta.rows.push({ [k]: _r[k] });
+          meta.rows[k].push(_r[k]);
         });
       }
+
       setDbfFile({ file, meta });
-      setFilelData(meta.rows);
     };
     readerDbf.readAsArrayBuffer(file);
     setRenderTable("shapeTable");
@@ -110,7 +100,16 @@ export default function UploadStore() {
 
   const csvExcel = (prepareData, meta, file) => {
     const getKeys = Object.keys(prepareData[0]);
-    meta.headings = Object.keys(prepareData[0]);
+    const newArr = prepareData.map(
+      x => (
+        prepareData
+          .map(x => Object.keys(x))
+          .reduce((a, b) => (b.forEach(z => a.includes(z) || a.push(z)), a))
+          .forEach(y => (x[y] = x.hasOwnProperty(y) ? x[y] : null)),
+        x
+      )
+    );
+    meta.headings = Object.keys(newArr[0]);
     meta.file = file;
     updateTitleColumn(getKeys);
     _setFormData({
@@ -126,14 +125,10 @@ export default function UploadStore() {
     fileReader = new FileReader();
     fileReader.onload = async () => {
       const sourceCsv = await neatCsv(fileReader.result);
-      const sourceCsvs = sourceCsv;
-      const stringifyData = JSON.stringify(sourceCsvs);
-      const objData = JSON.parse(stringifyData);
-      setUpdateDataLatLong(objData);
       setCsvFile({ file });
-      setFilelData(objData);
+      setCsvExcelData(sourceCsv.slice(0, 50));
       setMeta(storeMeta);
-      csvExcel(objData, storeMeta, file);
+      csvExcel(sourceCsv, storeMeta, file);
     };
     fileReader.readAsText(file);
     setRenderTable("csvEcxelTable");
@@ -149,51 +144,27 @@ export default function UploadStore() {
       const first_sheet_name = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[first_sheet_name];
       excelData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-      setUpdateDataLatLong(excelData);
       setExcelFile({ file });
       csvExcel(excelData, storeMeta, file);
       setMeta(storeMeta);
-      setFilelData(excelData);
+      setCsvExcelData(excelData.slice(0, 50));
     };
     reader.readAsBinaryString(file);
     setRenderTable("csvEcxelTable");
-  };
-
-  const excelCsvExport = updateDataLatLong => {
-    const ws = XLSX.utils.json_to_sheet(updateDataLatLong);
-    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-    if (meta.file.name.endsWith(FILE_TYPES.XLSX)) {
-      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-      const blob = new Blob([excelBuffer]);
-      return new File([blob], meta.file.name, {
-        type: meta.file.type,
-        lastModified: new Date().getTime()
-      });
-    } else if (meta.file.name.endsWith(FILE_TYPES.CSV)) {
-      const excelBuffer = XLSX.write(wb, { bookType: "csv", type: "array" });
-      const blob = new Blob([excelBuffer]);
-      return new File([blob], meta.file.name, {
-        type: meta.file.type,
-        lastModified: new Date().getTime()
-      });
-    }
   };
 
   const submitData = () => {
     setIsLoading(true);
     const req = request.post(endpoint);
     const txtFile = generateTxt(dbfFile, meta);
-    let saveExportedData;
     if (dbfFile.file !== null) {
       req.attach("dbf", dbfFile.file);
       req.attach("shp", shpFile.file);
       req.attach("shx", shxFile.file);
     } else if (meta.file.name.endsWith(FILE_TYPES.XLSX)) {
-      saveExportedData = excelCsvExport(updateDataLatLong);
-      req.attach("xlsx", saveExportedData);
+      req.attach("xlsx", excelFile.file);
     } else if (meta.file.name.endsWith(FILE_TYPES.CSV)) {
-      saveExportedData = excelCsvExport(updateDataLatLong);
-      req.attach("csv", saveExportedData);
+      req.attach("csv", csvFile.file);
     }
     req.attach("metadata", txtFile);
     req.on("progress", p => {
@@ -242,7 +213,7 @@ layer_tablename : ${dbfFile.file == null ? meta.file.name : dbfFile.file.name}
 status : 1
 $Layer_Column_Description
 ${
-  dbfFile.file == null
+  dbfFile.file === null
     ? meta.headings.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")
     : dbfFile.meta.keys.map((k, i) => `${k} : ${titleColumn[i]}`).join("\n")
 }`;
@@ -273,8 +244,7 @@ ${
     uploadPersentage,
     setAllFilesUploaded,
     renderTable,
-    setLatLongColumn,
     meta,
-    fileData
+    csvExcelData
   };
 }

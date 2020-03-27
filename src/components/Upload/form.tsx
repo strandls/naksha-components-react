@@ -66,11 +66,9 @@ export default function Form({ endpoint }) {
               setTitleColumn={uploadStore.setTitleColumn}
               isLoading={uploadStore.isLoading}
               uploadPersentage={uploadStore.uploadPersentage}
-              fileData={uploadStore.fileData}
+              csvExcelData={uploadStore.csvExcelData}
               renderTable={uploadStore.renderTable}
               allFilesUploaded={uploadStore.allFilesUploaded}
-              setLatLongColumn={uploadStore.setLatLongColumn}
-              setAllFilesUploaded={uploadStore.setAllFilesUploaded}
               getMeta={uploadStore.meta}
             />
           </PivotItem>

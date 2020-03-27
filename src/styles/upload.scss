@@ -57,8 +57,9 @@ $info: #605e5c;
   }
 
   .upload--table {
-    max-height: 890px;
+    max-height: 500px;
     margin-bottom: 2rem;
     overflow-y: scroll;
+    display: flex;
   }
 }

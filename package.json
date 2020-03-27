@@ -1,6 +1,6 @@
 {
   "name": "naksha-components-react",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "Mapbox GL Components for Biodiv",
   "main": "dist/naksha-components-react.js",
   "umd:main": "dist/naksha-components-react.umd.js",
@@ -12,16 +12,7 @@
     "dev": "microbundle watch --jsx react --format cjs",
     "build": "microbundle -o dist/ --sourcemap false --compress false",
     "storybook": "start-storybook -p 6006",
-    "build:storybook": "build-storybook",
-    "prettier": "prettier --write \"{,!(node_modules|dist|build|coverage)/**/}*.{js,jsx,ts,tsx,json}\"",
-    "pre-commit": "yarn tslint:fix && yarn prettier && yarn build",
-    "tslint": "tslint --project tsconfig.json",
-    "tslint:fix": "tslint --project tsconfig.json --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn pre-commit"
-    }
+    "build:storybook": "build-storybook"
   },
   "keywords": [
     "maps",
@@ -47,13 +38,9 @@
     "@types/storybook__react": "^4.0.2",
     "babel-loader": "^8.0.6",
     "core-js": "^3.1.4",
-    "husky": "^3.0.9",
     "microbundle": "^0.11.0",
     "node-sass": "^4.12.0",
-    "prettier": "^1.18.2",
-    "sass-loader": "^7.1.0",
-    "tslint": "^5.20.0",
-    "tslint-config-prettier": "^1.18.0"
+    "sass-loader": "^7.1.0"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -65,17 +52,18 @@
     "bootstrap-4-grid": "^2.4.1",
     "control-statements": "^1.0.2",
     "immutable": "^4.0.0-rc.12",
-    "neat-csv": "^5.1.0",
     "office-ui-fabric-react": "^7.8.1",
     "outstated": "^2.1.0",
-    "react-contenteditable": "^3.3.2",
     "react-dropzone": "^10.1.5",
     "react-highlight-words": "^0.16.0",
+    "react-indexed-db": "0.0.2",
+    "react-js-pagination-bs4": "^3.0.7",
     "react-map-gl": "^5.0.3",
     "shapefile": "^0.6.6",
     "superagent": "^5.1.0",
     "viewport-mercator-project": "^6.1.1",
-    "xlsx": "^0.15.1",
-    "xml-js": "^1.6.11"
+    "xml-js": "^1.6.11",
+    "neat-csv": "^5.1.0",
+    "xlsx": "^0.15.1"
   }
 }
