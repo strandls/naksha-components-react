@@ -11,8 +11,8 @@ import {
   TextField
 } from "office-ui-fabric-react";
 import React, { useEffect, useState } from "react";
-
 import {
+  LATLONG_TYPE_OPTIONS,
   LAYER_TYPE_OPTIONS,
   LICENSE_TYPE_OPTIONS,
   UPLOADER_COLUMNS
@@ -25,9 +25,14 @@ export default function UploadTable({
   setTitleColumn,
   submitData,
   isLoading,
-  uploadPersentage
+  uploadPersentage,
+  renderTable,
+  allFilesUploaded,
+  getMeta,
+  csvExcelData
 }) {
   const [items, setItems] = useState([] as any);
+  const [Header, setHeader] = useState([] as any);
 
   useEffect(() => {
     if (meta.hasOwnProperty("keys")) {
@@ -42,8 +47,57 @@ export default function UploadTable({
           sample3: meta.rows[o][2]
         }))
       );
+    } else if (getMeta.hasOwnProperty("headings")) {
+      setHeader(
+        getMeta.headings.map((o, id) => ({
+          id,
+          text: o,
+          key: o,
+          fieldName: o,
+          name: o,
+          minWidth: 160,
+          isResizable: true,
+          isPadded: false
+        }))
+      );
+      setItems(csvExcelData);
     }
-  }, [meta.keys]);
+  }, [meta.keys, getMeta.headings]);
+
+  const setDefaultKey = column => {
+    if (column.key === "latitude" || column.key === "longitude") {
+      return column.key;
+    } else {
+      return LATLONG_TYPE_OPTIONS[0].key;
+    }
+  };
+
+  const displayTable = (item, index, column) => {
+    const fieldContent = item[column.fieldName];
+    switch (index) {
+      case 0:
+        return (
+          <Dropdown
+            options={LATLONG_TYPE_OPTIONS}
+            defaultSelectedKey={setDefaultKey(column)}
+            styles={{ dropdown: { width: 160 } }}
+          />
+        );
+      case 1:
+        return (
+          <TextField
+            name={column.id}
+            onChange={(e, v) => {
+              setTitleColumn(column.id, v);
+            }}
+            defaultValue={column.key}
+            disabled={false}
+          />
+        );
+      default:
+        return fieldContent;
+    }
+  };
 
   const TableRow = (item, index, column) => {
     const fieldContent = item[column.fieldName];
@@ -80,9 +134,13 @@ export default function UploadTable({
               <FocusZone direction={FocusZoneDirection.vertical}>
                 <DetailsList
                   items={items}
-                  columns={UPLOADER_COLUMNS}
+                  columns={
+                    renderTable === "shapeTable" ? UPLOADER_COLUMNS : Header
+                  }
                   selectionMode={SelectionMode.none}
-                  onRenderItemColumn={TableRow}
+                  onRenderItemColumn={
+                    renderTable === "shapeTable" ? TableRow : displayTable
+                  }
                   setKey="key"
                   layoutMode={DetailsListLayoutMode.fixedColumns}
                 />
@@ -104,7 +162,7 @@ export default function UploadTable({
               placeholder="Select an option"
               label="Title Column"
               defaultSelectedKey={formData.titleColumn}
-              options={items}
+              options={renderTable === "shapeTable" ? items : Header}
               onChange={(e, v) => {
                 setFormData(null, v, "titleColumn");
               }}
@@ -113,7 +171,7 @@ export default function UploadTable({
               placeholder="Select Summary Columns"
               label="Summary Columns"
               multiSelect
-              options={items}
+              options={renderTable === "shapeTable" ? items : Header}
               onChange={(e, v: any) => {
                 const _v = formData.summeryColumns.filter(k => k !== v.key);
                 setFormData(
@@ -127,7 +185,7 @@ export default function UploadTable({
               placeholder="Select an option"
               label="Default Styling Column"
               defaultSelectedKey={formData.defaultStylingColumn}
-              options={items}
+              options={renderTable === "shapeTable" ? items : Header}
               onChange={(e, v) => {
                 setFormData(null, v, "defaultStylingColumn");
               }}
@@ -177,6 +235,7 @@ export default function UploadTable({
               className="naksha--upload-next mt-2"
               secondaryText="Upload dataset to server"
               onClick={submitData}
+              disabled={!allFilesUploaded}
             >
               Submit &rarr;
             </CompoundButton>

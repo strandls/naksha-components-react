@@ -42,9 +42,12 @@ export default function Form({ endpoint }) {
                   {...props}
                   setSelectedKey={uploadStore.setSelectedKey}
                   allFilesUploaded={uploadStore.allFilesUploaded}
+                  setAllFilesUploaded={uploadStore.setAllFilesUploaded}
                   dbfFile={uploadStore.dbfFile}
                   shpFile={uploadStore.shpFile}
                   shxFile={uploadStore.shxFile}
+                  csvFile={uploadStore.csvFile}
+                  excelFile={uploadStore.excelFile}
                 />
               )}
             </ReactDropzone>
@@ -52,7 +55,7 @@ export default function Form({ endpoint }) {
           <PivotItem
             itemIcon="Table"
             headerText="Data"
-            headerButtonProps={{ disabled: false }}
+            headerButtonProps={{ disabled: !uploadStore.allFilesUploaded }}
             itemKey="1"
           >
             <UploadTable
@@ -63,6 +66,10 @@ export default function Form({ endpoint }) {
               setTitleColumn={uploadStore.setTitleColumn}
               isLoading={uploadStore.isLoading}
               uploadPersentage={uploadStore.uploadPersentage}
+              csvExcelData={uploadStore.csvExcelData}
+              renderTable={uploadStore.renderTable}
+              allFilesUploaded={uploadStore.allFilesUploaded}
+              getMeta={uploadStore.meta}
             />
           </PivotItem>
         </Pivot>

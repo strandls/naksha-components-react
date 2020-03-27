@@ -16,7 +16,6 @@ export function Layers({
   defaultLayers = [] as String[]
 }) {
   initializeIcons();
-
   return (
     <Customizer {...FluentCustomizations}>
       <Provider stores={[LayersStore]}>

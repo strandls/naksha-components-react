@@ -1,9 +1,11 @@
 import React from "react";
 
+import csvIcon from "../../images/icon.csv";
 import dbfIcon from "../../images/icon.dbf";
 import shpIcon from "../../images/icon.shp";
 import shxIcon from "../../images/icon.shx";
 import unknownIcon from "../../images/icon.unknown";
+import xlsxIcon from "../../images/icon.xls";
 
 export const UPLOADER_COLUMNS = [
   {
@@ -46,7 +48,6 @@ export const UPLOADER_COLUMNS = [
     isPadded: false
   }
 ];
-
 export const LAYER_TYPE_OPTIONS = [
   {
     key: "POINT",
@@ -74,6 +75,20 @@ export const LICENSE_TYPE_OPTIONS = [
   {
     key: "CC-HI",
     text: "CC-HI"
+  }
+];
+export const LATLONG_TYPE_OPTIONS = [
+  {
+    key: "Mark Column",
+    text: "Mark Column"
+  },
+  {
+    key: "latitude",
+    text: "latitude"
+  },
+  {
+    key: "longitude",
+    text: "longitude"
   }
 ];
 
@@ -115,6 +130,10 @@ const getFileIcon = fileName => {
     return shpIcon;
   } else if (fileName.endsWith(".shx")) {
     return shxIcon;
+  } else if (fileName.endsWith(".csv")) {
+    return csvIcon;
+  } else if (fileName.endsWith(".xlsx")) {
+    return xlsxIcon;
   }
   return unknownIcon;
 };
