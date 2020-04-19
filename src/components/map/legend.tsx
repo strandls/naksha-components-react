@@ -1,8 +1,8 @@
 import { Box, Divider, Stack } from "@chakra-ui/core";
 import React from "react";
-import { MdFiberManualRecord } from "react-icons/md";
 
 import { useLayers } from "../../hooks/use-layers";
+import { IconCircle } from "./icons";
 
 export default function Legend() {
   const {
@@ -30,12 +30,9 @@ export default function Legend() {
             key={index}
             alignItems="center"
           >
-            <Box
-              display="inline"
-              fontSize="lg"
-              as={MdFiberManualRecord}
-              color={color}
-            />
+            <Box display="inline" color={color} fontSize="lg">
+              <IconCircle />
+            </Box>
             <span>
               {prevStop} - {stop}
             </span>

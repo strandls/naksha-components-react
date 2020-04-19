@@ -1,9 +1,9 @@
 import { CloseButton, IconButton, useDisclosure } from "@chakra-ui/core";
 import styled from "@emotion/styled";
 import React from "react";
-import { MdInfo } from "react-icons/md";
 
 import { useLayers } from "../../../hooks/use-layers";
+import { IconInfo } from "../icons";
 
 const TabContainer = styled.div`
   position: absolute;
@@ -41,7 +41,7 @@ export default function InfobarPanel() {
       variant="outline"
       onClick={onToggle}
       aria-label="List Layers"
-      icon={MdInfo}
+      icon={IconInfo}
     />
   );
 }

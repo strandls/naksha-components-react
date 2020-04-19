@@ -1,10 +1,10 @@
 import { CloseButton, IconButton } from "@chakra-ui/core";
 import styled from "@emotion/styled";
 import React, { useEffect } from "react";
-import { MdLayers } from "react-icons/md";
 
 import useLayerManager from "../../../hooks/use-layer-manager";
 import { useLayers } from "../../../hooks/use-layers";
+import { IconLayers } from "../icons";
 import SidebarTabs from "./tabs";
 
 const TabContainer = styled.div`
@@ -20,6 +20,9 @@ const TabContainer = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
+  }
+  [role="tab"] svg {
+    margin-right: 0.5rem;
   }
 `;
 
@@ -47,7 +50,7 @@ export default function Sidebar() {
       variant="outline"
       onClick={ToC.onOpen}
       aria-label="List Layers"
-      icon={MdLayers}
+      icon={IconLayers}
     />
   );
 }

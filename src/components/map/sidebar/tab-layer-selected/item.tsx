@@ -10,8 +10,12 @@ import {
 import { GeoserverLayer } from "interfaces/naksha";
 import React from "react";
 import Highlight from "react-highlighter";
-import { MdExpandLess, MdExpandMore, MdRemoveCircle } from "react-icons/md";
 
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconRemoveCircle
+} from "../../../../components/map/icons";
 import Tooltip from "../../../../components/tooltip";
 import useLayerManager from "../../../../hooks/use-layer-manager";
 import { useLayers } from "../../../../hooks/use-layers";
@@ -79,7 +83,7 @@ const Item = ({ layer, q }: ItemProps) => {
           variant="outline"
           hidden={!showLegend}
           onClick={onToggle}
-          leftIcon={isOpen ? MdExpandLess : MdExpandMore}
+          leftIcon={isOpen ? IconChevronUp : IconChevronDown}
         >
           Legend
         </Button>
@@ -87,7 +91,7 @@ const Item = ({ layer, q }: ItemProps) => {
           variantColor="red"
           variant="outline"
           onClick={removeLayer}
-          leftIcon={MdRemoveCircle}
+          leftIcon={IconRemoveCircle}
         >
           Remove
         </Button>

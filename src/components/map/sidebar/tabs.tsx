@@ -1,25 +1,23 @@
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/core";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/core";
 import React from "react";
-import { MdLayers, MdTune } from "react-icons/md";
 
+import { IconLayers, IconSettings } from "../icons";
 import LayerList from "./tab-layer-list";
 import LayerSelected from "./tab-layer-selected";
 import LayerSettings from "./tab-layer-settings";
-
-const LayerTitle = ({ icon }) => <Box mr={1} as={icon} />;
 
 export default function SidebarTabs() {
   return (
     <Tabs className="sidebar-tabs">
       <TabList>
         <Tab>
-          <LayerTitle icon={MdLayers} /> Layers
+          <IconLayers /> Layers
         </Tab>
         <Tab>
-          <LayerTitle icon={MdLayers} /> Selected
+          <IconLayers /> Selected
         </Tab>
         <Tab>
-          <LayerTitle icon={MdTune} /> Settings
+          <IconSettings /> Settings
         </Tab>
       </TabList>
       <TabPanels flexGrow={1}>
