@@ -7,6 +7,7 @@ import useDebounce from "../../hooks/use-debounce";
 import useLayerManager from "../../hooks/use-layer-manager";
 import { useLayers } from "../../hooks/use-layers";
 import { defaultMapStyles } from "../../static/constants";
+import { updateWorldViewRef } from "../../utils/view";
 import InfoBar from "./infobar";
 import Legend from "./legend";
 import MarkersList from "./markers-list";
@@ -31,7 +32,6 @@ export default function Map() {
   } = useLayers();
 
   const {
-    updateWorldView,
     reloadLayers,
     onMapClick,
     onMapHover,
@@ -43,9 +43,9 @@ export default function Map() {
   useListener(reloadLayers, ["STYLE_UPDATED"]);
 
   const onLoad = () => {
-    updateWorldView();
+    updateWorldViewRef(mapRef);
     mapRef.current.getMap().on("style.load", () => {
-      updateWorldView();
+      updateWorldViewRef(mapRef);
       emit("STYLE_UPDATED");
     });
   };

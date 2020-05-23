@@ -11,7 +11,6 @@ import {
   getGridLayerData
 } from "../services/naksha";
 import {
-  adminBoundries,
   FEATURE_PROP,
   HL,
   LAYER_PREFIX,
@@ -35,27 +34,6 @@ export default function useLayerManager() {
     setClickPopup,
     setHoverPopup
   } = useLayers();
-
-  /**
-   * updates mapbox world view to load administrative boundaries
-   *
-   * @param {string} [country="IN"]
-   */
-  const updateWorldView = (country = "IN") => {
-    if (mapRef) {
-      adminBoundries.forEach(function(adminLayer) {
-        mapRef.current
-          .getMap()
-          .setFilter(adminLayer, [
-            "match",
-            ["get", "worldview"],
-            ["all", country],
-            true,
-            false
-          ]);
-      });
-    }
-  };
 
   /**
    * On clicking handler for map
@@ -411,7 +389,6 @@ export default function useLayerManager() {
     onMapHover,
     reloadLayers,
     renderHLData,
-    toggleLayer,
-    updateWorldView
+    toggleLayer
   };
 }
