@@ -82,3 +82,11 @@ export interface GeoserverLayer {
   onHover?: ({ bbox, feature, layerId: string }) => JSX.Element;
   data?: { styles?: VectorStyleMeta[]; styleIndex?; propertyMap? };
 }
+
+export interface MapAreaDrawProps {
+  defaultViewPort?: Partial<ViewportProps>;
+  mapboxApiAccessToken: string;
+  baseLayer?: BaseLayer;
+  defaultFeatures?: any[];
+  onFeaturesChange?: Function;
+}
