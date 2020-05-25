@@ -1,6 +1,6 @@
 {
   "name": "naksha-components-react",
-  "version": "3.0.7-alpha",
+  "version": "3.0.8-r1-alpha",
   "main": "dist/index.js",
   "module": "dist/naksha.esm.js",
   "typings": "dist/index.d.ts",

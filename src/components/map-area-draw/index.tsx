@@ -1,7 +1,6 @@
-import bboxPolygon from "@turf/bbox";
 import React, { useEffect, useRef, useState } from "react";
 import MapGL from "react-map-gl";
-import { DrawRectangleMode, Editor } from "react-map-gl-draw";
+import { DrawPolygonMode, DrawRectangleMode, Editor } from "react-map-gl-draw";
 
 import Navigation from "../../components/map/navigation";
 import { MapAreaDrawProps } from "../../interfaces/naksha";
@@ -19,7 +18,7 @@ const featureStyle = {
 
 /**
  * Allows you to select rectangular region in a map.
- * providing callback w/ either bounding box or empty array and raw features as a second arguement
+ * providing callback w/ raw features
  *
  * @export
  * @param {MapAreaDrawProps} {
@@ -36,7 +35,8 @@ export default function MapAreaDraw({
   defaultFeatures,
   onFeaturesChange,
   baseLayer,
-  mapboxApiAccessToken
+  mapboxApiAccessToken,
+  isPolygon
 }: MapAreaDrawProps) {
   const mapRef = useRef(null);
   const [viewPort, setViewPort] = useState(
@@ -47,9 +47,9 @@ export default function MapAreaDraw({
   useEffect(() => {
     if (onFeaturesChange) {
       if (features.length > 0) {
-        onFeaturesChange(bboxPolygon(features[0]), features);
+        onFeaturesChange(features);
       } else {
-        onFeaturesChange([], []);
+        onFeaturesChange([]);
       }
     }
   }, [features]);
@@ -79,7 +79,7 @@ export default function MapAreaDraw({
       }
       onLoad={onLoad}
       ref={mapRef}
-      getCursor={({ isDragging }) => (isDragging ? "grabbing" : "crosshair")}
+      getCursor={({ isDragging }) => (isDragging ? "grabbing" : "default")}
       onViewportChange={setViewPort}
       mapboxApiAccessToken={mapboxApiAccessToken}
     >
@@ -87,7 +87,7 @@ export default function MapAreaDraw({
       <ClearFeatures onClick={clearFeatures} />
       <Editor
         clickRadius={12}
-        mode={new DrawRectangleMode()}
+        mode={isPolygon ? new DrawPolygonMode() : new DrawRectangleMode()}
         onUpdate={onUpdate}
         features={features}
         featureStyle={() => featureStyle}

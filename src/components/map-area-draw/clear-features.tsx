@@ -8,7 +8,7 @@ const ToolBar = styled.div`
   margin: 1rem;
 
   button {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
   }

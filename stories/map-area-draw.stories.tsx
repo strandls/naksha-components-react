@@ -1,4 +1,4 @@
-import { object, text, withKnobs } from "@storybook/addon-knobs";
+import { boolean, object, text, withKnobs } from "@storybook/addon-knobs";
 import React from "react";
 
 import { defaultNakshaProps, MapAreaDraw } from "../src";
@@ -22,6 +22,7 @@ export const toStorybook = () => {
       )}
       defaultFeatures={[]}
       onFeaturesChange={onFeaturesChange}
+      isPolygon={boolean("Is Polygon", true)}
     />
   );
 };
