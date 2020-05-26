@@ -12,7 +12,8 @@ export enum LayerActions {
 export enum BaseLayer {
   MAP_STREETS = "0",
   MAP_SATELLITE = "1",
-  MAP_DARK = "2"
+  MAP_DARK = "2",
+  MAP_OSM = "3"
 }
 
 export interface SelectedLayers {

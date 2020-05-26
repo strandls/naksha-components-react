@@ -4,7 +4,11 @@ import { DrawPolygonMode, DrawRectangleMode, Editor } from "react-map-gl-draw";
 
 import Navigation from "../../components/map/navigation";
 import { MapAreaDrawProps } from "../../interfaces/naksha";
-import { defaultMapStyles, defaultNakshaProps } from "../../static/constants";
+import {
+  CURSOR_PENCIL,
+  defaultMapStyles,
+  defaultNakshaProps
+} from "../../static/constants";
 import { updateWorldViewRef } from "../../utils/view";
 import ClearFeatures from "./clear-features";
 
@@ -79,7 +83,7 @@ export default function MapAreaDraw({
       }
       onLoad={onLoad}
       ref={mapRef}
-      getCursor={({ isDragging }) => (isDragging ? "grabbing" : "default")}
+      getCursor={({ isDragging }) => (isDragging ? "grabbing" : CURSOR_PENCIL)}
       onViewportChange={setViewPort}
       mapboxApiAccessToken={mapboxApiAccessToken}
     >
