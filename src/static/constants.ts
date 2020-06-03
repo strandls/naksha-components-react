@@ -1,5 +1,3 @@
-import { theme } from "@chakra-ui/core";
-
 import { BaseLayer, NakshaProps } from "../interfaces/naksha";
 
 export const defaultNakshaProps: NakshaProps = {
@@ -11,8 +9,6 @@ export const defaultNakshaProps: NakshaProps = {
   mapboxApiAccessToken: "pk.xxx",
   nakshaApiEndpoint: "/naksha-api/api",
   geoserver: { endpoint: "/geoserver", workspace: "biodiv", store: "ibp" },
-
-  theme,
 
   baseLayer: BaseLayer.MAP_STREETS,
   layers: [],

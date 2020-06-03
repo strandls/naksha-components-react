@@ -1,4 +1,3 @@
-import { DefaultTheme } from "@chakra-ui/core";
 import { ViewportProps } from "react-map-gl";
 
 export type LayerType = "grid" | "vector" | "raster";
@@ -46,8 +45,6 @@ export interface NakshaProps {
   baseLayer?: BaseLayer;
   layers?: GeoserverLayer[];
   markers?: ExtendedMarkerProps[];
-
-  theme?: DefaultTheme;
 
   children?;
 }

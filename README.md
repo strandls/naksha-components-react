@@ -70,6 +70,23 @@ import Naksha from "naksha-components-react";
 />;
 ```
 
+### 🌀 Using without `@chakra-ui/core`
+
+If you are using `<Naksha/>` in a project where `chakra-ui` is not initialized you need to do so manually like below
+
+```jsx
+import Naksha, {
+  CSSReset,
+  theme,
+  ThemeProvider
+} from "naksha-components-react";
+
+<ThemeProvider theme={theme}>
+  <CSSReset />
+  <Naksha />
+</ThemeProvider>;
+```
+
 ### 🔧 Configuration
 
 Code quality checks are done with `prettier`, `husky`, and `lint-staged`.
