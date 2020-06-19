@@ -1,4 +1,4 @@
-# Naksha Components React 🗺️
+# Naksha Components React 🗺️ [For Reference Only]
 
 ![Dependencies](https://img.shields.io/david/strandls/naksha-components-react.svg)
 
