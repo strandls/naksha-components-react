@@ -1,10 +1,10 @@
 # Naksha Components React 🗺️
 
 [![GitHub Actions Status](https://github.com/strandls/naksha-components-react/workflows/NodeJS/badge.svg)](https://github.com/strandls/naksha-components-react/actions)
-![Dependencies](https://img.shields.io/david/strandls/naksha-components-react.svg)
-![Bundle Size](https://img.shields.io/bundlephobia/minzip/naksha-components-react.svg)
+![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/naksha-components-react/latest)
 [![typed with TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://www.typescriptlang.org)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![stable release](https://badgen.net/github/release/strandls/naksha-components-react/stable)](https://github.com/strandls/naksha-components-react/releases)
 
 Mapbox GL Components for IndiaBiodiversity
 
