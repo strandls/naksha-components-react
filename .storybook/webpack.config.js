@@ -1,30 +1,20 @@
 const path = require("path");
 
-module.exports = ({ config, mode }) => {
+module.exports = ({ config }) => {
   config.module.rules.push({
-    test: /\.(ts|tsx)$/,
-    loader: require.resolve("babel-loader"),
-    options: {
-      presets: [["react-app", { flow: false, typescript: true }]]
-    }
-  });
-
-  config.module.rules.push({
-    test: /\.scss$/,
-    loaders: ["style-loader", "css-loader", "sass-loader"]
-  });
-
-  config.module.rules.push({
-    test: /\.story\.tsx?$/,
-    loaders: [
+    test: /\.tsx?$/,
+    use: [
       {
-        loader: require.resolve("@storybook/addon-storysource/loader"),
-        options: { parser: "typescript" }
+        loader: require.resolve("ts-loader"),
+        options: {
+          reportFiles: ["stories/**/*.{ts|tsx}"]
+        }
       }
-    ],
-    enforce: "pre"
+    ]
   });
-
   config.resolve.extensions.push(".ts", ".tsx");
+  config.resolve.alias = Object.assign(config.resolve.alias, {
+    "@": path.resolve(__dirname, "..")
+  });
   return config;
 };
