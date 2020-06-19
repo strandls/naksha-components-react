@@ -1446,10 +1446,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nebula.gl/edit-modes@0.18.1":
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/@nebula.gl/edit-modes/-/edit-modes-0.18.1.tgz#197c625a805435314c366383cf47fb4709874bba"
-  integrity sha512-eyFVD42m0oRc4u8jdlCqWpF6WID8+HatQqOq4FemvaHmx4ei58i977hA25lMO8iR/b1LPI5I6LHoiv3yMLhmrA==
+"@nebula.gl/edit-modes@0.18.5":
+  version "0.18.5"
+  resolved "https://registry.yarnpkg.com/@nebula.gl/edit-modes/-/edit-modes-0.18.5.tgz#cf47701c80218d35d242576cfa441c4dcfec69e1"
+  integrity sha512-b5PZY0pGhV008hkIHSoUBKPei5zc/TX3X2A/jeYdOK5ZWXQsQUMZ2FyEm9BYSrz554cIoBV6CLvdeIqFnufAqg==
   dependencies:
     "@turf/bbox" ">=4.0.0"
     "@turf/bbox-polygon" ">=4.0.0"
@@ -2688,10 +2688,17 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
 
-"@types/mapbox-gl@*", "@types/mapbox-gl@^1.10.2":
+"@types/mapbox-gl@*":
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/@types/mapbox-gl/-/mapbox-gl-1.10.2.tgz#ba903e9d70e69200efe29444ee33e0c111f9d53c"
   integrity sha512-fgsFVivgopfge1HwUmkMqjEg0XO0sMqI2au3GKhg8g6vpexjszvy63chNpLiz5MOLu4APbKXm18JsKSmhzzoMw==
+  dependencies:
+    "@types/geojson" "*"
+
+"@types/mapbox-gl@^1.10.4":
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/@types/mapbox-gl/-/mapbox-gl-1.10.4.tgz#1fa8a41c47387a6b891bf9a205b53d67fe106563"
+  integrity sha512-52KpCZM7XF9n1GKrR/reDuBHswFodXs+qCTJP1+ruhr3ywf0f60AZDB9obhWTXz/Q0b2vCrSPQzrNYea7TSkng==
   dependencies:
     "@types/geojson" "*"
 
@@ -2776,10 +2783,18 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.8.10", "@types/react@^16.9.35":
+"@types/react@*", "@types/react@^16.8.10":
   version "16.9.35"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.35.tgz#a0830d172e8aadd9bd41709ba2281a3124bbd368"
   integrity sha512-q0n0SsWcGc8nDqH2GJfWQWUOmZSJhXV64CjVN5SvcNti3TdEaA3AH0D8DwNmMdzjMAC/78tB8nAZIlV8yTz+zQ==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.9.38":
+  version "16.9.38"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.38.tgz#868405dace93a4095d3e054f4c4a1de7a1ac0680"
+  integrity sha512-pHAeZbjjNRa/hxyNuLrvbxhhnKyKNiLC6I5fRF2Zr/t/S6zS41MiyzH4+c+1I9vVfvuRt1VS2Lodjr4ZWnxrdA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -4007,10 +4022,10 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
-boundingbox@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/boundingbox/-/boundingbox-1.2.1.tgz#2f61f5e6ad8d4b97bce22e430b7d1fa28a8d6f0d"
-  integrity sha512-VnM1f1XgTb7mfIUsUG3VzulpTdE3HdFcrrmj2Sfk/Vp1fjgsZmF35L1Y5NDxJppdhmKbOx51vrI/icKEm69TIg==
+boundingbox@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/boundingbox/-/boundingbox-1.2.2.tgz#e75758b73556d9dc58268c8ac4a1d306be52ce54"
+  integrity sha512-sm0RvHBCYgUmJkbCxZSpkkH2Nq2LnFDDREUgd4cULvWuUh7DM+1bTrqj/0Uffl4z6IcQUzTnLjCb7Omm6o4NFQ==
   dependencies:
     geojson-bounds "^1.0.2"
     haversine "^1.1.1"
@@ -7002,10 +7017,10 @@ immer@1.10.0:
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
   integrity sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
 
-immer@^6.0.9:
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-6.0.9.tgz#b9dd69b8e69b3a12391e87db1e3ff535d1b26485"
-  integrity sha512-SyCYnAuiRf67Lvk0VkwFvwtDoEiCMjeamnHvRfnVDyc7re1/rQrNxuL+jJ7lA3WvdC4uznrvbmm+clJ9+XXatg==
+immer@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-7.0.1.tgz#830f44a36c4181c0eca4385e7782e164e5eb9249"
+  integrity sha512-DpWL/ES2Ba8KwW+A5AgNRoJPZP8LxdHejKXar1VfbF5a7ATvvekzmmNSQxje+WG0DIhuanvFEumFffVqyCLmBQ==
 
 immutable@^4.0.0-rc.12:
   version "4.0.0-rc.12"
@@ -10157,23 +10172,23 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-map-gl-draw@^0.18.4:
-  version "0.18.4"
-  resolved "https://registry.yarnpkg.com/react-map-gl-draw/-/react-map-gl-draw-0.18.4.tgz#b49e6a2393a3e96f3d266ca5071a7dd88bb1c62d"
-  integrity sha512-wRQoK6eeQHWSIeWm/JNN4uVtqEPPxkUNqieT5EsoL9VINbrUleHc+11M2l7XVSY6cdQ0/NMFzRDUxJ+3YRXjew==
+react-map-gl-draw@^0.18.5:
+  version "0.18.5"
+  resolved "https://registry.yarnpkg.com/react-map-gl-draw/-/react-map-gl-draw-0.18.5.tgz#710f2cbbb1739472cf404e1fbb07ffed58b85a5b"
+  integrity sha512-5QTdIoEhAt7/m104aor1HjFLzUj5igakq4WH0Z5szEYiIpYwXc5J63rhnktk1fojXZg6DCyoaLvnuqa2/fGeIA==
   dependencies:
     "@math.gl/web-mercator" "^3.1.3"
-    "@nebula.gl/edit-modes" "0.18.1"
+    "@nebula.gl/edit-modes" "0.18.5"
     "@turf/helpers" "^6.1.4"
     "@types/react-map-gl" "5.2.2"
     mjolnir.js "^2.4.0"
     prop-types "^15.7.2"
     uuid "^3.4.0"
 
-react-map-gl@^5.2.5:
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-5.2.5.tgz#0b16bfd384d5d471cceaabff893b0d088fec9270"
-  integrity sha512-+U5d2ZJ3FpvJvO1U8hJvikC0s51Gq5bcjA77I8yECrbRIfgtPlnhuRoxUDN7rtxtlMHBsPdsypPe3pKgkK+iow==
+react-map-gl@^5.2.7:
+  version "5.2.7"
+  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-5.2.7.tgz#a3d6eda15ee8abb87b9acd855a0f6996cc364188"
+  integrity sha512-nwn/ThhZzlFB5SHzCbKjW2WKhrH9y3uq92PvTQSTIkaZf3eHgfOM4wsRUXR2UncFY8fAdm1ymdYHUwZUqx/2SQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     mapbox-gl "^1.0.0"
@@ -12055,10 +12070,15 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.7.3, typescript@^3.9.3:
+typescript@^3.7.3:
   version "3.9.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.3.tgz#d3ac8883a97c26139e42df5e93eeece33d610b8a"
   integrity sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==
+
+typescript@^3.9.5:
+  version "3.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
+  integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
 
 ua-parser-js@^0.7.18:
   version "0.7.21"

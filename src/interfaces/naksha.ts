@@ -78,7 +78,12 @@ export interface GeoserverLayer {
   };
   onClick?: ({ bbox, feature, layerId: string }) => JSX.Element;
   onHover?: ({ bbox, feature, layerId: string }) => JSX.Element;
-  data?: { styles?: VectorStyleMeta[]; styleIndex?; propertyMap? };
+  data?: {
+    styles?: VectorStyleMeta[];
+    styleIndex?;
+    propertyMap?;
+    [key: string]: any;
+  };
 }
 
 export interface MapAreaDrawProps {

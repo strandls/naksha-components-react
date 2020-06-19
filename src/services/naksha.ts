@@ -1,7 +1,6 @@
 import axios from "axios";
 import cb from "colorbrewer";
 
-import { compiledMessage } from "../utils/basic";
 import { geohashToJSON, getDataBins, getZoomConfig } from "../utils/grid";
 import { parseGeoserverLayersXml } from "../utils/naksha";
 
@@ -52,21 +51,23 @@ export const getGridLayerData = async (
   url,
   bounds,
   zoom,
+  payload = {},
   binCount = 6,
   colorScheme = "YlOrRd"
 ) => {
   try {
     const [precision, level, squareSize] = getZoomConfig(zoom);
     const { _ne, _sw } = bounds;
-    const endpoint = compiledMessage(url, {
+    const finalizedPayload = {
       top: _ne.lat,
       left: _sw.lng,
       bottom: _sw.lat,
       right: _ne.lng,
-      precision
-    });
+      precision,
+      ...payload
+    };
 
-    const { data } = await axios.get(endpoint);
+    const { data } = await axios.post(url, finalizedPayload);
 
     const geojson = geohashToJSON(data, level);
     const bins = getDataBins(data, binCount);

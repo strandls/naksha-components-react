@@ -290,7 +290,8 @@ export default function useLayerManager() {
       } = await getGridLayerData(
         layer.source.endpoint,
         map.getBounds(),
-        viewPort.zoom
+        viewPort.zoom,
+        layer.data
       );
 
       if (success) {

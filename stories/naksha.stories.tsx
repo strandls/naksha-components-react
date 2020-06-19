@@ -55,10 +55,15 @@ export const toStorybook = () => (
           source: {
             type: "grid",
             endpoint:
-              "http://localhost:8010/proxy/naksha-api/api/observation/aggregation?index=extended_observation&type=extended_records&geoField=location&top={top}&left={left}&bottom={bottom}&right={right}&precision={precision}"
+              "http://localhost:8010/proxy/esmodule-api/api/v1/geo/aggregation"
           },
           onClick: Popup,
-          onHover: HoverPopup
+          onHover: HoverPopup,
+          data: {
+            index: "extended_observation",
+            type: "extended_records",
+            geoField: "location"
+          }
         }
       ]}
       markers={object("Markers", [
