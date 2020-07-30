@@ -93,4 +93,6 @@ export interface MapAreaDrawProps {
   defaultFeatures?: any[];
   onFeaturesChange?: Function;
   isPolygon?: boolean;
+  isReadOnly?: boolean;
+  isMultiple?: boolean;
 }

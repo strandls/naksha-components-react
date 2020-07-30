@@ -22,7 +22,9 @@ export const toStorybook = () => {
       )}
       defaultFeatures={[]}
       onFeaturesChange={onFeaturesChange}
-      isPolygon={boolean("Is Polygon", true)}
+      isPolygon={boolean("Is Polygon", false)}
+      isReadOnly={boolean("Is ReadOnly", false)}
+      isMultiple={boolean("Is Multiple", false)}
     />
   );
 };

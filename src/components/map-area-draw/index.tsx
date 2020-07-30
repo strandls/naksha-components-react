@@ -1,3 +1,4 @@
+import { ViewMode } from "@nebula.gl/edit-modes";
 import React, { useEffect, useRef, useState } from "react";
 import MapGL from "react-map-gl";
 import { DrawPolygonMode, DrawRectangleMode, Editor } from "react-map-gl-draw";
@@ -40,7 +41,9 @@ export default function MapAreaDraw({
   onFeaturesChange,
   baseLayer,
   mapboxApiAccessToken,
-  isPolygon
+  isPolygon,
+  isReadOnly,
+  isMultiple
 }: MapAreaDrawProps) {
   const mapRef = useRef(null);
   const [viewPort, setViewPort] = useState(
@@ -67,11 +70,14 @@ export default function MapAreaDraw({
 
   const onUpdate = ({ editType, data }) => {
     if (editType === "addFeature") {
-      setFeatures([data[data.length - 1]]);
+      setFeatures(isMultiple ? data : [data[data.length - 1]]);
     }
   };
 
   const clearFeatures = () => setFeatures([]);
+
+  const getCursor = ({ isDragging }) =>
+    isDragging ? "grabbing" : isReadOnly ? "grab" : CURSOR_PENCIL;
 
   return (
     <MapGL
@@ -83,15 +89,21 @@ export default function MapAreaDraw({
       }
       onLoad={onLoad}
       ref={mapRef}
-      getCursor={({ isDragging }) => (isDragging ? "grabbing" : CURSOR_PENCIL)}
+      getCursor={getCursor}
       onViewportChange={setViewPort}
       mapboxApiAccessToken={mapboxApiAccessToken}
     >
       <Navigation onViewportChange={setViewPort} />
-      <ClearFeatures onClick={clearFeatures} />
+      {!isReadOnly && <ClearFeatures onClick={clearFeatures} />}
       <Editor
         clickRadius={12}
-        mode={isPolygon ? new DrawPolygonMode() : new DrawRectangleMode()}
+        mode={
+          isReadOnly
+            ? new ViewMode()
+            : isPolygon
+            ? new DrawPolygonMode()
+            : new DrawRectangleMode()
+        }
         onUpdate={onUpdate}
         features={features}
         featureStyle={() => featureStyle}
