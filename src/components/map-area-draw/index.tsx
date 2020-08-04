@@ -41,6 +41,7 @@ export default function MapAreaDraw({
   onFeaturesChange,
   baseLayer,
   mapboxApiAccessToken,
+  isControlled,
   isPolygon,
   isReadOnly,
   isMultiple
@@ -60,6 +61,12 @@ export default function MapAreaDraw({
       }
     }
   }, [features]);
+
+  useEffect(() => {
+    if (isControlled) {
+      setFeatures(defaultFeatures);
+    }
+  }, [defaultFeatures]);
 
   const onLoad = () => {
     updateWorldViewRef(mapRef);

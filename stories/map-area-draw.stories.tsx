@@ -20,8 +20,9 @@ export const toStorybook = () => {
         "Mapbox Token",
         process.env.STORYBOOK_MAPBOX_TOKEN
       )}
-      defaultFeatures={[]}
+      defaultFeatures={object("defaultFeatures", [])}
       onFeaturesChange={onFeaturesChange}
+      isControlled={boolean("Is Controlled", true)}
       isPolygon={boolean("Is Polygon", false)}
       isReadOnly={boolean("Is ReadOnly", false)}
       isMultiple={boolean("Is Multiple", false)}
