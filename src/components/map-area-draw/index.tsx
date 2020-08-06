@@ -63,7 +63,10 @@ export default function MapAreaDraw({
   }, [features]);
 
   useEffect(() => {
-    if (isControlled) {
+    if (
+      isControlled &&
+      JSON.stringify(features) !== JSON.stringify(defaultFeatures)
+    ) {
       setFeatures(defaultFeatures);
     }
   }, [defaultFeatures]);

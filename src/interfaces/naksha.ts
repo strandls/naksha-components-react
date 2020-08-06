@@ -97,3 +97,10 @@ export interface MapAreaDrawProps {
   isReadOnly?: boolean;
   isMultiple?: boolean;
 }
+
+export interface PreviewerProps {
+  defaultViewPort?: Partial<ViewportProps>;
+  mapboxApiAccessToken: string;
+  baseLayer?: BaseLayer;
+  data?: any;
+}

@@ -1,5 +1,5 @@
 import { WebMercatorViewport } from "@math.gl/web-mercator";
-import bboxPolygon from "@turf/bbox";
+import bbox from "@turf/bbox";
 import produce from "immer";
 import { debounce } from "ts-debounce";
 
@@ -97,7 +97,7 @@ export default function useLayerManager() {
     );
     set({
       element: layer[eventProp],
-      bbox: bboxPolygon(feature),
+      bbox: bbox(feature),
       feature,
       lngLat,
       layerId: layer.id
