@@ -16,6 +16,16 @@ const featureStyle = {
   }
 };
 
+const pointStyle = {
+  type: "circle",
+  paint: {
+    "circle-radius": 8,
+    "circle-color": "#f03b20",
+    "circle-opacity": 0.8
+  },
+  filter: ["==", ["geometry-type"], "Point"]
+};
+
 /**
  * Renders Provided geojson.
  *
@@ -57,7 +67,7 @@ export default function Previewer({
       ...o,
       longitude,
       latitude,
-      zoom: zoom - 0.2
+      zoom: zoom > viewPort.maxZoom ? viewPort.maxZoom : zoom - 0.2
     }));
   };
 
@@ -89,6 +99,7 @@ export default function Previewer({
       <Navigation onViewportChange={setViewPort} />
       {data && (
         <Source type="geojson" data={data}>
+          <Layer {...pointStyle} />
           <Layer {...featureStyle} />
         </Source>
       )}

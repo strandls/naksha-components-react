@@ -1,7 +1,14 @@
 import { BaseLayer, NakshaProps } from "../interfaces/naksha";
 
 export const defaultNakshaProps: NakshaProps = {
-  viewPort: { latitude: 20, longitude: 79, zoom: 3, bearing: 0, pitch: 0 },
+  viewPort: {
+    latitude: 20,
+    longitude: 79,
+    zoom: 3,
+    bearing: 0,
+    pitch: 0,
+    maxZoom: 14
+  },
 
   loadToC: false,
   showToC: false,

@@ -15,14 +15,22 @@ const geojson = {
       type: "Feature",
       properties: {},
       geometry: {
+        type: "Point",
+        coordinates: [78, 30]
+      }
+    },
+    {
+      type: "Feature",
+      properties: {},
+      geometry: {
         type: "Polygon",
         coordinates: [
           [
-            [45.17, -19.31],
-            [46.93, -19.31],
-            [46.93, -17.72],
-            [45.17, -17.72],
-            [45.17, -19.31]
+            [72, 20],
+            [79, 20],
+            [79, 24],
+            [72, 24],
+            [72, 20]
           ]
         ]
       }
