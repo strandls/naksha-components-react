@@ -38,7 +38,7 @@ const TabContainer = styled.div`
 
 export default function InfobarPanel() {
   const { infobarData = [] } = useLayers();
-  const { isOpen, onToggle, onClose } = useDisclosure(true);
+  const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return isOpen ? (
     <TabContainer>
