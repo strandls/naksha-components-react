@@ -1,17 +1,13 @@
-import {
-  Box,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement
-} from "@chakra-ui/core";
+import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/core";
 import React from "react";
+
+import { IconSearch } from "../icons";
 
 export default function Search({ onChange, name }) {
   return (
-    <Box p={3} shadow="sm">
+    <Box p={4} shadow="sm">
       <InputGroup>
-        <InputLeftElement children={<Icon name="search" color="gray.300" />} />
+        <InputLeftElement p={0} children={<IconSearch />} />
         <Input
           name={name}
           placeholder="Find layer by name"

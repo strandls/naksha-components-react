@@ -39,15 +39,15 @@ const Item = ({ layer, q }: ItemProps) => {
     toggleLayer(layer.id, true, Number(e.target.value), false);
 
   return (
-    <Box p={3} key={layer.id} borderBottom="1px" borderColor="gray.200">
-      <Stack isInline={true} spacing="3" mb={3}>
+    <Box p={4} key={layer.id} borderBottom="1px" borderColor="gray.200">
+      <Stack isInline={true} spacing={4} mb={4}>
         <Image
           borderRadius="md"
           border="1px"
           borderColor="gray.200"
           objectFit="contain"
           flexShrink={0}
-          size="4.5rem"
+          boxSize="4.5rem"
           src={layer.thumbnail}
           fallbackSrc={FALLBACK_THUMB}
         />
@@ -65,7 +65,7 @@ const Item = ({ layer, q }: ItemProps) => {
         </Box>
       </Stack>
       {showLegend && (
-        <Select mb={3} onChange={updateLayerStyle}>
+        <Select mb={4} onChange={updateLayerStyle}>
           {layer.data.styles.map((s, index) => (
             <option key={index} value={index}>
               {s.styleTitle}
@@ -79,25 +79,25 @@ const Item = ({ layer, q }: ItemProps) => {
         justifyContent={showLegend ? "space-between" : "flex-end"}
       >
         <Button
-          variantColor="blue"
+          colorScheme="blue"
           variant="outline"
           hidden={!showLegend}
           onClick={onToggle}
-          leftIcon={isOpen ? IconChevronUp : IconChevronDown}
+          leftIcon={isOpen ? <IconChevronUp /> : <IconChevronDown />}
         >
           Legend
         </Button>
         <Button
-          variantColor="red"
+          colorScheme="red"
           variant="outline"
           onClick={removeLayer}
-          leftIcon={IconRemoveCircle}
+          leftIcon={<IconRemoveCircle />}
         >
           Remove
         </Button>
       </Stack>
       {showLegend && isOpen && (
-        <Box pt={3}>
+        <Box pt={4}>
           <Image src={getLegendUrl(layer, geoserver.endpoint)} />
         </Box>
       )}

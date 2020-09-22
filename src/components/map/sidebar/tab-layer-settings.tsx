@@ -1,4 +1,4 @@
-import { Box, FormControl, FormLabel, Select } from "@chakra-ui/core";
+import { FormControl, FormLabel, Select } from "@chakra-ui/core";
 import React from "react";
 
 import { useLayers } from "../../../hooks/use-layers";
@@ -12,17 +12,15 @@ export default function LayerSettings() {
   };
 
   return (
-    <Box p={3}>
-      <FormControl>
-        <FormLabel htmlFor="email">Base Style</FormLabel>
-        <Select value={baseLayer} onChange={onBaseLayerChange}>
-          {defaultMapStyles.map(s => (
-            <option key={s.key} value={s.key}>
-              {s.text}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <FormControl>
+      <FormLabel htmlFor="email">Base Style</FormLabel>
+      <Select value={baseLayer} onChange={onBaseLayerChange}>
+        {defaultMapStyles.map(s => (
+          <option key={s.key} value={s.key}>
+            {s.text}
+          </option>
+        ))}
+      </Select>
+    </FormControl>
   );
 }

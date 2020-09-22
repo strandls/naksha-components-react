@@ -21,10 +21,10 @@ export default function SidebarTabs() {
         </Tab>
       </TabList>
       <TabPanels flexGrow={1}>
-        <TabPanel>
+        <TabPanel p={0}>
           <LayerList />
         </TabPanel>
-        <TabPanel>
+        <TabPanel p={0}>
           <LayerSelected />
         </TabPanel>
         <TabPanel>

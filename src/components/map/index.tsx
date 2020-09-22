@@ -43,7 +43,6 @@ export default function Map() {
   useListener(reloadLayers, ["STYLE_UPDATED"]);
 
   const onLoad = () => {
-    updateWorldViewRef(mapRef);
     mapRef.current.getMap().on("style.load", () => {
       updateWorldViewRef(mapRef);
       emit("STYLE_UPDATED");
@@ -63,7 +62,7 @@ export default function Map() {
   }, [infobarData]);
 
   return (
-    <Box size="full" position="relative">
+    <Box boxSize="full" position="relative">
       <MapGL
         {...viewPort}
         width="100%"

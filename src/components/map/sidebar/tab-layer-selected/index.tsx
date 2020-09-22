@@ -10,7 +10,7 @@ export default function LayerSelected() {
   return (
     <Flex direction="column" h="full">
       <Search onChange={setQ} name="list-selected" />
-      <Box className="list" size="full" overflowX="auto">
+      <Box className="list" boxSize="full" overflowX="auto">
         <LayersList q={q} />
       </Box>
     </Flex>

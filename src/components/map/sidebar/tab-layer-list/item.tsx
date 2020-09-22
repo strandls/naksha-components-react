@@ -34,7 +34,7 @@ const Item = memo<ItemProps>(({ data: { q = "", data }, index, style }) => {
       borderBottom="1px"
       style={style}
       borderColor="gray.200"
-      p={3}
+      p={4}
     >
       <Box minW="1.3rem">
         {isLoading ? (
@@ -53,7 +53,7 @@ const Item = memo<ItemProps>(({ data: { q = "", data }, index, style }) => {
         borderColor="gray.200"
         objectFit="contain"
         flexShrink={0}
-        size="4.5rem"
+        boxSize="4.5rem"
         src={layer.thumbnail}
         fallbackSrc={FALLBACK_THUMB}
       />

@@ -6,7 +6,7 @@ import Naksha, {
   CSSReset,
   defaultNakshaProps,
   theme,
-  ThemeProvider
+  ChakraProvider
 } from "../src";
 
 export default {
@@ -28,7 +28,7 @@ const HoverPopup = ({ feature }) => {
 };
 
 export const toStorybook = () => (
-  <ThemeProvider theme={theme}>
+  <ChakraProvider theme={theme}>
     <CSSReset />
     <Naksha
       viewPort={object("ViewPort", defaultNakshaProps.viewPort)}
@@ -70,7 +70,7 @@ export const toStorybook = () => (
         { latitude: 21, longitude: 77, colorHex: "E53E3E" }
       ])}
     />
-  </ThemeProvider>
+  </ChakraProvider>
 );
 
 toStorybook.story = {

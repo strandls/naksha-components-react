@@ -45,7 +45,7 @@ interface LayerContextProps extends NakshaProps {
 const LayersContext = createContext<LayerContextProps>(defaultNakshaProps);
 
 export const LayersProvider = (props: NakshaProps) => {
-  const ToC = useDisclosure(props.showToC);
+  const ToC = useDisclosure({ defaultIsOpen: props.showToC });
   const mapRef = useRef(null);
   const [viewPort, setViewPort] = useState<Partial<ViewportProps>>(
     props.viewPort
