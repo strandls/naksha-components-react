@@ -50,7 +50,7 @@ export default function Sidebar() {
       variant="outline"
       onClick={ToC.onOpen}
       aria-label="List Layers"
-      icon={IconLayers}
+      icon={<IconLayers />}
     />
   );
 }

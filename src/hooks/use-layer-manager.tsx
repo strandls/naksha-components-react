@@ -192,7 +192,7 @@ export default function useLayerManager() {
    */
   const updateToBBox = (bbox, updateBbox: boolean) => {
     if (updateBbox) {
-      const viewportx = new WebMercatorViewport(viewPort);
+      const viewportx = new WebMercatorViewport(viewPort as any);
       const { longitude, latitude, zoom } = viewportx.fitBounds(bbox);
       setViewPort(o => ({
         ...o,

@@ -72,7 +72,6 @@ export default function Previewer({
   };
 
   const onLoad = () => {
-    updateWorldViewRef(mapRef);
     mapRef.current.getMap().on("style.load", () => {
       updateWorldViewRef(mapRef);
     });

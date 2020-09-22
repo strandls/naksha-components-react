@@ -23,7 +23,7 @@ const TabContainer = styled.div`
 
 export default function InfobarPanel() {
   const { infobarData } = useLayers();
-  const { isOpen, onToggle, onClose } = useDisclosure(true);
+  const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return isOpen ? (
     <TabContainer>
@@ -41,7 +41,7 @@ export default function InfobarPanel() {
       variant="outline"
       onClick={onToggle}
       aria-label="List Layers"
-      icon={IconInfo}
+      icon={<IconInfo />}
     />
   );
 }

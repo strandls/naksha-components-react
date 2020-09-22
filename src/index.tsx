@@ -1,4 +1,4 @@
-import { CSSReset, theme, ThemeProvider } from "@chakra-ui/core";
+import { CSSReset, theme, ChakraProvider } from "@chakra-ui/core";
 
 import MapAreaDraw from "./components/map-area-draw";
 import Previewer from "./components/previewer";
@@ -22,7 +22,7 @@ export {
   ExtendedMarkerProps,
   defaultNakshaProps,
   theme,
-  ThemeProvider,
+  ChakraProvider,
   CSSReset,
   MapAreaDrawProps,
   MapAreaDraw,
