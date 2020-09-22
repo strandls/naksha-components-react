@@ -122,9 +122,9 @@ export default function useLayerManager() {
    *
    */
   const renderHLData = () => {
-    const map = mapRef.current.getMap();
+    const map = mapRef?.current?.getMap();
 
-    if (!map.isStyleLoaded()) {
+    if (!map?.isStyleLoaded()) {
       return;
     }
 
