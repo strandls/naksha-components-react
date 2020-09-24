@@ -12,7 +12,7 @@ const featureStyle = {
   type: "fill",
   paint: {
     "fill-color": "#f03b20",
-    "fill-opacity": 0.2
+    "fill-opacity": 0.7
   }
 };
 
@@ -21,7 +21,7 @@ const pointStyle = {
   paint: {
     "circle-radius": 8,
     "circle-color": "#f03b20",
-    "circle-opacity": 0.8
+    "circle-opacity": 0.7
   },
   filter: ["==", ["geometry-type"], "Point"]
 };

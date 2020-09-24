@@ -35,10 +35,15 @@ export const axGetGeoserverLayerStyleList = async (id, endpoint) => {
   }
 };
 
-export const axGetGeoserverLayerStyle = async (styleName, endpoint) => {
+export const axGetGeoserverLayerStyle = async (
+  layerId,
+  styleName,
+  workspace,
+  endpoint
+) => {
   try {
     const res = await axios.get(
-      `${endpoint}/geoserver/styles/${styleName}.json`
+      `${endpoint}/geoserver/workspaces/${workspace}/styles/${layerId}_${styleName}.mbstyle`
     );
     return res.data?.layers?.[0];
   } catch (e) {

@@ -143,6 +143,10 @@ export default function useLayerManager() {
    * @param {boolean} [gridOnly=false]
    */
   const reloadLayers = debounce((gridOnly = false) => {
+    if (!mapRef?.current) {
+      return;
+    }
+
     layers.forEach(layer => {
       const gridFlag = gridOnly
         ? layer.id.startsWith(LAYER_PREFIX_GRID)
@@ -151,6 +155,7 @@ export default function useLayerManager() {
         toggleLayer(layer.id, true, layer?.data?.styleIndex, false);
       }
     });
+
     mapRef.current.getMap().once("idle", () => {
       renderHLData();
     });
@@ -174,7 +179,9 @@ export default function useLayerManager() {
       }
       if (!_draft[styleIndex].colors) {
         _draft[styleIndex].colors = await axGetGeoserverLayerStyle(
+          layer.id,
           _draft[styleIndex].styleName,
+          geoserver.workspace,
           nakshaApiEndpoint
         );
       }
