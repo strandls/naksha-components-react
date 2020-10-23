@@ -151,9 +151,7 @@ export default function useLayerManager() {
         toggleLayer(layer.id, true, layer?.data?.styleIndex, false);
       }
     });
-    mapRef.current.getMap().once("idle", () => {
-      renderHLData();
-    });
+    mapRef?.current?.getMap()?.once("idle", renderHLData);
   }, 1000);
 
   /**
