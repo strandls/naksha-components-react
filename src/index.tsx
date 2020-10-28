@@ -1,31 +1,5 @@
-import { CSSReset, theme, ChakraProvider } from "@chakra-ui/core";
-
-import MapAreaDraw from "./components/map-area-draw";
-import Previewer from "./components/previewer";
-import {
-  BaseLayer,
-  ExtendedMarkerProps,
-  LayerType,
-  MapAreaDrawProps,
-  NakshaProps,
-  PreviewerProps
-} from "./interfaces/naksha";
-import Naksha from "./naksha";
-import { defaultNakshaProps } from "./static/constants";
-
-export default Naksha;
-
-export {
-  BaseLayer,
-  LayerType,
-  NakshaProps,
-  ExtendedMarkerProps,
-  defaultNakshaProps,
-  theme,
-  ChakraProvider,
-  CSSReset,
-  MapAreaDrawProps,
-  MapAreaDraw,
-  PreviewerProps,
-  Previewer
-};
+export * from "./components/map-area-draw";
+export * from "./components/previewer";
+export * from "./interfaces/naksha";
+export * from "./naksha";
+export * from "./static/constants";

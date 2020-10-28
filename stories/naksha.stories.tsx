@@ -1,13 +1,8 @@
-import { Box } from "@chakra-ui/core";
+import { Box, ChakraProvider, CSSReset, theme } from "@chakra-ui/core";
 import { boolean, object, text, withKnobs } from "@storybook/addon-knobs";
 import React from "react";
 
-import Naksha, {
-  CSSReset,
-  defaultNakshaProps,
-  theme,
-  ChakraProvider
-} from "../src";
+import { defaultNakshaProps, Naksha } from "../src";
 
 export default {
   title: "Components",

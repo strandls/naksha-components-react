@@ -10,13 +10,13 @@ Mapbox GL Components for IndiaBiodiversity
 
 > As of now full documentation is only available via TypeScript autocomplete but we are working on adding complete documentation
 
-#### Grid Layer
+## Grid Layer
 
 Grid layer that accepts geohashes and plots grid according to it
 
 ![Grid Layer](./preview/geohash-grid-layer.gif)
 
-#### Geoserver Vector Layer
+## Geoserver Vector Layer
 
 Vector layer that shows geoserver vector layer
 
@@ -27,23 +27,30 @@ Vector layer that shows geoserver vector layer
 - Multiple View
 - Multi Style
 
-### 📦 Setup
+## 📦 Setup
 
 ```sh
 git clone https://github.com/strandls/naksha-components-react.git
 cd naksha-components-react
 yarn install
+yarn add --peer --pure-lockfile @chakra-ui/core@next framer-motion
 ```
 
-### 📚 Storybook
+## 📚 Storybook
 
-```
+```sh
 yarn storybook
 ```
 
 This loads the stories from `./stories`.
 
-### 📦 Usage
+## 📦 Installing Package
+
+```sh
+yarn add naksha-components-react @chakra-ui/core framer-motion
+```
+
+## 📦 Usage
 
 ```tsx
 import Naksha from "naksha-components-react";
@@ -70,7 +77,7 @@ import Naksha from "naksha-components-react";
 />;
 ```
 
-### 🌀 Using without `@chakra-ui/core`
+## 🌀 Using without `@chakra-ui/core`
 
 If you are using `<Naksha/>` in a project where `chakra-ui` is not initialized you need to do so manually like below
 
@@ -87,21 +94,21 @@ import Naksha, {
 </ThemeProvider>;
 ```
 
-### 🔧 Configuration
+## 🔧 Configuration
 
 Code quality checks are done with `prettier`, `husky`, and `lint-staged`.
 
-### 🤠 Credits
+## 🤠 Credits
 
 - [tsdx](https://github.com/jaredpalmer/tsdx)
 - [typescript](https://github.com/microsoft/TypeScript)
 - [chakra-ui](https://github.com/chakra-ui/chakra-ui)
 - [react-map-gl](https://github.com/uber/react-map-gl)
 
-### 🙏 Contributing
+## 🙏 Contributing
 
 Contributions/Suggestions are always welcome!
 
-### 📄 License
+## 📄 License
 
 Apache-2.0 &copy; [Strand Life Sciences](https://github.com/strandls)

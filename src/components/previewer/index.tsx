@@ -39,7 +39,7 @@ const pointStyle = {
  * }
  * @returns
  */
-export default function Previewer({
+export function Previewer({
   defaultViewPort,
   data,
   baseLayer,

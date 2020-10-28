@@ -5,7 +5,7 @@ import { LayersProvider } from "../hooks/use-layers";
 import { NakshaProps } from "../interfaces/naksha";
 import { defaultNakshaProps } from "../static/constants";
 
-export default function Naksha(props: NakshaProps) {
+export function Naksha(props: NakshaProps) {
   return (
     <LayersProvider {...defaultNakshaProps} {...props}>
       <Map />

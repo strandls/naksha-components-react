@@ -35,7 +35,7 @@ const featureStyle = {
  * }
  * @returns
  */
-export default function MapAreaDraw({
+export function MapAreaDraw({
   defaultViewPort,
   defaultFeatures,
   onFeaturesChange,
