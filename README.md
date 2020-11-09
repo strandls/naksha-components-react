@@ -33,7 +33,7 @@ Vector layer that shows geoserver vector layer
 git clone https://github.com/strandls/naksha-components-react.git
 cd naksha-components-react
 yarn install
-yarn add --peer --pure-lockfile @chakra-ui/core@next framer-motion
+yarn install-peers -f
 ```
 
 ## 📚 Storybook
@@ -47,7 +47,7 @@ This loads the stories from `./stories`.
 ## 📦 Installing Package
 
 ```sh
-yarn add naksha-components-react @chakra-ui/core framer-motion
+yarn add naksha-components-react @chakra-ui/core@next framer-motion
 ```
 
 ## 📦 Usage
@@ -82,7 +82,8 @@ import Naksha from "naksha-components-react";
 If you are using `<Naksha/>` in a project where `chakra-ui` is not initialized you need to do so manually like below
 
 ```jsx
-import Naksha, {
+import {
+  Naksha,
   CSSReset,
   theme,
   ThemeProvider

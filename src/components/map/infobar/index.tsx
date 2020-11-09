@@ -1,13 +1,7 @@
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
   CloseButton,
-  FormControl,
-  FormLabel,
+  HStack,
   IconButton,
   Text,
   useDisclosure
@@ -17,6 +11,7 @@ import React from "react";
 
 import { useLayers } from "../../../hooks/use-layers";
 import { IconInfo } from "../icons";
+import InfobarData from "./data";
 
 const TabContainer = styled.div`
   position: absolute;
@@ -37,32 +32,22 @@ const TabContainer = styled.div`
 `;
 
 export default function InfobarPanel() {
-  const { infobarData = [] } = useLayers();
+  const { infobarData = [], layers } = useLayers();
   const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return isOpen ? (
     <TabContainer>
       <CloseButton m={1} onClick={onClose} position="absolute" right="0" />
+      <HStack alignItems="center" px={4} py={2} spacing={2}>
+        <IconInfo /> <Text>Information</Text>
+      </HStack>
       <Accordion defaultIndex={[0]} allowMultiple={true}>
         {infobarData.map(({ properties = {}, layer }) => (
-          <AccordionItem>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                {layer?.source}
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              {Object.entries(properties).map(([k, v]) => (
-                <FormControl key={k} mb={4}>
-                  <FormLabel fontSize="sm" htmlFor={k} color="gray.500">
-                    {k}
-                  </FormLabel>
-                  <Text id={k}>{v}</Text>
-                </FormControl>
-              ))}
-            </AccordionPanel>
-          </AccordionItem>
+          <InfobarData
+            properties={properties}
+            layer={layers.find(({ id }) => id === layer.source)}
+            key={layer.source}
+          />
         ))}
       </Accordion>
     </TabContainer>

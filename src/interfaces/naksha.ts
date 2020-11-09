@@ -35,6 +35,7 @@ export interface NakshaProps {
 
   mapboxApiAccessToken: string;
   nakshaApiEndpoint?: string;
+  bearerToken?: string;
   geoserver?: {
     endpoint: string;
     store: string;
@@ -44,6 +45,7 @@ export interface NakshaProps {
   selectedLayers?: SelectedLayers[];
   baseLayer?: BaseLayer;
   layers?: GeoserverLayer[];
+  onLayerDownload?;
   markers?: ExtendedMarkerProps[];
 
   children?;
@@ -68,6 +70,14 @@ export interface GeoserverLayer {
   title: string;
   description?: string;
   thumbnail?: string;
+  attribution?: string;
+  license?: string;
+  tags?: string[];
+  createdBy?: string;
+  author?: { name: string };
+  url?: string;
+  createdDate?: string;
+  isDownloadable?: boolean;
   bbox?: [[number, number], [number, number]];
   isAdded?: boolean;
   source: {
@@ -82,6 +92,8 @@ export interface GeoserverLayer {
     styles?: VectorStyleMeta[];
     styleIndex?;
     propertyMap?;
+    titleColumn?;
+    summeryColumn?;
     [key: string]: any;
   };
 }

@@ -20,7 +20,7 @@ jobs:
         run: npm install -g yarn@1
 
       - name: Install
-        run: yarn install
+        run: yarn install && yarn install-peers -f
 
       - name: Build
         run: yarn build

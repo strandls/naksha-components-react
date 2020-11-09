@@ -40,6 +40,9 @@ interface LayerContextProps extends NakshaProps {
 
   hoverPopup?;
   setHoverPopup?;
+
+  bearerToken?;
+  onLayerDownload?;
 }
 
 const LayersContext = createContext<LayerContextProps>(defaultNakshaProps);

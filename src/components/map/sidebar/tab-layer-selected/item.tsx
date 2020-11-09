@@ -16,11 +16,11 @@ import {
   IconChevronUp,
   IconRemoveCircle
 } from "../../../../components/map/icons";
-import Tooltip from "../../../../components/tooltip";
 import useLayerManager from "../../../../hooks/use-layer-manager";
 import { useLayers } from "../../../../hooks/use-layers";
-import { fadeOverflow, FALLBACK_THUMB } from "../../../../static/constants";
+import { FALLBACK_THUMB, overflowStyle } from "../../../../static/constants";
 import { getLegendUrl } from "../../../../utils/naksha";
+import ItemInfo from "../tab-layer-list/item-info";
 
 interface ItemProps {
   layer: GeoserverLayer;
@@ -29,7 +29,7 @@ interface ItemProps {
 
 const Item = ({ layer, q }: ItemProps) => {
   const { geoserver } = useLayers();
-  const { toggleLayer } = useLayerManager();
+  const { toggleLayer, handleOnLayerDownload } = useLayerManager();
   const { isOpen, onToggle } = useDisclosure();
   const showLegend = layer.source.type !== "grid";
 
@@ -51,19 +51,27 @@ const Item = ({ layer, q }: ItemProps) => {
           src={layer.thumbnail}
           fallbackSrc={FALLBACK_THUMB}
         />
-        <Box h="4.5rem" style={fadeOverflow}>
-          <Tooltip label={layer.description}>
-            <div>
-              <Text mb={1}>
-                <Highlight search={q || ""}>{layer.title}</Highlight>
-              </Text>
-              <Box fontSize="sm" color="gray.600">
-                {layer.description}
-              </Box>
-            </div>
-          </Tooltip>
-        </Box>
+        <div>
+          <Text mb={1}>
+            <Highlight search={q}>{layer.title}</Highlight>
+          </Text>
+          <Box
+            fontSize="sm"
+            color="gray.600"
+            style={overflowStyle}
+            title={layer.description}
+          >
+            {layer.description}
+          </Box>
+        </div>
       </Stack>
+
+      <ItemInfo
+        layer={layer}
+        onDownload={() => handleOnLayerDownload(layer.id)}
+        mb={4}
+      />
+
       {showLegend && (
         <Select mb={4} onChange={updateLayerStyle}>
           {layer.data.styles.map((s, index) => (
@@ -73,6 +81,7 @@ const Item = ({ layer, q }: ItemProps) => {
           ))}
         </Select>
       )}
+
       <Stack
         isInline
         spacing={4}

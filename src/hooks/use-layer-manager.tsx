@@ -5,6 +5,7 @@ import { debounce } from "ts-debounce";
 
 import { GeoserverLayer } from "../interfaces/naksha";
 import {
+  axDownloadLayer,
   axGetGeoserverLayers,
   axGetGeoserverLayerStyle,
   axGetGeoserverLayerStyleList,
@@ -32,7 +33,8 @@ export default function useLayerManager() {
     selectedLayers,
     setLegend,
     setClickPopup,
-    setHoverPopup
+    setHoverPopup,
+    onLayerDownload
   } = useLayers();
 
   /**
@@ -77,16 +79,20 @@ export default function useLayerManager() {
   };
 
   const onMapHover = e => {
-    let noGridFeature = true;
+    let noFeature = true;
 
     e?.features?.forEach(featureRaw => {
       const feat = featureRaw.toJSON();
       if (feat.layer.id.startsWith(LAYER_PREFIX_GRID)) {
         onMapEventGrid(e.lngLat, feat, setHoverPopup, "onHover");
-        noGridFeature = false;
+        noFeature = false;
+      }
+      if (feat.layer.id.startsWith(LAYER_PREFIX)) {
+        onMapEventVector(e.lngLat, feat, setHoverPopup);
+        noFeature = false;
       }
     });
-    if (noGridFeature) {
+    if (noFeature) {
       setHoverPopup(null);
     }
   };
@@ -101,6 +107,23 @@ export default function useLayerManager() {
       feature,
       lngLat,
       layerId: layer.id
+    });
+  };
+
+  const onMapEventVector = (lngLat, feature, set) => {
+    const layer = layers.find(l => l.id === feature.layer.id);
+
+    const data = layer?.data?.summaryColumn.map(column => [
+      layer?.data?.propertyMap[column],
+      feature.properties[column]
+    ]);
+
+    set({
+      element: 1,
+      bbox: bbox(feature),
+      feature: data,
+      lngLat,
+      layerId: layer.title
     });
   };
 
@@ -162,20 +185,31 @@ export default function useLayerManager() {
    * @returns
    */
   const getLayerStyle = async (layer: GeoserverLayer, styleIndex) => {
-    const nextSl = produce(layer.data.styles, async _draft => {
-      if (_draft.length === 0) {
-        const styles = await axGetGeoserverLayerStyleList(
+    const nextSl = produce(layer.data, async _draft => {
+      if (_draft.styles.length === 0) {
+        const { success, data } = await axGetGeoserverLayerStyleList(
           layer.id,
           nakshaApiEndpoint
         );
-        _draft.push(...styles);
+        if (success) {
+          _draft.layerName = data.layerName;
+          _draft.styles = data.styles;
+          _draft.summaryColumn = data.summaryColumn;
+          _draft.titleColumn = data.titleColumn;
+          _draft.propertyMap = Object.fromEntries(
+            data.styles.map(o => [o.styleName, o.styleTitle])
+          );
+        }
       }
-      if (!_draft[styleIndex].colors) {
-        _draft[styleIndex].colors = await axGetGeoserverLayerStyle(
-          _draft[styleIndex].styleName,
+      if (!_draft.styles[styleIndex].colors) {
+        _draft.styles[styleIndex].colors = await axGetGeoserverLayerStyle(
+          layer.id,
+          geoserver.workspace,
+          _draft.styles[styleIndex].styleName,
           nakshaApiEndpoint
         );
       }
+      _draft.styleIndex = styleIndex;
     });
     return nextSl;
   };
@@ -220,23 +254,11 @@ export default function useLayerManager() {
   ) => {
     const map = mapRef.current.getMap();
     const layer = layers[layerIndex];
-    const styleList = await getLayerStyle(layer, styleIndex);
-
-    const propertyMap = styleList.reduce(
-      (acc, cv) => ({
-        ...acc,
-        [cv.styleName.replace(`${id}_`, "")]: cv.styleTitle
-      }),
-      []
-    );
+    const layerMeta = await getLayerStyle(layer, styleIndex);
 
     setLayers(_draft => {
       if (add) {
-        _draft[layerIndex].data = {
-          styles: styleList,
-          styleIndex,
-          propertyMap
-        };
+        _draft[layerIndex].data = layerMeta;
       }
       _draft[layerIndex].isAdded = add;
     });
@@ -246,7 +268,7 @@ export default function useLayerManager() {
         map.addSource(id, layer.source);
       }
       removeLayer(map, id);
-      map.addLayer(styleList[styleIndex].colors);
+      map.addLayer(layerMeta.styles[styleIndex].colors);
       updateToBBox(layer.bbox, updateBbox);
     } else {
       const t = infobarData.filter(
@@ -376,10 +398,21 @@ export default function useLayerManager() {
    *
    */
   const getGeoserverLayers = async () => {
-    const layersData = await axGetGeoserverLayers(geoserver, selectedLayers);
+    const layersData = await axGetGeoserverLayers(
+      nakshaApiEndpoint,
+      geoserver,
+      selectedLayers
+    );
     setLayers(_draft => {
       _draft.push(...layersData);
     });
+  };
+
+  const handleOnLayerDownload = async layerId => {
+    const { success, data } = await onLayerDownload(layerId);
+    if (success) {
+      axDownloadLayer(nakshaApiEndpoint, data, layerId);
+    }
   };
 
   return {
@@ -388,6 +421,8 @@ export default function useLayerManager() {
     onMapHover,
     reloadLayers,
     renderHLData,
-    toggleLayer
+    toggleLayer,
+    handleOnLayerDownload,
+    onMapEventVector
   };
 }

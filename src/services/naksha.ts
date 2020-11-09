@@ -5,18 +5,17 @@ import { geohashToJSON, getDataBins, getZoomConfig } from "../utils/grid";
 import { parseGeoserverLayersXml } from "../utils/naksha";
 
 export const axGetGeoserverLayers = async (
-  { endpoint, workspace },
+  nakshaApiEndpoint,
+  geoserver,
   selectedLayers
 ) => {
   try {
-    const res = await axios.get(
-      `${endpoint}/${workspace}/wfs?service=wfs&version=1.1.0&request=GetCapabilities`,
-      { responseType: "text" }
-    );
+    const res = await axios.get(`${nakshaApiEndpoint}/layer/all`);
     return parseGeoserverLayersXml(
       res.data,
-      endpoint,
-      workspace,
+      nakshaApiEndpoint,
+      geoserver.endpoint,
+      geoserver.workspace,
       selectedLayers
     );
   } catch (e) {
@@ -27,18 +26,23 @@ export const axGetGeoserverLayers = async (
 
 export const axGetGeoserverLayerStyleList = async (id, endpoint) => {
   try {
-    const res = await axios.get(`${endpoint}/geoserver/layers/${id}/styles`);
-    return res.data;
+    const { data } = await axios.get(`${endpoint}/layer/onClick/${id}`);
+    return { success: true, data };
   } catch (e) {
     console.error(e);
-    return [];
+    return { success: false };
   }
 };
 
-export const axGetGeoserverLayerStyle = async (styleName, endpoint) => {
+export const axGetGeoserverLayerStyle = async (
+  layername,
+  workspace,
+  styleName,
+  endpoint
+) => {
   try {
     const res = await axios.get(
-      `${endpoint}/geoserver/styles/${styleName}.json`
+      `${endpoint}/geoserver/workspaces/${workspace}/styles/${layername}_${styleName}.mbstyle`
     );
     return res.data?.layers?.[0];
   } catch (e) {
@@ -89,5 +93,17 @@ export const getGridLayerData = async (
   } catch (e) {
     console.error(e);
     return { success: false, geojson: {}, paint: {}, stops: [], squareSize: 0 };
+  }
+};
+
+export const axDownloadLayer = async (endpoint, token, layerName) => {
+  try {
+    await axios.post(
+      `${endpoint}/layer/download`,
+      { layerName },
+      { headers: { Authorization: token } }
+    );
+  } catch (e) {
+    console.error(e);
   }
 };

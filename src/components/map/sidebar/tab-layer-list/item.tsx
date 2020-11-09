@@ -5,9 +5,9 @@ import { useState } from "react";
 import Highlight from "react-highlighter";
 import { areEqual } from "react-window";
 
-import Tooltip from "../../../../components/tooltip";
 import useLayerManager from "../../../../hooks/use-layer-manager";
-import { fadeOverflow, FALLBACK_THUMB } from "../../../../static/constants";
+import { FALLBACK_THUMB, overflowStyle } from "../../../../static/constants";
+import ItemInfo from "./item-info";
 
 interface ItemProps {
   data: { q?; data: GeoserverLayer[] };
@@ -16,7 +16,7 @@ interface ItemProps {
 }
 
 const Item = memo<ItemProps>(({ data: { q = "", data }, index, style }) => {
-  const { toggleLayer } = useLayerManager();
+  const { toggleLayer, handleOnLayerDownload } = useLayerManager();
   const [isLoading, setIsLoading] = useState(false);
   const layer = data[index];
 
@@ -28,47 +28,54 @@ const Item = memo<ItemProps>(({ data: { q = "", data }, index, style }) => {
 
   return (
     <Stack
-      isInline={true}
+      spacing={1}
       key={layer.id}
-      spacing="3"
-      borderBottom="1px"
       style={style}
-      borderColor="gray.200"
       p={4}
+      borderBottom="1px"
+      borderColor="gray.200"
     >
-      <Box minW="1.3rem">
-        {isLoading ? (
-          <Spinner emptyColor="gray.200" color="blue.500" size="md" />
-        ) : (
-          <Checkbox
-            size="lg"
-            isChecked={layer.isAdded}
-            onChange={handleOnChange}
-          />
-        )}
-      </Box>
-      <Image
-        borderRadius="md"
-        border="1px"
-        borderColor="gray.200"
-        objectFit="contain"
-        flexShrink={0}
-        boxSize="4.5rem"
-        src={layer.thumbnail}
-        fallbackSrc={FALLBACK_THUMB}
+      <Stack isInline={true} spacing={3} mb={1}>
+        <Box minW="1.3rem">
+          {isLoading ? (
+            <Spinner emptyColor="gray.200" color="blue.500" size="md" />
+          ) : (
+            <Checkbox
+              size="lg"
+              isChecked={layer.isAdded}
+              onChange={handleOnChange}
+            />
+          )}
+        </Box>
+        <Image
+          borderRadius="md"
+          border="1px"
+          borderColor="gray.200"
+          objectFit="contain"
+          flexShrink={0}
+          p={1}
+          boxSize="4.5rem"
+          src={layer.thumbnail}
+          fallbackSrc={FALLBACK_THUMB}
+        />
+        <div>
+          <Text mb={1}>
+            <Highlight search={q}>{layer.title}</Highlight>
+          </Text>
+          <Box
+            fontSize="sm"
+            color="gray.600"
+            style={overflowStyle}
+            title={layer.description}
+          >
+            {layer.description}
+          </Box>
+        </div>
+      </Stack>
+      <ItemInfo
+        layer={layer}
+        onDownload={() => handleOnLayerDownload(layer.id)}
       />
-      <Box h="4.5rem" style={fadeOverflow}>
-        <Tooltip label={layer.description}>
-          <div>
-            <Text mb={1}>
-              <Highlight search={q}>{layer.title}</Highlight>
-            </Text>
-            <Box fontSize="sm" color="gray.600">
-              {layer.description}
-            </Box>
-          </div>
-        </Tooltip>
-      </Box>
     </Stack>
   );
 }, areEqual);

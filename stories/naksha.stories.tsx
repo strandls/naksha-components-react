@@ -22,6 +22,10 @@ const HoverPopup = ({ feature }) => {
   return <div>{feature?.properties?.count} Observations</div>;
 };
 
+const handleOnDownload = async layer => {
+  return { success: true, data: "xyz" };
+};
+
 export const toStorybook = () => (
   <ChakraProvider theme={theme}>
     <CSSReset />
@@ -41,7 +45,8 @@ export const toStorybook = () => (
         "Geoserver",
         JSON.parse(process.env.STORYBOOK_GEOSERVER)
       )}
-      selectedLayers={object("Selected Layers", [])}
+      onLayerDownload={handleOnDownload}
+      /*
       layers={[
         {
           id: "global-observations",
@@ -61,9 +66,10 @@ export const toStorybook = () => (
           }
         }
       ]}
-      markers={object("Markers", [
-        { latitude: 21, longitude: 77, colorHex: "E53E3E" }
-      ])}
+      // markers={object("Markers", [
+      //   { latitude: 21, longitude: 77, colorHex: "E53E3E" }
+      // ])}
+      */
     />
   </ChakraProvider>
 );
