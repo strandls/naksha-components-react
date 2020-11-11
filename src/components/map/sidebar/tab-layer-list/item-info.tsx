@@ -36,69 +36,75 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
       <ListItem icon={IconCredit}>{layer.attribution}</ListItem>
       <ListItem icon={IconTag}>{layer?.tags?.join(", ")}</ListItem>
       <ListItem icon={IconLicense}>
-        <Link
-          target="_blank"
-          color="blue.500"
-          fontWeight="bold"
-          rel="noopener"
-          href={licenses[layer.license]}
-        >
-          {layer.license} <IconExternalLink />
-        </Link>
+        {layer.license ? (
+          <Link
+            target="_blank"
+            color="blue.500"
+            fontWeight="bold"
+            rel="noopener"
+            href={licenses[layer.license]}
+          >
+            {layer.license} <IconExternalLink />
+          </Link>
+        ) : (
+          "NA"
+        )}
       </ListItem>
-      <Flex justifyContent="space-between" mt={2}>
-        <Button
-          variant="outline"
-          size="sm"
-          leftIcon={<IconDownload />}
-          disabled={!layer.isDownloadable}
-          onClick={onDownload}
-        >
-          Download
-        </Button>
-        <Popover>
-          <PopoverTrigger>
-            <Button variant="outline" size="sm" leftIcon={<IconInfo />}>
-              More Info
-            </Button>
-          </PopoverTrigger>
-          <Portal>
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverBody fontSize="sm">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <b>Created By</b>
-                      </td>
-                      <td>{layer.createdBy}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>Author</b>
-                      </td>
-                      <td>{layer.author.name}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>URL</b>
-                      </td>
-                      <td>{layer.url}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>Created On</b>
-                      </td>
-                      <td>{new Date(layer.createdDate).toDateString()}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </PopoverBody>
-            </PopoverContent>
-          </Portal>
-        </Popover>
-      </Flex>
+      {layer.source.type !== "grid" ? (
+        <Flex justifyContent="space-between" mt={2}>
+          <Button
+            variant="outline"
+            size="sm"
+            leftIcon={<IconDownload />}
+            disabled={!layer.isDownloadable}
+            onClick={onDownload}
+          >
+            Download
+          </Button>
+          <Popover>
+            <PopoverTrigger>
+              <Button variant="outline" size="sm" leftIcon={<IconInfo />}>
+                More Info
+              </Button>
+            </PopoverTrigger>
+            <Portal>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverBody fontSize="sm">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <b>Created By</b>
+                        </td>
+                        <td>{layer.createdBy}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Author</b>
+                        </td>
+                        <td>{layer.author.name}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>URL</b>
+                        </td>
+                        <td>{layer.url}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Created On</b>
+                        </td>
+                        <td>{new Date(layer.createdDate).toDateString()}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </PopoverBody>
+              </PopoverContent>
+            </Portal>
+          </Popover>
+        </Flex>
+      ) : null}
     </Box>
   );
 }
