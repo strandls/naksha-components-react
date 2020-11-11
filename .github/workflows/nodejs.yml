@@ -20,7 +20,10 @@ jobs:
         run: npm install -g yarn@1
 
       - name: Install
-        run: yarn install && yarn install-peers -f
+        run: yarn install
+
+      - name: remove postinstall hook
+        run: sed -i 's/postinstall/install-peers/g' package.json
 
       - name: Build
         run: yarn build
