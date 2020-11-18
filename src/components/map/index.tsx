@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { emit, useListener } from "react-gbus";
 import MapGL from "react-map-gl";

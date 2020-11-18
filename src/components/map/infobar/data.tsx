@@ -7,7 +7,7 @@ import {
   FormControl,
   FormLabel,
   Text
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import React from "react";
 
 export default function InfobarData({ properties, layer }) {

@@ -1,4 +1,4 @@
-import { Box, Divider, Stack } from "@chakra-ui/core";
+import { Box, Divider, Stack } from "@chakra-ui/react";
 import React from "react";
 
 import { useLayers } from "../../hooks/use-layers";

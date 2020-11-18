@@ -47,7 +47,7 @@ This loads the stories from `./stories`.
 ## 📦 Installing Package
 
 ```sh
-yarn add naksha-components-react @chakra-ui/core@next framer-motion
+yarn add naksha-components-react @chakra-ui/react@next framer-motion
 ```
 
 ## 📦 Usage
@@ -77,7 +77,7 @@ import Naksha from "naksha-components-react";
 />;
 ```
 
-## 🌀 Using without `@chakra-ui/core`
+## 🌀 Using without `@chakra-ui/react`
 
 If you are using `<Naksha/>` in a project where `chakra-ui` is not initialized you need to do so manually like below
 

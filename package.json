@@ -1,6 +1,6 @@
 {
   "name": "naksha-components-react",
-  "version": "3.4.0-canary.11",
+  "version": "3.4.0-canary.13",
   "main": "dist/index.js",
   "module": "dist/naksha.esm.js",
   "typings": "dist/index.d.ts",
@@ -25,10 +25,10 @@
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "postinstall": "install-peers"
+    "install-peers": "install-peers"
   },
   "peerDependencies": {
-    "@chakra-ui/core": "^1.0.0-rc.8",
+    "@chakra-ui/react": "^1.0.0",
     "framer-motion": "^2.9.4",
     "react": ">=17"
   },
@@ -66,7 +66,7 @@
     "babel-loader": "^8.1.0",
     "husky": "^4.3.0",
     "install-peers-cli": "^2.2.0",
-    "react": "^16.13.0",
+    "react": ">=17",
     "react-dom": "^17.0.1",
     "ts-loader": "^8.0.7",
     "tsdx": "^0.14.1",

@@ -9,7 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Portal
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import React from "react";
 
 import {

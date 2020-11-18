@@ -1,4 +1,4 @@
-import { Box, Checkbox, Image, Spinner, Stack, Text } from "@chakra-ui/core";
+import { Box, Checkbox, Image, Spinner, Stack, Text } from "@chakra-ui/react";
 import { GeoserverLayer } from "interfaces/naksha";
 import React, { memo } from "react";
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/core";
+import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import React from "react";
 
 import { IconSearch } from "../icons";

@@ -1,4 +1,4 @@
-import { Box, ChakraProvider, CSSReset, theme } from "@chakra-ui/core";
+import { Box, ChakraProvider, CSSReset, theme } from "@chakra-ui/react";
 import { boolean, object, text, withKnobs } from "@storybook/addon-knobs";
 import React from "react";
 

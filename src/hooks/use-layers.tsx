@@ -1,4 +1,4 @@
-import { useDisclosure } from "@chakra-ui/core";
+import { useDisclosure } from "@chakra-ui/react";
 import React, {
   createContext,
   MutableRefObject,
