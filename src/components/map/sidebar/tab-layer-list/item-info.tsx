@@ -23,8 +23,14 @@ import {
 import { overflowStyle1 } from "../../../../static/constants";
 import licenses from "../../../../static/licenses";
 
-const ListItem = ({ icon: Icon, children }) => (
-  <Box style={overflowStyle1} fontSize="sm">
+interface ListItemProps {
+  icon;
+  children;
+  title?;
+}
+
+const ListItem = ({ icon: Icon, children, title }: ListItemProps) => (
+  <Box style={overflowStyle1} fontSize="sm" title={title}>
     <Icon ml={1} mr={3} />
     {children}
   </Box>
@@ -33,7 +39,9 @@ const ListItem = ({ icon: Icon, children }) => (
 export default function ItemInfo({ layer, onDownload, mb = 0 }) {
   return (
     <Box color="gray.600" mb={mb}>
-      <ListItem icon={IconCredit}>{layer.attribution}</ListItem>
+      <ListItem icon={IconCredit} title={layer.attribution}>
+        {layer.attribution}
+      </ListItem>
       <ListItem icon={IconTag}>{layer?.tags?.join(", ")}</ListItem>
       <ListItem icon={IconLicense}>
         {layer.license ? (
@@ -54,6 +62,7 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
         <Flex justifyContent="space-between" mt={2}>
           <Button
             variant="outline"
+            colorScheme="blue"
             size="sm"
             leftIcon={<IconDownload />}
             disabled={!layer.isDownloadable}
@@ -63,7 +72,12 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
           </Button>
           <Popover>
             <PopoverTrigger>
-              <Button variant="outline" size="sm" leftIcon={<IconInfo />}>
+              <Button
+                variant="outline"
+                colorScheme="teal"
+                size="sm"
+                leftIcon={<IconInfo />}
+              >
                 More Info
               </Button>
             </PopoverTrigger>
@@ -81,7 +95,7 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
                       </tr>
                       <tr>
                         <td>
-                          <b>Author</b>
+                          <b>Uploaded</b>
                         </td>
                         <td>{layer.author.name}</td>
                       </tr>

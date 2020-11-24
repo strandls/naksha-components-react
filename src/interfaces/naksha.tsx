@@ -78,7 +78,7 @@ export interface GeoserverLayer {
   url?: string;
   createdDate?: string;
   isDownloadable?: boolean;
-  bbox?: [[number, number], [number, number]];
+  bbox?: any[];
   isAdded?: boolean;
   source: {
     type: LayerType;

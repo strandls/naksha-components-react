@@ -1,9 +1,9 @@
-import { GeoserverLayer } from "interfaces/naksha";
 import React, { useEffect, useState } from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList as List } from "react-window";
 
 import { useLayers } from "../../../../hooks/use-layers";
+import { GeoserverLayer } from "../../../../interfaces/naksha";
 import Item from "./item";
 
 export default function LayersList({ q }: { q? }) {

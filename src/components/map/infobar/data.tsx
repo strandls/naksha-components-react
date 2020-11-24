@@ -26,7 +26,7 @@ export default function InfobarData({ properties, layer }) {
             px={4}
             py={2}
             borderBottom="1px"
-            borderColor="gray.200"
+            borderColor="gray.300"
           >
             <FormLabel htmlFor={k} color="gray.500" m={0}>
               {v}

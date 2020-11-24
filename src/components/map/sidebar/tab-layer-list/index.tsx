@@ -8,7 +8,7 @@ export default function LayerList() {
   const [q, setQ] = useState<any>();
 
   return (
-    <Flex direction="column" h="full">
+    <Flex direction="column" h="100%">
       <Search onChange={setQ} name="list-all" />
       <Box className="list" flexGrow={1}>
         <LayersList q={q} />

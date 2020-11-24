@@ -1,29 +1,32 @@
-name: NodeJS
-
-on: push
-
+name: CI
+on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ["12"]
-    name: Node ${{ matrix.node }}
+        node: ["14.x"]
+        os: [ubuntu-latest]
+
     steps:
-      - uses: actions/checkout@v1
-      - name: Setup node
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Setup Yarn
-        run: npm install -g yarn@1
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
 
-      - name: Install
-        run: yarn install
+      - name: Lint
+        run: yarn lint
 
-      - name: remove postinstall hook
-        run: sed -i 's/postinstall/install-peers/g' package.json
+      - name: Test
+        run: yarn test --ci --coverage --maxWorkers=2
 
       - name: Build
         run: yarn build

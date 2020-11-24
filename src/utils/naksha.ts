@@ -1,4 +1,4 @@
-import { GeoserverLayer } from "interfaces/naksha";
+import { GeoserverLayer } from "../interfaces/naksha";
 
 /**
  * pre-processes layers list

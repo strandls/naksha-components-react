@@ -1,12 +1,7 @@
-import { object, text, withKnobs } from "@storybook/addon-knobs";
+import { Meta } from "@storybook/react/types-6-0";
 import React from "react";
 
 import { defaultNakshaProps, Previewer } from "../src";
-
-export default {
-  title: "Previewer",
-  decorators: [withKnobs]
-};
 
 const geojson = {
   type: "FeatureCollection",
@@ -38,19 +33,16 @@ const geojson = {
   ]
 };
 
-export const toStorybook = () => {
-  return (
-    <Previewer
-      defaultViewPort={object("ViewPort", defaultNakshaProps.viewPort)}
-      mapboxApiAccessToken={text(
-        "Mapbox Token",
-        process.env.STORYBOOK_MAPBOX_TOKEN
-      )}
-      data={object("data", geojson)}
-    />
-  );
+export default {
+  title: "Components"
 };
 
-toStorybook.story = {
-  name: "previewer"
+export const Previewer1 = () => {
+  return (
+    <Previewer
+      defaultViewPort={defaultNakshaProps.viewPort}
+      mapboxApiAccessToken={process.env.STORYBOOK_MAPBOX_TOKEN}
+      data={geojson}
+    />
+  );
 };

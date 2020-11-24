@@ -8,9 +8,9 @@ export default function LayerSelected() {
   const [q, setQ] = useState<any>();
 
   return (
-    <Flex direction="column" h="full">
+    <Flex direction="column" h="100%">
       <Search onChange={setQ} name="list-selected" />
-      <Box className="list" boxSize="full" overflowX="auto">
+      <Box className="list" boxSize="100%" overflowX="auto">
         <LayersList q={q} />
       </Box>
     </Flex>

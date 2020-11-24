@@ -33,7 +33,6 @@ Vector layer that shows geoserver vector layer
 git clone https://github.com/strandls/naksha-components-react.git
 cd naksha-components-react
 yarn install
-yarn install-peers -f
 ```
 
 ## 📚 Storybook
@@ -47,13 +46,13 @@ This loads the stories from `./stories`.
 ## 📦 Installing Package
 
 ```sh
-yarn add naksha-components-react @chakra-ui/react@next framer-motion
+yarn add naksha-components-react
 ```
 
 ## 📦 Usage
 
 ```tsx
-import Naksha from "naksha-components-react";
+import { Naksha } from "naksha-components-react";
 
 <Naksha
   viewPort={{ latitude: 20, longitude: 79, zoom: 3, bearing: 0, pitch: 0 }}

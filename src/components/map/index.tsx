@@ -62,7 +62,7 @@ export default function Map() {
   }, [infobarData]);
 
   return (
-    <Box boxSize="full" position="relative">
+    <Box boxSize="100%" position="relative">
       <MapGL
         {...viewPort}
         width="100%"

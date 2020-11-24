@@ -6,9 +6,9 @@ import { GeoHash } from "geohash";
  * Takes zoom level of map and returns Precision, Level and Square Size (in kms)
  *
  * @param {*} zoom
- * @returns {[number, number, number]}
+ * @returns {number[]}
  */
-export const getZoomConfig = (zoom): [number, number, number] => {
+export const getZoomConfig = (zoom): number[] => {
   if (zoom < 6) return [4, 1, 39.2];
   else if (zoom < 7) return [5, 0, 19.6];
   else if (zoom < 8) return [5, 1, 9.8];
@@ -97,7 +97,10 @@ export const geohashToJSON = (data, level: number) => ({
       : processRectangles(data, level)
 });
 
-export const getDataBins = (data: { [key: string]: number }, binCount) => {
+export const getDataBins = (
+  data: { [key: string]: number },
+  binCount: number
+) => {
   const sortedData = Object.values(data).sort((a, b) => a - b);
   const cutoff = Math.floor(sortedData.length / binCount);
   const tBins = new Array(binCount - 1)

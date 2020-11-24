@@ -7,7 +7,6 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
-import { GeoserverLayer } from "interfaces/naksha";
 import React from "react";
 import Highlight from "react-highlighter";
 
@@ -18,6 +17,7 @@ import {
 } from "../../../../components/map/icons";
 import useLayerManager from "../../../../hooks/use-layer-manager";
 import { useLayers } from "../../../../hooks/use-layers";
+import { GeoserverLayer } from "../../../../interfaces/naksha";
 import { FALLBACK_THUMB, overflowStyle } from "../../../../static/constants";
 import { getLegendUrl } from "../../../../utils/naksha";
 import ItemInfo from "../tab-layer-list/item-info";
@@ -39,12 +39,12 @@ const Item = ({ layer, q }: ItemProps) => {
     toggleLayer(layer.id, true, Number(e.target.value), false);
 
   return (
-    <Box p={4} key={layer.id} borderBottom="1px" borderColor="gray.200">
+    <Box p={4} key={layer.id} borderBottom="1px" borderColor="gray.300">
       <Stack isInline={true} spacing={4} mb={4}>
         <Image
           borderRadius="md"
           border="1px"
-          borderColor="gray.200"
+          borderColor="gray.300"
           objectFit="contain"
           flexShrink={0}
           boxSize="4.5rem"
@@ -89,6 +89,7 @@ const Item = ({ layer, q }: ItemProps) => {
       >
         <Button
           colorScheme="blue"
+          size="sm"
           variant="outline"
           hidden={!showLegend}
           onClick={onToggle}
@@ -97,6 +98,7 @@ const Item = ({ layer, q }: ItemProps) => {
           Legend
         </Button>
         <Button
+          size="sm"
           colorScheme="red"
           variant="outline"
           onClick={removeLayer}

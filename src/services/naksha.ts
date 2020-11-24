@@ -100,7 +100,7 @@ export const axDownloadLayer = async (endpoint, token, layerName) => {
   try {
     await axios.post(
       `${endpoint}/layer/download`,
-      { layerName },
+      { layerName, attributeList: [], filterArray: [] },
       { headers: { Authorization: token } }
     );
   } catch (e) {

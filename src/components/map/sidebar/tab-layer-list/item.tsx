@@ -1,12 +1,16 @@
 import { Box, Checkbox, Image, Spinner, Stack, Text } from "@chakra-ui/react";
-import { GeoserverLayer } from "interfaces/naksha";
 import React, { memo } from "react";
 import { useState } from "react";
 import Highlight from "react-highlighter";
 import { areEqual } from "react-window";
 
 import useLayerManager from "../../../../hooks/use-layer-manager";
-import { FALLBACK_THUMB, overflowStyle } from "../../../../static/constants";
+import { GeoserverLayer } from "../../../../interfaces/naksha";
+import {
+  FALLBACK_THUMB,
+  overflowStyle,
+  overflowStyle1
+} from "../../../../static/constants";
 import ItemInfo from "./item-info";
 
 interface ItemProps {
@@ -33,12 +37,12 @@ const Item = memo<ItemProps>(({ data: { q = "", data }, index, style }) => {
       style={style}
       p={4}
       borderBottom="1px"
-      borderColor="gray.200"
+      borderColor="gray.300"
     >
       <Stack isInline={true} spacing={3} mb={1}>
         <Box minW="1.3rem">
           {isLoading ? (
-            <Spinner emptyColor="gray.200" color="blue.500" size="md" />
+            <Spinner size="md" />
           ) : (
             <Checkbox
               size="lg"
@@ -50,7 +54,7 @@ const Item = memo<ItemProps>(({ data: { q = "", data }, index, style }) => {
         <Image
           borderRadius="md"
           border="1px"
-          borderColor="gray.200"
+          borderColor="gray.300"
           objectFit="contain"
           flexShrink={0}
           p={1}
@@ -60,7 +64,9 @@ const Item = memo<ItemProps>(({ data: { q = "", data }, index, style }) => {
         />
         <div>
           <Text mb={1}>
-            <Highlight search={q}>{layer.title}</Highlight>
+            <Highlight style={overflowStyle1} title={layer.title} search={q}>
+              {layer.title}
+            </Highlight>
           </Text>
           <Box
             fontSize="sm"
