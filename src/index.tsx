@@ -1,5 +1,5 @@
-export * from "./components/map-area-draw";
-export * from "./components/previewer";
-export * from "./interfaces/naksha";
-export * from "./naksha";
-export * from "./static/constants";
+export { MapAreaDraw } from "./components/map-area-draw";
+export { Previewer } from "./components/previewer";
+export { ExtendedMarkerProps } from "./interfaces/naksha";
+export { Naksha } from "./naksha";
+export { defaultNakshaProps } from "./static/constants";

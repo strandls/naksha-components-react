@@ -5,12 +5,15 @@ import { geohashToJSON, getDataBins, getZoomConfig } from "../utils/grid";
 import { parseGeoserverLayersXml } from "../utils/naksha";
 
 export const axGetGeoserverLayers = async (
+  nakshaEndpointToken,
   nakshaApiEndpoint,
   geoserver,
   selectedLayers
 ) => {
   try {
-    const res = await axios.get(`${nakshaApiEndpoint}/layer/all`);
+    const res = await axios.get(`${nakshaApiEndpoint}/layer/all`, {
+      headers: { Authorization: nakshaEndpointToken }
+    });
     return parseGeoserverLayersXml(
       res.data,
       nakshaApiEndpoint,

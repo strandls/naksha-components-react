@@ -1,6 +1,6 @@
 {
   "name": "naksha-components-react",
-  "version": "3.4.0",
+  "version": "3.5.0-canary.5",
   "main": "dist/index.js",
   "module": "dist/naksha.esm.js",
   "typings": "dist/index.d.ts",
@@ -8,8 +8,7 @@
   "license": "Apache-2.0",
   "repository": "strandls/naksha-components-react",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "keywords": [
     "maps",
@@ -94,23 +93,12 @@
       "pre-commit": "tsdx lint"
     }
   },
-  "eslint": {
-    "rules": {
-      "jsx-a11y/accessible-emoji": "off",
-      "react-hooks/exhaustive-deps": "off",
-      "no-console": [
-        "error",
-        {
-          "allow": [
-            "warn",
-            "error",
-            "debug"
-          ]
-        }
-      ]
-    }
-  },
   "resolutions": {
     "@turf/difference": "6.0.1"
+  },
+  "filesize": {
+    "track": [
+      "./dist/*.production.min.js"
+    ]
   }
 }

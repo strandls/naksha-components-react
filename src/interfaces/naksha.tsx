@@ -33,6 +33,7 @@ export interface NakshaProps {
   loadToC?: boolean;
   showToC?: boolean;
 
+  nakshaEndpointToken?: string;
   mapboxApiAccessToken: string;
   nakshaApiEndpoint?: string;
   bearerToken?: string;

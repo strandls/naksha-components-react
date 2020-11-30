@@ -1,0 +1,13 @@
+{
+  "extends": ["react-app"],
+  "rules": {
+    "jsx-a11y/accessible-emoji": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error", "debug"]
+      }
+    ]
+  }
+}

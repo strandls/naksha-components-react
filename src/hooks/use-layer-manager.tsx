@@ -23,6 +23,7 @@ export default function useLayerManager() {
   const {
     setLayers,
     geoserver,
+    nakshaEndpointToken,
     nakshaApiEndpoint,
     mapRef,
     layers,
@@ -399,6 +400,7 @@ export default function useLayerManager() {
    */
   const getGeoserverLayers = async () => {
     const layersData = await axGetGeoserverLayers(
+      nakshaEndpointToken,
       nakshaApiEndpoint,
       geoserver,
       selectedLayers
