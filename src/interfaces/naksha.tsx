@@ -94,7 +94,7 @@ export interface GeoserverLayer {
     styleIndex?;
     propertyMap?;
     titleColumn?;
-    summeryColumn?;
+    summaryColumn?;
     [key: string]: any;
   };
 }

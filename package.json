@@ -1,12 +1,13 @@
 {
   "name": "naksha-components-react",
-  "version": "3.5.0-canary.5",
+  "version": "3.5.0-canary.7",
   "main": "dist/index.js",
   "module": "dist/naksha.esm.js",
   "typings": "dist/index.d.ts",
   "author": "Harsh Zalavadiya <harsh@foobars.in> (twitter: @zhnebula)",
   "license": "Apache-2.0",
   "repository": "strandls/naksha-components-react",
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -35,6 +36,7 @@
     "@chakra-ui/react": "^1.0.1",
     "@emotion/react": "^11.1.1",
     "@emotion/styled": "^11.0.0",
+    "@hookform/resolvers": "^1.1.2",
     "@turf/bbox": "^6.0.1",
     "axios": "^0.21.0",
     "boundingbox": "^1.2.3",
@@ -42,14 +44,21 @@
     "framer-motion": "^2.9.4",
     "geohash": "^0.0.1",
     "immer": "^8.0.0",
+    "react-data-table-component": "^6.11.6",
+    "react-dropzone": "^11.2.4",
     "react-gbus": "^1.1.2",
     "react-highlighter": "^0.4.3",
+    "react-hook-form": "^6.12.2",
     "react-map-gl": "^5.2.10",
     "react-map-gl-draw": "^0.21.1",
+    "react-multi-select-component": "^3.0.7",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-window": "^1.8.6",
+    "shapefile": "^0.6.6",
+    "styled-components": "^5.2.1",
     "ts-debounce": "^2.0.1",
-    "use-immer": "^0.4.2"
+    "use-immer": "^0.4.2",
+    "yup": "^0.32.6"
   },
   "prettier": {
     "printWidth": 80,
