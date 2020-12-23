@@ -37,6 +37,26 @@ export const axGetGeoserverLayerStyleList = async (id, endpoint) => {
   }
 };
 
+export const axPublishLayer = async (
+  nakshaEndpointToken,
+  nakshaApiEndpoint,
+  layerId
+) => {
+  try {
+    await axios.put(
+      `${nakshaApiEndpoint}/layer/active/${layerId}`,
+      {},
+      {
+        headers: { Authorization: nakshaEndpointToken }
+      }
+    );
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
 export const axGetGeoserverLayerStyle = async (
   layername,
   workspace,

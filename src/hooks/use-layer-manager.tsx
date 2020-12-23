@@ -9,6 +9,7 @@ import {
   axGetGeoserverLayers,
   axGetGeoserverLayerStyle,
   axGetGeoserverLayerStyleList,
+  axPublishLayer,
   getGridLayerData
 } from "../services/naksha";
 import {
@@ -417,6 +418,10 @@ export default function useLayerManager() {
     }
   };
 
+  const publishLayer = async layerId => {
+    await axPublishLayer(nakshaEndpointToken, nakshaApiEndpoint, layerId);
+  };
+
   return {
     getGeoserverLayers,
     onMapClick,
@@ -424,6 +429,7 @@ export default function useLayerManager() {
     reloadLayers,
     renderHLData,
     toggleLayer,
+    publishLayer,
     handleOnLayerDownload,
     onMapEventVector
   };

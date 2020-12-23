@@ -29,6 +29,8 @@ export const Naksha1 = () => (
     viewPort={defaultNakshaProps.viewPort}
     loadToC={true}
     showToC={true}
+    managePublishing={true}
+    nakshaEndpointToken={process.env.STORYBOOK_NAKSHA_TOKEN}
     mapboxApiAccessToken={process.env.STORYBOOK_MAPBOX_TOKEN}
     nakshaApiEndpoint={process.env.STORYBOOK_NAKSHA_ENDPOINT}
     geoserver={JSON.parse(process.env.STORYBOOK_GEOSERVER)}

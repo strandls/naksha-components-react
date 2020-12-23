@@ -20,8 +20,10 @@ import {
   IconLicense,
   IconTag
 } from "../../../../components/map/icons";
+import { useLayers } from "../../../../hooks/use-layers";
 import { overflowStyle1 } from "../../../../static/constants";
 import licenses from "../../../../static/licenses";
+import ManagePublishing from "./manage-publishing";
 
 interface ListItemProps {
   icon;
@@ -37,6 +39,8 @@ const ListItem = ({ icon: Icon, children, title }: ListItemProps) => (
 );
 
 export default function ItemInfo({ layer, onDownload, mb = 0 }) {
+  const { managePublishing } = useLayers();
+
   return (
     <Box color="gray.600" mb={mb}>
       <ListItem icon={IconCredit} title={layer.attribution}>
@@ -60,6 +64,12 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
       </ListItem>
       {layer.source.type !== "grid" ? (
         <Flex justifyContent="space-between" mt={2}>
+          {managePublishing && (
+            <ManagePublishing
+              layerStatus={layer.layerStatus}
+              layerId={layer.id}
+            />
+          )}
           <Button
             variant="outline"
             colorScheme="blue"
