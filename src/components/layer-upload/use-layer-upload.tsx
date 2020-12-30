@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "redaxios";
 import { useImmer } from "use-immer";
-import axios from "axios";
 
 export interface LayerUploadProviderProps {
   nakshaEndpoint?: string;

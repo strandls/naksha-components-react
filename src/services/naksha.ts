@@ -1,5 +1,5 @@
-import axios from "axios";
 import cb from "colorbrewer";
+import axios from "redaxios";
 
 import { geohashToJSON, getDataBins, getZoomConfig } from "../utils/grid";
 import { parseGeoserverLayersXml } from "../utils/naksha";

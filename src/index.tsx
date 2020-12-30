@@ -2,5 +2,5 @@ export { MapAreaDraw } from "./components/map-area-draw";
 export { Previewer } from "./components/previewer";
 export { LayerUpload } from "./components/layer-upload";
 export { ExtendedMarkerProps } from "./interfaces/naksha";
-export { Naksha } from "./naksha";
+export { Naksha } from "./components/naksha";
 export { defaultNakshaProps } from "./static/constants";

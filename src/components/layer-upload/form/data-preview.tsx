@@ -1,8 +1,8 @@
 import { Box, Heading } from "@chakra-ui/react";
 import React, { useMemo } from "react";
-import DataTable from "react-data-table-component";
 
 import useLayerUpload from "../use-layer-upload";
+import DataTable from "./data-table";
 
 export default function DataPreview() {
   const { shapeFiles } = useLayerUpload();
@@ -21,13 +21,7 @@ export default function DataPreview() {
       <Heading size="md" mb={4}>
         🏁 Data Preview
       </Heading>
-      <Box border="1px solid" borderColor="gray.200" borderRadius="md">
-        <DataTable
-          columns={columns}
-          data={shapeFiles.dbf.meta.rows}
-          noHeader={true}
-        />
-      </Box>
+      <DataTable columns={columns} data={shapeFiles.dbf.meta.rows} />
     </Box>
   );
 }
