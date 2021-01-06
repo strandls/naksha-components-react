@@ -2,6 +2,11 @@
 .DS_Store
 .cache
 .env
+dist
 
 node_modules
-dist
+packages/*/node_modules
+packages/*/dist
+
+# yarn workspace only need root yarn.lock, ignore all yarn.lock(s) in subfolders
+*/**/yarn.lock
