@@ -1,0 +1,89 @@
+import {
+  BaseLayer,
+  defaultMapStyles,
+  defaultViewPort as dv,
+  updateWorldViewRef,
+} from "@ibp/naksha-commons";
+import bbox from "@turf/bbox";
+import React, { useEffect, useRef, useState } from "react";
+import MapGL, { Layer, Source, WebMercatorViewport } from "react-map-gl";
+
+import { NakshaMapboxViewProps } from "./interfaces";
+import Navigation from "./navigation";
+import { featureStyle, pointStyle } from "./static/constants";
+
+/**
+ * Renders Provided geojson.
+ *
+ * @export
+ * @param {NakshaMapboxViewProps} {
+ *   defaultViewPort,
+ *   data,
+ *   onFeaturesChange,
+ *   baseLayer,
+ *   mapboxApiAccessToken
+ * }
+ * @returns
+ */
+export function NakshaMapboxView({
+  defaultViewPort,
+  data,
+  baseLayer,
+  mapboxApiAccessToken,
+}: NakshaMapboxViewProps) {
+  const mapRef = useRef<any>(null);
+  const [viewPort, setViewPort] = useState(defaultViewPort || dv);
+
+  const updateViewport = () => {
+    if (!data) {
+      return;
+    }
+
+    const b = bbox(data);
+    const { longitude, latitude, zoom } = new WebMercatorViewport(
+      viewPort
+    ).fitBounds([
+      [b[0], b[1]],
+      [b[2], b[3]],
+    ]);
+
+    setViewPort((o) => ({
+      ...o,
+      longitude,
+      latitude,
+      zoom: zoom > (viewPort.maxZoom || -1) ? viewPort.maxZoom : zoom - 0.2,
+    }));
+  };
+
+  const onLoad = () => {
+    mapRef?.current?.getMap().on("style.load", () => {
+      updateWorldViewRef(mapRef);
+    });
+    updateViewport();
+  };
+
+  useEffect(() => {
+    updateViewport();
+  }, [data]);
+
+  return (
+    <MapGL
+      {...viewPort}
+      width="100%"
+      height="100%"
+      mapStyle={defaultMapStyles[baseLayer || BaseLayer.MAP_STREETS].style}
+      onLoad={onLoad}
+      ref={mapRef}
+      onViewportChange={setViewPort}
+      mapboxApiAccessToken={mapboxApiAccessToken}
+    >
+      <Navigation onViewportChange={setViewPort} />
+      {data && (
+        <Source type="geojson" data={data}>
+          <Layer {...pointStyle} />
+          <Layer {...featureStyle} />
+        </Source>
+      )}
+    </MapGL>
+  );
+}
