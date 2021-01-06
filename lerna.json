@@ -1,0 +1,16 @@
+{
+  "npmClient": "yarn",
+  "packages": ["packages/*"],
+  "useWorkspaces": true,
+  "version": "3.6.0",
+  "command": {
+    "version": {
+      "exact": true
+    },
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore: 🤖",
+      "ignoreChanges": ["**/stories/**"]
+    }
+  }
+}

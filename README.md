@@ -1,31 +1,41 @@
 # Naksha Components React 🗺️
 
-[![GitHub Actions Status](https://github.com/strandls/naksha-components-react/workflows/NodeJS/badge.svg)](https://github.com/strandls/naksha-components-react/actions)
+[![GitHub Actions Status](https://github.com/strandls/naksha-components-react/workflows/CI/badge.svg)](https://github.com/strandls/naksha-components-react/actions)
 ![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/naksha-components-react/latest)
 [![typed with TypeScript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://www.typescriptlang.org)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![stable release](https://badgen.net/github/release/strandls/naksha-components-react/stable)](https://github.com/strandls/naksha-components-react/releases)
 
-Mapbox GL Components for IndiaBiodiversity
-
-> As of now full documentation is only available via TypeScript autocomplete but we are working on adding complete documentation
-
-## Grid Layer
-
-Grid layer that accepts geohashes and plots grid according to it
+Map Components for Biodiversity Informatics Platform
 
 ![Grid Layer](./preview/geohash-grid-layer.gif)
 
-## Geoserver Vector Layer
-
-Vector layer that shows geoserver vector layer
-
 ![Geoserver Vector Layer](./preview/geoserver-vector-layer.gif)
 
-- Render grid layer from geohashed data (ideal for elasticsearch)
-- Render vector tiles directly from geoserver
-- Multiple View
-- Multi Style
+## 🔌 Packages
+
+```sh
+# contains reusable code shared with other packages
+@ibp/naksha-commons
+
+# ability to draw polygons over google-maps
+@ibp/naksha-gmaps-draw
+
+# ability to draw polygons over mapbox-gl
+@ibp/naksha-mapbox-draw
+
+# component with ability to list and show GeoServer layers
+@ibp/naksha-mapbox-list
+
+# accepts GeoJSON and shows them over mapbox
+@ibp/naksha-mapbox-view
+
+# component that works with naksha-api to enable layer upload
+@ibp/naksha-upload
+
+# bundle combining all above packages
+naksha-components-react
+```
 
 ## 📦 Setup
 
@@ -33,59 +43,33 @@ Vector layer that shows geoserver vector layer
 git clone https://github.com/strandls/naksha-components-react.git
 cd naksha-components-react
 yarn install
-yarn add --peer --pure-lockfile @chakra-ui/core@next framer-motion
+yarn bootstrap
 ```
 
 ## 📚 Storybook
+
+for each library examples are available as storybook stories at `packages/**/stories/*.stories.tsx`
 
 ```sh
 yarn storybook
 ```
 
-This loads the stories from `./stories`.
-
-## 📦 Installing Package
-
-```sh
-yarn add naksha-components-react @chakra-ui/core framer-motion
-```
-
 ## 📦 Usage
 
-```tsx
-import Naksha from "naksha-components-react";
-
-<Naksha
-  viewPort={{ latitude: 20, longitude: 79, zoom: 3, bearing: 0, pitch: 0 }}
-  loadToC={true}
-  showToC={false}
-  mapboxApiAccessToken="pk.xxx"
-  nakshaApiEndpoint="/naksha-api/api"
-  geoserver={{ endpoint: "/geoserver", store: "ibp", workspace: "biodiv" }}
-  layers={[
-    {
-      id: "global-observations",
-      title: "Global Observations",
-      isAdded: true,
-      source: {
-        type: "grid",
-        endpoint:
-          "/your-api-endpoint?t={top}&l={left}&b={bottom}&r={right}&p={precision}"
-      }
-    }
-  ]}
-/>;
+```sh
+yarn add naksha-components-react
 ```
 
-## 🌀 Using without `@chakra-ui/core`
+## 🌀 Using without `@chakra-ui/react`
 
-If you are using `<Naksha/>` in a project where `chakra-ui` is not initialized you need to do so manually like below
+If you are using any component in a project where `chakra-ui` is not initialized/used you need to do so manually like below
 
 ```jsx
-import Naksha, {
+import {
+  Naksha,
   CSSReset,
   theme,
-  ThemeProvider
+  ThemeProvider,
 } from "naksha-components-react";
 
 <ThemeProvider theme={theme}>
@@ -96,7 +80,7 @@ import Naksha, {
 
 ## 🔧 Configuration
 
-Code quality checks are done with `prettier`, `husky`, and `lint-staged`.
+Code quality checks are done with `prettier`, `eslint`.
 
 ## 🤠 Credits
 

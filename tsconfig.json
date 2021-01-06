@@ -1,27 +1,22 @@
 {
-  "include": ["src", "types", "test"],
   "compilerOptions": {
-    "target": "es5",
     "module": "esnext",
-    "lib": ["dom", "esnext"],
+    "moduleResolution": "node",
+    "jsx": "react",
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./",
+    "esModuleInterop": true,
+    "strict": true,
+    "target": "ESNext",
     "noImplicitAny": false,
-    "noImplicitThis": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "baseUrl": "./",
-    "paths": {
-      "@": ["./"],
-      "*": ["src/*", "node_modules/*"]
-    },
-    "jsx": "react",
-    "esModuleInterop": true
-  }
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["packages"],
+  "exclude": ["node_modules"]
 }
