@@ -1,7 +1,7 @@
 {
-  "name": "@ibp/example",
+  "name": "naksha-components-react",
   "author": "harshzalavadiya",
-  "module": "dist/example.esm.js",
+  "module": "dist/naksha.esm.js",
   "version": "3.6.1",
   "license": "Apache-2.0",
   "main": "dist/index.js",
@@ -23,7 +23,6 @@
   "peerDependencies": {
     "react": ">=16"
   },
-  "private": true,
   "publishConfig": {
     "access": "public"
   },

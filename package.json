@@ -18,7 +18,7 @@
     "lint": "lerna run lint --no-private --stream",
     "prerelease": "yarn build",
     "release": "lerna publish --no-private",
-    "storybook": "start-storybook -p 6006"
+    "storybook": "start-storybook -p 3000"
   },
   "dependencies": {},
   "devDependencies": {

@@ -14,34 +14,18 @@ Map Components for Biodiversity Informatics Platform
 
 ## 🔌 Packages
 
-```sh
-# contains reusable code shared with other packages
-@ibp/naksha-commons
+- [naksha-components-react](./packages/naksha-components-react/README.md)
+- [@ibp/naksha-commons](./packages/naksha-commons/README.md)
+- [@ibp/naksha-gmaps-draw](./packages/naksha-gmaps-draw/README.md)
+- [@ibp/naksha-mapbox-draw](./packages/naksha-mapbox-draw/README.md)
+- [@ibp/naksha-mapbox-list](./packages/naksha-mapbox-list/README.md)
+- [@ibp/naksha-mapbox-view](./packages/naksha-mapbox-view/README.md)
+- [@ibp/naksha-upload](./packages/naksha-upload/README.md)
 
-# ability to draw polygons over google-maps
-@ibp/naksha-gmaps-draw
-
-# ability to draw polygons over mapbox-gl
-@ibp/naksha-mapbox-draw
-
-# component with ability to list and show GeoServer layers
-@ibp/naksha-mapbox-list
-
-# accepts GeoJSON and shows them over mapbox
-@ibp/naksha-mapbox-view
-
-# component that works with naksha-api to enable layer upload
-@ibp/naksha-upload
-
-# bundle combining all above packages
-naksha-components-react
-```
-
-## 📦 Setup
+## 📦 Development Setup
 
 ```sh
 git clone https://github.com/strandls/naksha-components-react.git
-cd naksha-components-react
 yarn install
 yarn bootstrap
 ```
@@ -54,28 +38,17 @@ for each library examples are available as storybook stories at `packages/**/sto
 yarn storybook
 ```
 
-## 📦 Usage
-
-```sh
-yarn add naksha-components-react
-```
-
 ## 🌀 Using without `@chakra-ui/react`
 
 If you are using any component in a project where `chakra-ui` is not initialized/used you need to do so manually like below
 
 ```jsx
-import {
-  Naksha,
-  CSSReset,
-  theme,
-  ThemeProvider,
-} from "naksha-components-react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { ComponentX } from "naksha-components-react";
 
-<ThemeProvider theme={theme}>
-  <CSSReset />
-  <Naksha />
-</ThemeProvider>;
+<ChakraProvider>
+  <ComponentX />
+</ChakraProvider>;
 ```
 
 ## 🔧 Configuration
