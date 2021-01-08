@@ -18,6 +18,7 @@
     "lint": "lerna run lint --no-private --stream",
     "prerelease": "yarn build",
     "release": "lerna publish --no-private",
+    "release:local": "lerna publish --no-git-tag-version --force-publish --no-private --no-push --registry=\"http://localhost:4873/\"",
     "storybook": "start-storybook -p 3000"
   },
   "dependencies": {},
