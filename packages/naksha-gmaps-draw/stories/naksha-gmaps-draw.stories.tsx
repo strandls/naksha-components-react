@@ -6,9 +6,10 @@ export const NakshaGmapsDrawStory = () => (
   <div style={{ height: "100vh", width: "100vw" }}>
     <NakshaGmapsDraw
       isAutocomplete={true}
+      isMultiple={true}
       gmapApiAccessToken={process.env.STORYBOOK_GMAP_TOKEN}
       // Restricts autocomplete + customization searches to India
-      gmapRegion={"IN"}
+      gmapRegion="IN"
     />
   </div>
 );

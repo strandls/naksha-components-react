@@ -8,6 +8,6 @@ export const GMAP_FEATURE_TYPES = {
 
 export const GMAP_OPTIONS = {
   mapTypeControlOptions: {
-    position: (window as any).google?.maps?.ControlPosition?.BOTTOM_LEFT,
+    position: 10,
   },
 };

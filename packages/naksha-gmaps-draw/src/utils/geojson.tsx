@@ -8,22 +8,20 @@ import { GMAP_FEATURE_TYPES } from "../static/constants";
  */
 export const placeToGeoJsonFeature = (place) => {
   return {
-    type: "Feature",
+    type: GMAP_FEATURE_TYPES.POINT,
     properties: {
       id: new Date().getTime(),
       name: place.name,
       formatted_address: place.formatted_address,
     },
-    geometry: {
-      type: GMAP_FEATURE_TYPES.POINT,
-      coordinates: Object.values(place.geometry.location.toJSON()),
-    },
+    coordinates: Object.values(place.geometry.location.toJSON()).reverse(),
   };
 };
 
 /**
- * converts geometry returned from data object to GeoJSON
- * the reason for coverting this is so we can provide consistant onChange callback
+ * - converts geometry returned from data object to GeoJSON
+ * - the reason for coverting this is so we can provide consistant onChange callback
+ * - we *reverse* coordinates to keep compatibility with mapbox
  *
  * @param {*} geometry
  * @return {*}
@@ -34,26 +32,20 @@ export const geometryToGeoJsonFeature = (geometry) => {
   switch (geometry.getType()) {
     case GMAP_FEATURE_TYPES.POINT: {
       return {
-        type: "Feature",
+        type: GMAP_FEATURE_TYPES.POINT,
         properties: { id },
-        geometry: {
-          type: GMAP_FEATURE_TYPES.POINT,
-          coordinates: Object.values(geometry.get().toJSON()),
-        },
+        coordinates: Object.values(geometry.get().toJSON()).reverse(),
       };
     }
 
     case GMAP_FEATURE_TYPES.POLYGON: {
       const clist: any[] = [];
-      geometry.forEachLatLng((c) => clist.push([c.lat(), c.lng()]));
+      geometry.forEachLatLng((c) => clist.push([c.lng(), c.lat()]));
 
       return {
-        type: "Feature",
+        type: GMAP_FEATURE_TYPES.POLYGON,
         properties: { id },
-        geometry: {
-          type: GMAP_FEATURE_TYPES.POLYGON,
-          coordinates: [clist],
-        },
+        coordinates: [clist],
       };
     }
 

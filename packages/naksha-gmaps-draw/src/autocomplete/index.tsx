@@ -11,7 +11,7 @@ const InputStyles: CSSProperties = {
   height: "2rem",
   padding: "0 0.5rem",
   borderRadius: "0.25rem",
-  boxShadow: "0 2px 2px rgba(0, 0, 0, 0.1)",
+  boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 4px -1px",
   outline: "none",
   textOverflow: "ellipses",
   position: "absolute",
