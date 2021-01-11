@@ -1,6 +1,7 @@
 export const ACTION_TYPES = {
   ADD: "add",
   CLEAR: "clear",
+  REPLACE: "replace",
 };
 
 export function featuresReducer(
@@ -13,6 +14,9 @@ export function featuresReducer(
 
     case ACTION_TYPES.CLEAR:
       return [];
+
+    case ACTION_TYPES.REPLACE:
+      return data;
 
     default:
       return state;

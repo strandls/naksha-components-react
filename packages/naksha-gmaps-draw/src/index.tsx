@@ -42,7 +42,7 @@ export function NakshaGmapsDraw({
 
   const reloadFeatures = () => {
     // Clear Map
-    mapRef.current.state.map.data.forEach(function(feature) {
+    mapRef.current.state.map.data.forEach(function (feature) {
       mapRef.current.state.map.data.remove(feature);
     });
 
@@ -75,9 +75,8 @@ export function NakshaGmapsDraw({
       JSON.stringify(features) !== JSON.stringify(defaultFeatures)
     ) {
       dispatch({
-        action: ACTION_TYPES.ADD,
+        action: ACTION_TYPES.REPLACE,
         data: defaultFeatures,
-        isMultiple: false,
       });
     }
   }, [defaultFeatures]);
