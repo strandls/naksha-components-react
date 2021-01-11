@@ -1,13 +1,13 @@
 import { GMAPS_LIBRARIES, mapboxToGmapsViewPort } from "@ibp/naksha-commons";
 import { Data, GoogleMap, LoadScriptNext } from "@react-google-maps/api";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 
 import NakshaAutocomplete from "./autocomplete";
 import NakshaFeatures from "./features";
 import ClearFeatures from "./features/clear-features";
 import { ACTION_TYPES, featuresReducer } from "./reducers/features";
 import { GMAP_FEATURE_TYPES, GMAP_OPTIONS } from "./static/constants";
-import { geometryToGeoJsonFeature } from "./utils/geojson";
+import { calculateBounds, geometryToGeoJsonFeature } from "./utils/geojson";
 
 export interface NakshaGmapsDrawProps {
   defaultViewPort?;
@@ -30,24 +30,32 @@ export function NakshaGmapsDraw({
   isReadOnly,
   isMultiple,
   isAutocomplete,
-  gmapRegion
+  gmapRegion,
 }: NakshaGmapsDrawProps) {
+  const mapRef = useRef<any>(null);
   const [viewPort] = useState(mapboxToGmapsViewPort(defaultViewPort));
   const [features, dispatch] = useReducer(featuresReducer, defaultFeatures);
 
   useEffect(() => {
     onFeaturesChange && onFeaturesChange(features?.[0]);
+
+    // Auto fit to bounds
+    const bounds = calculateBounds(features);
+    bounds && mapRef.current.fitBounds(bounds);
   }, [features]);
 
   /**
    *  can simulate isControlled if `defaultFeatures` are going to be changed
    */
   useEffect(() => {
-    if (isControlled && JSON.stringify(features) !== JSON.stringify(defaultFeatures)) {
+    if (
+      isControlled &&
+      JSON.stringify(features) !== JSON.stringify(defaultFeatures)
+    ) {
       dispatch({
         action: ACTION_TYPES.ADD,
         data: defaultFeatures,
-        isMultiple: false
+        isMultiple: false,
       });
     }
   }, [defaultFeatures]);
@@ -69,7 +77,9 @@ export function NakshaGmapsDraw({
     <LoadScriptNext
       googleMapsApiKey={gmapApiAccessToken}
       region={gmapRegion}
-      libraries={isAutocomplete ? GMAPS_LIBRARIES.AUTOCOMPLETE : GMAPS_LIBRARIES.DEFAULT}
+      libraries={
+        isAutocomplete ? GMAPS_LIBRARIES.AUTOCOMPLETE : GMAPS_LIBRARIES.DEFAULT
+      }
     >
       <GoogleMap
         id="naksha-gmaps-draw"
@@ -77,15 +87,20 @@ export function NakshaGmapsDraw({
         zoom={viewPort.zoom}
         center={viewPort.center}
         options={GMAP_OPTIONS}
+        onLoad={(map) => {
+          mapRef.current = map;
+        }}
       >
         {isMultiple && <ClearFeatures onClick={onClearFeatures} />}
-        {isAutocomplete && <NakshaAutocomplete addFeature={addFeature} gmapRegion={gmapRegion} />}
+        {isAutocomplete && (
+          <NakshaAutocomplete addFeature={addFeature} gmapRegion={gmapRegion} />
+        )}
         {!isReadOnly && (
           <Data
             options={{
               controls: [GMAP_FEATURE_TYPES.POINT, GMAP_FEATURE_TYPES.POLYGON],
               drawingMode: GMAP_FEATURE_TYPES.POLYGON,
-              featureFactory: onFeatureAdded
+              featureFactory: onFeatureAdded,
             }}
           />
         )}

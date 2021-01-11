@@ -14,7 +14,7 @@
     "clean": "lerna clean --yes && rm -rf node_modules",
     "commit": "git-cz",
     "dedup": "yarn-deduplicate --strategy highest yarn.lock",
-    "format": "prettier --config ./.prettierrc --ignore-path ./.gitignore --write .",
+    "format": "prettier --config ./.prettierrc --write .",
     "lint": "lerna run lint --no-private --stream",
     "prerelease": "yarn build",
     "release": "lerna publish --no-private",

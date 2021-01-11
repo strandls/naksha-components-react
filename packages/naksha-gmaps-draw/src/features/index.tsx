@@ -34,7 +34,9 @@ export default function NakshaFeatures({ data }) {
               );
 
             default:
-              console.warn("Unknown data type was supplied to <NakshaFeatures/>");
+              console.warn(
+                "Unknown data type was supplied to <NakshaFeatures/>"
+              );
               return <Fragment key={-1} />;
           }
         })}
