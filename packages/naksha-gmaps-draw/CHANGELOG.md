@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.9](https://github.com/strandls/naksha-components-react/compare/v3.6.8...v3.6.9) (2021-01-11)
+
+
+### Bug Fixes
+
+* 🐛 rendering error controlled component ([b520912](https://github.com/strandls/naksha-components-react/commit/b520912737f1a66ce5019e7694d5af735f5c770f))
+
+
+
+
+
 ## [3.6.8](https://github.com/strandls/naksha-components-react/compare/v3.6.7...v3.6.8) (2021-01-11)
 
 **Note:** Version bump only for package @ibp/naksha-gmaps-draw
