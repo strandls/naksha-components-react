@@ -114,7 +114,7 @@ export function NakshaGmapsDraw({
         ref={mapRef}
         onLoad={onMapLoaded}
       >
-        <ClearFeatures onClick={onClearFeatures} />
+        {isMultiple && <ClearFeatures onClick={onClearFeatures} />}
         {isAutocomplete && (
           <NakshaAutocomplete addFeature={addFeature} gmapRegion={gmapRegion} />
         )}
