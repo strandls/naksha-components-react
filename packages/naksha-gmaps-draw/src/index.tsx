@@ -3,11 +3,14 @@ import { Data, GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 
 import NakshaAutocomplete from "./autocomplete";
-import NakshaFeatures from "./features";
 import ClearFeatures from "./features/clear-features";
 import { ACTION_TYPES, featuresReducer } from "./reducers/features";
 import { GMAP_FEATURE_TYPES, GMAP_OPTIONS } from "./static/constants";
-import { calculateBounds, geometryToGeoJsonFeature } from "./utils/geojson";
+import {
+  calculateBounds,
+  geometryToGeoJsonFeature,
+  toFullGeoJson,
+} from "./utils/geojson";
 
 export interface NakshaGmapsDrawProps {
   defaultViewPort?;
@@ -35,14 +38,33 @@ export function NakshaGmapsDraw({
   const mapRef = useRef<any>(null);
   const [viewPort] = useState(mapboxToGmapsViewPort(defaultViewPort));
   const [features, dispatch] = useReducer(featuresReducer, defaultFeatures);
+  const [isLoaded, setIsLoaded] = useState<boolean>();
+
+  const reloadFeatures = () => {
+    // Clear Map
+    mapRef.current.state.map.data.forEach(function(feature) {
+      mapRef.current.state.map.data.remove(feature);
+    });
+
+    // Recalculate GeoJson from features list
+    const fullGeoJson = toFullGeoJson(features);
+
+    if (fullGeoJson) {
+      fullGeoJson && mapRef.current.state.map.data.addGeoJson(fullGeoJson);
+
+      // Calculate bounds from GeoJson
+      const bounds = calculateBounds(fullGeoJson);
+      bounds && mapRef.current.state.map.fitBounds(bounds);
+    }
+  };
 
   useEffect(() => {
-    onFeaturesChange && onFeaturesChange(features?.[0]);
+    if (isLoaded) {
+      onFeaturesChange && onFeaturesChange(features);
 
-    // Auto fit to bounds
-    const bounds = calculateBounds(features);
-    bounds && mapRef.current.fitBounds(bounds);
-  }, [features]);
+      reloadFeatures();
+    }
+  }, [isLoaded, features]);
 
   /**
    *  can simulate isControlled if `defaultFeatures` are going to be changed
@@ -73,6 +95,8 @@ export function NakshaGmapsDraw({
     dispatch({ action: ACTION_TYPES.CLEAR });
   };
 
+  const onMapLoaded = () => setIsLoaded(true);
+
   return (
     <LoadScriptNext
       googleMapsApiKey={gmapApiAccessToken}
@@ -87,11 +111,10 @@ export function NakshaGmapsDraw({
         zoom={viewPort.zoom}
         center={viewPort.center}
         options={GMAP_OPTIONS}
-        onLoad={(map) => {
-          mapRef.current = map;
-        }}
+        ref={mapRef}
+        onLoad={onMapLoaded}
       >
-        {isMultiple && <ClearFeatures onClick={onClearFeatures} />}
+        <ClearFeatures onClick={onClearFeatures} />
         {isAutocomplete && (
           <NakshaAutocomplete addFeature={addFeature} gmapRegion={gmapRegion} />
         )}
@@ -104,7 +127,6 @@ export function NakshaGmapsDraw({
             }}
           />
         )}
-        <NakshaFeatures data={features} />
       </GoogleMap>
     </LoadScriptNext>
   );

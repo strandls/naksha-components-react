@@ -1,5 +1,6 @@
+import bbox from "@turf/bbox";
+
 import { GMAP_FEATURE_TYPES } from "../static/constants";
-import bbox from "@turf/bbox"
 
 /**
  * Used with `<AutoComplete/>` component to convert search result to GeoJSON marker
@@ -41,7 +42,12 @@ export const geometryToGeoJsonFeature = (geometry) => {
 
     case GMAP_FEATURE_TYPES.POLYGON: {
       const clist: any[] = [];
-      geometry.forEachLatLng((c) => clist.push([c.lng(), c.lat()]));
+
+      const toLatLng = (c) => clist.push([c.lng(), c.lat()]);
+      geometry.forEachLatLng(toLatLng);
+
+      // To make first and last equal
+      clist.push(clist[0]);
 
       return {
         type: GMAP_FEATURE_TYPES.POLYGON,
@@ -55,28 +61,31 @@ export const geometryToGeoJsonFeature = (geometry) => {
   }
 };
 
-/**
- * Calculates bounds for all features
- *
- * @param {*} features
- * @return {*} 
- */
-export const calculateBounds = (features) => {
+export const toFullGeoJson = (features) => {
+  const cleanFeaures = (features || []).filter((o) => o);
 
-  const cleanFeaures = (features || []).filter(o => o);
-
-  if(cleanFeaures.length === 0){
+  if (cleanFeaures.length === 0) {
     return false;
   }
 
-  const b = bbox({
+  return {
     type: "FeatureCollection",
     features: cleanFeaures.map((geometry) => ({
       type: "Feature",
       properties: {},
       geometry,
     })),
-  });
+  };
+};
+
+/**
+ * Calculates bounds for all features
+ *
+ * @param {*} geojson
+ * @return {*}
+ */
+export const calculateBounds = (geojson) => {
+  const b = bbox(geojson);
 
   return {
     east: b[2],

@@ -15,6 +15,6 @@ export function featuresReducer(
       return [];
 
     default:
-      throw new Error("Invalid Action");
+      return state;
   }
 }
