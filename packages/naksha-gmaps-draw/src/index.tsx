@@ -22,6 +22,8 @@ export interface NakshaGmapsDrawProps {
   isMultiple?: boolean;
   isAutocomplete?: boolean;
   gmapRegion?;
+  mapStyle?: React.CSSProperties;
+  autocompleteComponent?;
 }
 
 export function NakshaGmapsDraw({
@@ -34,6 +36,8 @@ export function NakshaGmapsDraw({
   isMultiple,
   isAutocomplete,
   gmapRegion,
+  mapStyle,
+  autocompleteComponent,
 }: NakshaGmapsDrawProps) {
   const mapRef = useRef<any>(null);
   const [viewPort] = useState(mapboxToGmapsViewPort(defaultViewPort));
@@ -104,29 +108,38 @@ export function NakshaGmapsDraw({
         isAutocomplete ? GMAPS_LIBRARIES.AUTOCOMPLETE : GMAPS_LIBRARIES.DEFAULT
       }
     >
-      <GoogleMap
-        id="naksha-gmaps-draw"
-        mapContainerStyle={{ height: "100%", width: "100%" }}
-        zoom={viewPort.zoom}
-        center={viewPort.center}
-        options={GMAP_OPTIONS}
-        ref={mapRef}
-        onLoad={onMapLoaded}
-      >
-        {isMultiple && <ClearFeatures onClick={onClearFeatures} />}
+      <>
         {isAutocomplete && (
-          <NakshaAutocomplete addFeature={addFeature} gmapRegion={gmapRegion} />
-        )}
-        {!isReadOnly && (
-          <Data
-            options={{
-              controls: [GMAP_FEATURE_TYPES.POINT, GMAP_FEATURE_TYPES.POLYGON],
-              drawingMode: GMAP_FEATURE_TYPES.POLYGON,
-              featureFactory: onFeatureAdded,
-            }}
+          <NakshaAutocomplete
+            InputComponent={autocompleteComponent || <input />}
+            addFeature={addFeature}
+            gmapRegion={gmapRegion}
           />
         )}
-      </GoogleMap>
+        <GoogleMap
+          id="naksha-gmaps-draw"
+          mapContainerStyle={mapStyle || { height: "100%", width: "100%" }}
+          zoom={viewPort.zoom}
+          center={viewPort.center}
+          options={GMAP_OPTIONS}
+          ref={mapRef}
+          onLoad={onMapLoaded}
+        >
+          {isMultiple && <ClearFeatures onClick={onClearFeatures} />}
+          {!isReadOnly && (
+            <Data
+              options={{
+                controls: [
+                  GMAP_FEATURE_TYPES.POINT,
+                  GMAP_FEATURE_TYPES.POLYGON,
+                ],
+                drawingMode: GMAP_FEATURE_TYPES.POLYGON,
+                featureFactory: onFeatureAdded,
+              }}
+            />
+          )}
+        </GoogleMap>
+      </>
     </LoadScriptNext>
   );
 }
