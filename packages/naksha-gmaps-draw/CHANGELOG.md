@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/strandls/naksha-components-react/compare/v3.6.9...v3.7.0) (2021-01-12)
+
+
+### Features
+
+* 🎸 accepts custom component for autocomplete input ([2bb2f4a](https://github.com/strandls/naksha-components-react/commit/2bb2f4a2aff33bf31f4c948085d10b1d1acdbcfc))
+
+
+
+
+
 ## [3.6.9](https://github.com/strandls/naksha-components-react/compare/v3.6.8...v3.6.9) (2021-01-11)
 
 
