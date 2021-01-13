@@ -13,7 +13,7 @@ export default function Legend() {
     <Box
       m={4}
       mb={8}
-      p={1}
+      p={2}
       position="absolute"
       right={0}
       bottom={0}
@@ -30,9 +30,7 @@ export default function Legend() {
             key={index}
             alignItems="center"
           >
-            <Box display="inline" color={color} fontSize="lg">
-              <IconCircle />
-            </Box>
+            <IconCircle color={color} />
             <span>
               {prevStop} - {stop}
             </span>

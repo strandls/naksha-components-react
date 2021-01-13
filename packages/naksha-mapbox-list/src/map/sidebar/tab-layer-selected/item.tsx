@@ -11,12 +11,11 @@ import React from "react";
 import Highlight from "react-highlighter";
 
 import useLayerManager from "../../../hooks/use-layer-manager";
-import { useLayers } from "../../../hooks/use-layers";
 import { GeoserverLayer } from "../../../interfaces";
 import { FALLBACK_THUMB, overflowStyle } from "../../../static/constants";
-import { getLegendUrl } from "../../../utils/naksha";
 import { IconChevronDown, IconChevronUp, IconRemoveCircle } from "../../icons";
 import ItemInfo from "../tab-layer-list/item-info";
+import Legend from "./legend";
 
 interface ItemProps {
   layer: GeoserverLayer;
@@ -24,7 +23,6 @@ interface ItemProps {
 }
 
 const Item = ({ layer, q }: ItemProps) => {
-  const { geoserver } = useLayers();
   const { toggleLayer, handleOnLayerDownload } = useLayerManager();
   const { isOpen, onToggle } = useDisclosure();
   const showLegend = layer.source.type !== "grid";
@@ -103,11 +101,7 @@ const Item = ({ layer, q }: ItemProps) => {
           Remove
         </Button>
       </Stack>
-      {showLegend && isOpen && (
-        <Box pt={4}>
-          <Image src={getLegendUrl(layer, geoserver?.endpoint)} />
-        </Box>
-      )}
+      {showLegend && isOpen && <Legend layer={layer} />}
     </Box>
   );
 };
