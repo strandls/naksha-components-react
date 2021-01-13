@@ -29,19 +29,3 @@ export const parseGeoserverLayersXml = (
     isAdded: selectedLayersIDs.includes(l.name),
   }));
 };
-
-/**
- * Returns legend image URL for Geoserver Layer
- *
- * @param {GeoserverLayer} layer
- * @param {string} geoserverEndpoint
- * @returns {string}
- */
-export const getLegendUrl = (
-  layer: GeoserverLayer,
-  geoserverEndpoint?: string
-) => {
-  return `${geoserverEndpoint}/wms?request=getlegendgraphic&version=1.0.0&format=image/png&transparent=true&layer=${
-    layer.id
-  }&style=${layer?.data?.styles?.[layer.data.styleIndex].styleName}`;
-};

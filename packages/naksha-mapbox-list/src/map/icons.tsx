@@ -1,20 +1,13 @@
 import { createIcon } from "@chakra-ui/react";
 import React from "react";
 
-export function IconCircle() {
-  return (
-    <svg
-      width="1em"
-      height="1em"
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="0"
-      viewBox="0 0 24 24"
-    >
-      <circle cx="12" cy="12" r="8" stroke="none"></circle>
-    </svg>
-  );
-}
+export const IconCircle = createIcon({
+  displayName: "Circle",
+  viewBox: "0 0 24 24",
+  path: (
+    <circle cx="12" fill="currentColor" cy="12" r="12" stroke="none"></circle>
+  ),
+});
 
 export const IconInfo = createIcon({
   displayName: "Info",
