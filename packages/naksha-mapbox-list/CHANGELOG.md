@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0](https://github.com/strandls/naksha-components-react/compare/v3.3.5...v3.8.0) (2021-01-13)
+
+
+### Features
+
+* 🎸 added legends for geoserver layers list ([#15](https://github.com/strandls/naksha-components-react/issues/15)) ([ec6400b](https://github.com/strandls/naksha-components-react/commit/ec6400ba4fa46604c3b89f4e98be017ccf3d5c92))
+
+
+
+
+
 ## [3.6.8](https://github.com/strandls/naksha-components-react/compare/v3.6.7...v3.6.8) (2021-01-11)
 
 **Note:** Version bump only for package @ibp/naksha-mapbox-list
