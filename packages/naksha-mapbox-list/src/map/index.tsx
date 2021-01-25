@@ -43,6 +43,14 @@ export default function Map() {
   useListener(reloadLayers, ["STYLE_UPDATED"]);
 
   const onLoad = () => {
+    // Will be called once on initial load
+    // Note: there's chance that style is loaded on `style.loaded` but not ready to apply admin boundries
+    mapRef?.current.getMap().once("idle", () => {
+      updateWorldViewRef(mapRef);
+      emit("STYLE_UPDATED");
+    });
+
+    // Will be called on everytime map reloads / style updates
     mapRef?.current.getMap().on("style.load", () => {
       updateWorldViewRef(mapRef);
       emit("STYLE_UPDATED");
