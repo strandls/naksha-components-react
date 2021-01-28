@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.2](https://github.com/strandls/naksha-components-react/compare/v3.8.1...v3.8.2) (2021-01-28)
+
+
+### Bug Fixes
+
+* :bug: display non-string value in preview table ([eb276e8](https://github.com/strandls/naksha-components-react/commit/eb276e88b338307ad427683b28e328c2dd790a49))
+
+
+
+
+
 ## [3.8.1](https://github.com/strandls/naksha-components-react/compare/v3.8.0...v3.8.1) (2021-01-25)
 
 

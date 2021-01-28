@@ -2,7 +2,7 @@
   "name": "@ibp/naksha-upload",
   "author": "harshzalavadiya",
   "module": "dist/naksha-upload.esm.js",
-  "version": "3.8.0",
+  "version": "3.8.2",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
