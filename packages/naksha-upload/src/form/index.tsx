@@ -89,13 +89,9 @@ export default function LayerUploadForm() {
             📝 Column Description
           </Heading>
           {dbf.meta.keys.map((key) => (
-            <HStack spacing={4} maxW="32rem" mb={4}>
+            <HStack spacing={4} key={key} maxW="32rem" mb={4}>
               <FormLabel w="15rem">{key}</FormLabel>
-              <InputField
-                key={key}
-                name={`layerColumnDescription.${key}`}
-                f={hForm}
-              />
+              <InputField name={`layerColumnDescription.${key}`} f={hForm} />
             </HStack>
           ))}
         </Box>
