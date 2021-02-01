@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.5](https://github.com/strandls/naksha-components-react/compare/v3.8.2...v3.8.5) (2021-02-01)
+
+
+### Bug Fixes
+
+* :bug: viewport update glitch ([d7593d5](https://github.com/strandls/naksha-components-react/commit/d7593d59b0dcb7287f84240159441fd7224763e0))
+
+
+
+
+
 ## [3.8.4](https://github.com/strandls/naksha-components-react/compare/v3.8.3...v3.8.4) (2021-02-01)
 
 **Note:** Version bump only for package naksha-components-react
