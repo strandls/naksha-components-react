@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.4](https://github.com/strandls/naksha-components-react/compare/v3.8.3...v3.8.4) (2021-02-01)
+
+
+### Bug Fixes
+
+* :bug: zoom glitch ([6699e04](https://github.com/strandls/naksha-components-react/commit/6699e04f9ebefbb3e01634021938426c71a39988))
+
+
+
+
+
 ## [3.8.3](https://github.com/strandls/naksha-components-react/compare/v3.8.2...v3.8.3) (2021-02-01)
 
 
