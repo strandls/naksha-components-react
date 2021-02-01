@@ -56,10 +56,14 @@ export function NakshaMapboxView({
   };
 
   const onLoad = () => {
+    mapRef?.current?.getMap().once("idle", () => {
+      updateWorldViewRef(mapRef);
+      updateViewport();
+    });
+
     mapRef?.current?.getMap().on("style.load", () => {
       updateWorldViewRef(mapRef);
     });
-    updateViewport();
   };
 
   useEffect(() => {

@@ -24,16 +24,16 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/addon-actions": "^6.1.11",
-    "@storybook/addon-essentials": "^6.1.11",
-    "@storybook/addon-links": "^6.1.11",
-    "@storybook/react": "^6.1.11",
+    "@storybook/addon-actions": "^6.1.15",
+    "@storybook/addon-essentials": "^6.1.15",
+    "@storybook/addon-links": "^6.1.15",
+    "@storybook/react": "^6.1.15",
     "babel-loader": "^8.2.2",
     "git-cz": "^4.7.6",
     "lerna": "^3.22.1",
     "prettier": "^2.2.1",
     "react-docgen-typescript-loader": "^3.7.2",
-    "ts-loader": "^8.0.13",
+    "ts-loader": "^8.0.14",
     "yarn-deduplicate": "^3.1.0"
   },
   "resolutions": {
