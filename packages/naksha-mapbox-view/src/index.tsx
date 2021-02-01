@@ -47,11 +47,13 @@ export function NakshaMapboxView({
       [b[2], b[3]],
     ]);
 
+    const maxZoom = viewPort.maxZoom || dv.maxZoom;
+
     setViewPort((o) => ({
       ...o,
       longitude,
       latitude,
-      zoom: zoom > (viewPort.maxZoom || -1) ? viewPort.maxZoom : zoom - 0.2,
+      zoom: zoom > maxZoom ? maxZoom : zoom - 0.2,
     }));
   };
 
