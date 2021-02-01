@@ -33,9 +33,10 @@ export function NakshaMapboxView({
 }: NakshaMapboxViewProps) {
   const mapRef = useRef<any>(null);
   const [viewPort, setViewPort] = useState(defaultViewPort || dv);
+  const [isLoaded, setIsLoaded] = useState<boolean>();
 
   const updateViewport = () => {
-    if (!data) {
+    if (!data || !isLoaded) {
       return;
     }
 
@@ -47,24 +48,30 @@ export function NakshaMapboxView({
       [b[2], b[3]],
     ]);
 
+    const maxZoom = viewPort?.maxZoom || dv.maxZoom;
+
     setViewPort((o) => ({
       ...o,
       longitude,
       latitude,
-      zoom: zoom > (viewPort.maxZoom || -1) ? viewPort.maxZoom : zoom - 0.2,
+      zoom: zoom > maxZoom ? maxZoom : zoom - 0.2,
     }));
   };
 
   const onLoad = () => {
+    mapRef?.current?.getMap().once("idle", () => {
+      updateWorldViewRef(mapRef);
+      setIsLoaded(true);
+    });
+
     mapRef?.current?.getMap().on("style.load", () => {
       updateWorldViewRef(mapRef);
     });
-    updateViewport();
   };
 
   useEffect(() => {
     updateViewport();
-  }, [data]);
+  }, [data, isLoaded]);
 
   return (
     <MapGL
