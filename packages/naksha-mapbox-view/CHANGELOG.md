@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.3](https://github.com/strandls/naksha-components-react/compare/v3.8.2...v3.8.3) (2021-02-01)
+
+
+### Bug Fixes
+
+* :bug: viewport update glitch ([668b88d](https://github.com/strandls/naksha-components-react/commit/668b88dd1e00ad350f3eb69bf66d8a7c6571b521))
+
+
+
+
+
 # [3.8.0](https://github.com/strandls/naksha-components-react/compare/v3.3.5...v3.8.0) (2021-01-13)
 
 **Note:** Version bump only for package @ibp/naksha-mapbox-view
