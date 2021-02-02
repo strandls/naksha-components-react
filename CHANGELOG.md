@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.6](https://github.com/strandls/naksha-components-react/compare/v3.8.5...v3.8.6) (2021-02-02)
+
+
+### Bug Fixes
+
+* :bug: apply admin boundary on initial load ([9a6247a](https://github.com/strandls/naksha-components-react/commit/9a6247a71ef03531abd9aac50fb52eecde0d0cd3))
+
+
+
+
+
 ## [3.8.5](https://github.com/strandls/naksha-components-react/compare/v3.8.2...v3.8.5) (2021-02-01)
 
 
