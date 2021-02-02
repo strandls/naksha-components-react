@@ -71,6 +71,10 @@ function NakshaMapboxDraw({
   }, [defaultFeatures]);
 
   const onLoad = () => {
+    mapRef?.current?.getMap().once("idle", () => {
+      updateWorldViewRef(mapRef);
+    });
+
     mapRef.current.getMap().on("style.load", () => {
       updateWorldViewRef(mapRef);
     });
