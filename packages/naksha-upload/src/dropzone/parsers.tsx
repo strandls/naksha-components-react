@@ -13,7 +13,7 @@ export const parseSHP = (file, update) => {
 export const parseDBF = (file, update) => {
   const readerDbf = new FileReader();
   readerDbf.onload = async () => {
-    const sourceDbf = await openDbf(readerDbf.result);
+    const sourceDbf = await openDbf(readerDbf.result, { encoding: "UTF-8" });
 
     const rows: any[] = [];
     try {
