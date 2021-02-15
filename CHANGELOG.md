@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.7](https://github.com/strandls/naksha-components-react/compare/v3.8.6...v3.8.7) (2021-02-15)
+
+
+### Bug Fixes
+
+* :bug: force encoding to UTF-8 ([#16](https://github.com/strandls/naksha-components-react/issues/16)) ([5387a42](https://github.com/strandls/naksha-components-react/commit/5387a422688a1134168c5e19c73f6796ccc75b55))
+
+
+
+
+
 ## [3.8.6](https://github.com/strandls/naksha-components-react/compare/v3.8.5...v3.8.6) (2021-02-02)
 
 
