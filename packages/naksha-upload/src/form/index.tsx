@@ -70,7 +70,7 @@ export default function LayerUploadForm() {
       createdDate: formatDate(values.createdDate),
       layerFileDescription: {
         fileType: "shp",
-        encoding: "ISO-8859-1",
+        encoding: "UTF-8",
       },
       editAccess: "ALL",
       summaryColumns: values.summaryColumns
