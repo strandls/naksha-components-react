@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0](https://github.com/strandls/naksha-components-react/compare/v3.8.7...v3.9.0) (2021-02-16)
+
+
+### Features
+
+* :sparkles: layer delete and unpublish ([f8e5df9](https://github.com/strandls/naksha-components-react/commit/f8e5df94d394b7396b813ed75d3d3aa2567dbc42))
+
+
+
+
+
 ## [3.8.7](https://github.com/strandls/naksha-components-react/compare/v3.8.6...v3.8.7) (2021-02-15)
 
 
