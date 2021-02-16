@@ -37,19 +37,36 @@ export const axGetGeoserverLayerStyleList = async (id, endpoint) => {
   }
 };
 
-export const axPublishLayer = async (
+export const axToggleLayerPublishing = async (
+  nakshaEndpointToken,
+  nakshaApiEndpoint,
+  layerId,
+  isActive
+) => {
+  try {
+    await axios.put(
+      `${nakshaApiEndpoint}/layer/${
+        isActive ? "active" : "pending"
+      }/${layerId}`,
+      {},
+      { headers: { Authorization: nakshaEndpointToken } }
+    );
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
+export const axDeleteLayer = async (
   nakshaEndpointToken,
   nakshaApiEndpoint,
   layerId
 ) => {
   try {
-    await axios.put(
-      `${nakshaApiEndpoint}/layer/active/${layerId}`,
-      {},
-      {
-        headers: { Authorization: nakshaEndpointToken },
-      }
-    );
+    await axios.delete(`${nakshaApiEndpoint}/layer/${layerId}`, {
+      headers: { Authorization: nakshaEndpointToken },
+    });
     return true;
   } catch (e) {
     console.error(e);

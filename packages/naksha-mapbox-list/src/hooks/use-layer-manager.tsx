@@ -5,11 +5,12 @@ import { debounce } from "ts-debounce";
 
 import { GeoserverLayer } from "../interfaces";
 import {
+  axDeleteLayer,
   axDownloadLayer,
   axGetGeoserverLayers,
   axGetGeoserverLayerStyle,
   axGetGeoserverLayerStyleList,
-  axPublishLayer,
+  axToggleLayerPublishing,
   getGridLayerData,
 } from "../services/naksha";
 import {
@@ -418,8 +419,21 @@ export default function useLayerManager() {
     }
   };
 
-  const publishLayer = async (layerId) => {
-    await axPublishLayer(nakshaEndpointToken, nakshaApiEndpoint, layerId);
+  const toggleLayerPublishing = (layerId, isActive) =>
+    axToggleLayerPublishing(
+      nakshaEndpointToken,
+      nakshaApiEndpoint,
+      layerId,
+      isActive
+    );
+
+  const deleteLayer = async (layerId) => {
+    axDeleteLayer(nakshaEndpointToken, nakshaApiEndpoint, layerId);
+    const idx = layers.findIndex((o) => o.id === layerId);
+
+    setLayers((_draft) => {
+      _draft.splice(idx, 1);
+    });
   };
 
   return {
@@ -429,7 +443,8 @@ export default function useLayerManager() {
     reloadLayers,
     renderHLData,
     toggleLayer,
-    publishLayer,
+    toggleLayerPublishing,
+    deleteLayer,
     handleOnLayerDownload,
     onMapEventVector,
   };
