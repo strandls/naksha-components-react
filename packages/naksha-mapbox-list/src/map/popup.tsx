@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Table, TableCaption, Tbody, Td, Tr } from "@chakra-ui/react";
 import React from "react";
 import { Popup } from "react-map-gl";
 
@@ -10,25 +10,28 @@ interface IPopupContainerProps {
 
 const VectorLayerInfo = React.memo(function (props: any) {
   return (
-    <>
-      <Box fontWeight="bold" color="blue.500">
-        {props.layerId}
-      </Box>
-      <small style={{ zIndex: 999 }}>
-        <table>
-          <tbody>
-            {props.feature.map(([k, v]) => (
-              <tr key={k}>
-                <td>
-                  <b>{k}</b>
-                </td>
-                <td>{v}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </small>
-    </>
+    <Box maxW="250px" zIndex={5}>
+      <Table size="sm" variant="striped">
+        <TableCaption
+          mt={0}
+          pt={0}
+          fontWeight="bold"
+          fontSize="lg"
+          placement="top"
+          color="blue.500"
+        >
+          {props.layerId}
+        </TableCaption>
+        <Tbody>
+          {props.feature.map(([k, v]) => (
+            <Tr key={k}>
+              <Td fontWeight="bold">{k}</Td>
+              <Td>{v}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </Box>
   );
 });
 

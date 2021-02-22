@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import { defaultMapStyles, updateWorldViewRef } from "@ibp/naksha-commons";
 import React, { useEffect } from "react";
 import { emit, useListener } from "react-gbus";
 import MapGL from "react-map-gl";
@@ -6,8 +7,6 @@ import MapGL from "react-map-gl";
 import useDebounce from "../hooks/use-debounce";
 import useLayerManager from "../hooks/use-layer-manager";
 import { useLayers } from "../hooks/use-layers";
-import { defaultMapStyles } from "@ibp/naksha-commons";
-import { updateWorldViewRef } from "@ibp/naksha-commons";
 import InfoBar from "./infobar";
 import Legend from "./legend";
 import MarkersList from "./markers-list";
@@ -93,7 +92,7 @@ export default function Map() {
         <MarkersList />
       </MapGL>
       {loadToC && <Sidebar />}
-      {infobarData?.length ? <InfoBar /> : null}
+      {infobarData?.length ? <InfoBar key={infobarData[0]?.layer?.id} /> : null}
     </Box>
   );
 }
