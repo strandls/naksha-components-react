@@ -22,7 +22,7 @@ const TabContainer = styled.div`
   background: white;
   height: 100%;
   overflow: auto;
-  z-index: 4;
+  z-index: 2;
   s > .sidebar-tabs,
   [role="tabpanel"] {
     display: flex;
