@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.1](https://github.com/strandls/naksha-components-react/compare/v3.9.0...v3.9.1) (2021-02-22)
+
+
+### Bug Fixes
+
+* :bug: UI Fixes [#17](https://github.com/strandls/naksha-components-react/issues/17) ([#18](https://github.com/strandls/naksha-components-react/issues/18)) ([59a8e2d](https://github.com/strandls/naksha-components-react/commit/59a8e2df034a906d2dc422a32e2c2e1f91dacdc1))
+
+
+
+
+
 # [3.9.0](https://github.com/strandls/naksha-components-react/compare/v3.8.7...v3.9.0) (2021-02-16)
 
 
