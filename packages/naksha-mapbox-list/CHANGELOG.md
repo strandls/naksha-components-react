@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.2](https://github.com/strandls/naksha-components-react/compare/v3.9.1...v3.9.2) (2021-03-02)
+
+
+### Bug Fixes
+
+* :bug: duplicate layer list ([5598efb](https://github.com/strandls/naksha-components-react/commit/5598efbc344c5672d824d30dbcc1915e35d10fb9))
+
+
+
+
+
 ## [3.9.1](https://github.com/strandls/naksha-components-react/compare/v3.9.0...v3.9.1) (2021-02-22)
 
 
