@@ -311,11 +311,9 @@ export default function useLayerManager() {
         stops,
         squareSize,
       } = await getGridLayerData(
-        layer.source.endpoint,
+        layer.source.fetcher,
         map.getBounds(),
-        viewPort?.zoom,
-        layer.data,
-        layer.source.transform,
+        viewPort?.zoom
       );
 
       if (success) {

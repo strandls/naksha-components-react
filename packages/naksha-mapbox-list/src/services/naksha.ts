@@ -92,29 +92,24 @@ export const axGetGeoserverLayerStyle = async (
 };
 
 export const getGridLayerData = async (
-  url,
+  fetcher,
   bounds,
   zoom,
-  payload = {},
-  transform,
   binCount = 6,
   colorScheme = "YlOrRd"
 ) => {
   try {
-    const [precision, level, squareSize] = getZoomConfig(zoom);
+    const [geoAggegationPrecision, level, squareSize] = getZoomConfig(zoom);
     const { _ne, _sw } = bounds;
     const params = {
       top: _ne.lat,
       left: _sw.lng,
       bottom: _sw.lat,
       right: _ne.lng,
-      precision,
-      ...payload,
+      geoAggegationPrecision,
     };
 
-    const { data: preData } = await axios.get(url, { params });
-
-    const data = transform ? transform(preData) : preData;
+    const data = await fetcher(params);
 
     const geojson = geohashToJSON(data, level);
     const bins = getDataBins(data, binCount);
