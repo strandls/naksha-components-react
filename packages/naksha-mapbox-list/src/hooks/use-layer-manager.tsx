@@ -314,7 +314,8 @@ export default function useLayerManager() {
         layer.source.endpoint,
         map.getBounds(),
         viewPort?.zoom,
-        layer.data
+        layer.data,
+        layer.source.transform,
       );
 
       if (success) {

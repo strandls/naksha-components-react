@@ -75,6 +75,7 @@ export interface GeoserverLayer {
     scheme?;
     tiles?;
     endpoint?;
+    transform?;
   };
   onClick?: ({ bbox, feature, layerId: string }) => JSX.Element;
   onHover?: ({ bbox, feature, layerId: string }) => JSX.Element;

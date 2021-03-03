@@ -96,13 +96,14 @@ export const getGridLayerData = async (
   bounds,
   zoom,
   payload = {},
+  transform,
   binCount = 6,
   colorScheme = "YlOrRd"
 ) => {
   try {
     const [precision, level, squareSize] = getZoomConfig(zoom);
     const { _ne, _sw } = bounds;
-    const finalizedPayload = {
+    const params = {
       top: _ne.lat,
       left: _sw.lng,
       bottom: _sw.lat,
@@ -111,7 +112,9 @@ export const getGridLayerData = async (
       ...payload,
     };
 
-    const { data } = await axios.post(url, finalizedPayload);
+    const { data: preData } = await axios.get(url, { params });
+
+    const data = transform ? transform(preData) : preData;
 
     const geojson = geohashToJSON(data, level);
     const bins = getDataBins(data, binCount);
