@@ -42,7 +42,7 @@ export function NakshaMapboxView({
 
     const b = bbox(data);
     const { longitude, latitude, zoom } = new WebMercatorViewport(
-      viewPort
+      viewPort as any
     ).fitBounds([
       [b[0], b[1]],
       [b[2], b[3]],

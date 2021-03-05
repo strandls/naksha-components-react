@@ -1,4 +1,4 @@
-export const featureStyle = {
+export const featureStyle: any = {
   id: "data",
   type: "fill",
   paint: {
@@ -7,7 +7,7 @@ export const featureStyle = {
   },
 };
 
-export const pointStyle = {
+export const pointStyle: any = {
   type: "circle",
   paint: {
     "circle-radius": 8,
