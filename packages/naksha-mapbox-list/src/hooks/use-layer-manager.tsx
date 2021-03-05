@@ -13,12 +13,7 @@ import {
   axToggleLayerPublishing,
   getGridLayerData,
 } from "../services/naksha";
-import {
-  FEATURE_PROP,
-  HL,
-  LAYER_PREFIX,
-  LAYER_PREFIX_GRID,
-} from "../static/constants";
+import { FEATURE_PROP, HL, LAYER_PREFIX, LAYER_PREFIX_GRID } from "../static/constants";
 import { useLayers } from "./use-layers";
 
 export default function useLayerManager() {
@@ -336,6 +331,15 @@ export default function useLayerManager() {
             type: "fill",
             paint,
           });
+
+          const b = bbox(geojson);
+          updateToBBox(
+            [
+              [b[0], b[1]],
+              [b[2], b[3]],
+            ],
+            true
+          );
         }
         setLegend({ visible: true, stops, squareSize });
       }

@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { defaultMapStyles, updateWorldViewRef } from "@ibp/naksha-commons";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { emit, useListener } from "react-gbus";
 import MapGL from "react-map-gl";
 
@@ -37,9 +37,10 @@ export default function Map() {
     renderHLData,
   } = useLayerManager();
 
+  const [isReady, setIsReady] = useState<boolean>();
   const debouncedViewPort = useDebounce(viewPort, 500);
 
-  useListener(reloadLayers, ["STYLE_UPDATED"]);
+  useListener(() => setIsReady(true), ["STYLE_UPDATED"]);
 
   const onLoad = () => {
     // Will be called once on initial load
@@ -57,11 +58,11 @@ export default function Map() {
   };
 
   useEffect(() => {
-    reloadLayers();
-  }, [layers?.length]);
+    isReady && reloadLayers();
+  }, [layers?.length, isReady]);
 
   useEffect(() => {
-    reloadLayers(true);
+    isReady && reloadLayers(true);
   }, [debouncedViewPort]);
 
   useEffect(() => {

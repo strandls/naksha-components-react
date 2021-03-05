@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
+import axios from "redaxios";
 
 import { defaultNakshaProps, NakshaMapboxList } from "../src";
 
@@ -23,6 +24,21 @@ const handleOnDownload = async (layer) => {
   return { success: true, data: "xyz" };
 };
 
+const fetchGridData = async (geoProps) => {
+  const params = {
+    ...geoProps,
+    view: "map",
+    geoField: "location",
+    taxon: 5275
+  };
+
+  const response = await axios.get(
+    `http://localhost:8010/proxy/observation-api/api/v1/observation/list/extended_observation/_doc`,
+    { params }
+  );
+  return response.data.geohashAggregation;
+};
+
 export const NakshaMapboxListStory = () => (
   <NakshaMapboxList
     viewPort={defaultNakshaProps.viewPort}
@@ -38,30 +54,24 @@ export const NakshaMapboxListStory = () => (
       workspace: "biodiv",
     }}
     onLayerDownload={handleOnDownload}
-    /*
-  layers={[
-    {
-      id: "global-observations",
-      title: "Global Observations",
-      isAdded: true,
-      source: {
-        type: "grid",
-        endpoint:
-          "http://localhost:8010/proxy/esmodule-api/api/v1/geo/aggregation"
+    layers={[
+      {
+        id: "global-observations",
+        title: "Global Observations",
+        isAdded: true,
+        source: { type: "grid", fetcher: fetchGridData },
+        onClick: Popup,
+        onHover: HoverPopup,
+        data: {
+          index: "extended_observation",
+          type: "extended_records",
+          geoField: "location",
+        },
       },
-      onClick: Popup,
-      onHover: HoverPopup,
-      data: {
-        index: "extended_observation",
-        type: "extended_records",
-        geoField: "location"
-      }
-    }
-  ]}
-  // markers={object("Markers", [
-  //   { latitude: 21, longitude: 77, colorHex: "E53E3E" }
-  // ])}
-  */
+    ]}
+    // markers={object("Markers", [
+    //   { latitude: 21, longitude: 77, colorHex: "E53E3E" }
+    // ])}
   />
 );
 
