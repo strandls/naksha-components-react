@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.5](https://github.com/strandls/naksha-components-react/compare/v3.9.4...v3.9.5) (2021-03-05)
+
+
+### Bug Fixes
+
+* :rotating_light: lint fixes ([88861a1](https://github.com/strandls/naksha-components-react/commit/88861a11d3cba385aa1f89d0b6e945243d52bb6d))
+
+
+
+
+
 ## [3.8.5](https://github.com/strandls/naksha-components-react/compare/v3.8.2...v3.8.5) (2021-02-01)
 
 

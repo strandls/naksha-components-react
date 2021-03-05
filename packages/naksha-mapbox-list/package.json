@@ -2,7 +2,7 @@
   "name": "@ibp/naksha-mapbox-list",
   "author": "harshzalavadiya",
   "module": "dist/example.esm.js",
-  "version": "3.9.4",
+  "version": "3.9.5",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -50,7 +50,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@ibp/naksha-commons": "3.8.0",
+    "@ibp/naksha-commons": "3.9.5",
     "@turf/bbox": "^6.3.0",
     "boundingbox": "^1.2.3",
     "colorbrewer": "^1.4.0",
