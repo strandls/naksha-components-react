@@ -1,29 +1,28 @@
+import { FormErrorMessage } from "@chakra-ui/form-control";
 import { FormControl, FormHelperText, FormLabel } from "@chakra-ui/react";
 import React from "react";
-import { Controller, UseFormMethods } from "react-hook-form";
+import { useController } from "react-hook-form";
 
-import ErrorMessage from "./error-message";
 import { TagsInput } from "./tag-input";
 
 interface TagsFieldProps {
   name: string;
   label: string;
   hint?: string;
-  f: UseFormMethods<Record<string, any>>;
 }
 
-export default function TagsField({ name, label, hint, f }: TagsFieldProps) {
+export default function TagsField({ name, label, hint }: TagsFieldProps) {
+  const { field, fieldState } = useController({ name });
+
   return (
-    <FormControl isInvalid={f.errors[name] && true}>
+    <FormControl isInvalid={fieldState.invalid}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Controller
-        control={f.control}
-        name={name}
-        render={({ onChange, onBlur }) => (
-          <TagsInput name={name} onChange={onChange} onBlur={onBlur} />
-        )}
+      <TagsInput
+        name={field.name}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
       />
-      <ErrorMessage name={name} errors={f.errors} />
+      <FormErrorMessage children={fieldState?.error?.message} />
       {hint && <FormHelperText>{hint}</FormHelperText>}
     </FormControl>
   );

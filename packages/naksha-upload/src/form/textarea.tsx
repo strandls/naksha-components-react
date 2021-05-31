@@ -1,3 +1,4 @@
+import { FormErrorMessage } from "@chakra-ui/form-control";
 import {
   FormControl,
   FormHelperText,
@@ -5,15 +6,11 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
-import { UseFormMethods } from "react-hook-form";
-
-import { getByPath } from "@ibp/naksha-commons";
-import ErrorMessage from "./error-message";
+import { useController } from "react-hook-form";
 
 interface TextareaFieldProps {
   name: string;
   label?: string;
-  f: UseFormMethods<Record<string, any>>;
   type?: string;
   hint?: string;
 }
@@ -21,15 +18,21 @@ interface TextareaFieldProps {
 export default function TextareaField({
   name,
   label,
-  f,
   type,
   hint,
 }: TextareaFieldProps) {
+  const { field, fieldState } = useController({ name });
+
   return (
-    <FormControl isInvalid={getByPath(f.errors, `${name}.message`)}>
+    <FormControl isInvalid={fieldState.invalid}>
       {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
-      <Textarea bg="white" name={name} type={type} ref={f.register} />
-      <ErrorMessage name={name} errors={f.errors} />
+      <Textarea
+        bg="white"
+        name={field.name}
+        type={type}
+        onChange={field.onChange}
+      />
+      <FormErrorMessage children={fieldState?.error?.message} />
       {hint && <FormHelperText>{hint}</FormHelperText>}
     </FormControl>
   );

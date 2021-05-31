@@ -1,20 +1,22 @@
+import { FormErrorMessage } from "@chakra-ui/form-control";
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 import React from "react";
+import { useController } from "react-hook-form";
 
-import ErrorMessage from "./error-message";
+export default function SelectField({ name, label, options }) {
+  const { field, fieldState } = useController({ name });
 
-export default function SelectField({ name, label, f, options }) {
   return (
-    <FormControl isInvalid={f.errors[name] && true}>
+    <FormControl isInvalid={fieldState.invalid}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Select name={name} ref={f.register}>
+      <Select name={name} value={field.value} onChange={field.onChange}>
         {options.map((option) => (
           <option value={option} key={option}>
             {option}
           </option>
         ))}
       </Select>
-      <ErrorMessage name={name} errors={f.errors} />
+      <FormErrorMessage children={fieldState?.error?.message} />
     </FormControl>
   );
 }

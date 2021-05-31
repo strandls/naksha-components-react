@@ -10,11 +10,11 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { formatDate, LICENSES } from "@ibp/naksha-commons";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
-import { ACCESS, LAYER_TYPES } from "../icons/constants";
 import useLayerUpload from "../hooks/use-layer-upload";
+import { ACCESS, LAYER_TYPES } from "../icons/constants";
 import DataPreview from "./data-preview";
 import InputField from "./input";
 import SelectMultipleField from "./multi-select";
@@ -81,92 +81,78 @@ export default function LayerUploadForm() {
   };
 
   return (
-    <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
-      <SimpleGrid columns={{ base: 1, md: 7 }} spacing={4} h="100%">
-        <Box gridColumn="1/6" h="100%">
-          <DataPreview />
-          <Heading size="md" mb={4}>
-            📝 Column Description
-          </Heading>
-          {dbf.meta.keys.map((key) => (
-            <HStack spacing={4} key={key} maxW="32rem" mb={4}>
-              <FormLabel w="15rem">{key}</FormLabel>
-              <InputField name={`layerColumnDescription.${key}`} f={hForm} />
-            </HStack>
-          ))}
-        </Box>
-        <Box gridColumn="6/8" h="100%">
-          <Heading size="md" mb={4}>
-            🗺️ Layer Information
-          </Heading>
-          <Stack spacing={4}>
-            <InputField name="layerName" label="Name" f={hForm} />
-            <TextareaField
-              name="layerDescription"
-              label="Description"
-              f={hForm}
-            />
-            <SelectField
-              name="layerType"
-              options={LAYER_TYPES}
-              label="Layer Type"
-              f={hForm}
-            />
-            <SelectField
-              name="titleColumn"
-              options={dbf.meta.keys}
-              label="Title Column"
-              f={hForm}
-            />
-            <SelectMultipleField
-              name="summaryColumns"
-              label="Summary Columns"
-              options={dbf.meta.keys.map((option) => ({
-                label: option,
-                value: option,
-              }))}
-              f={hForm}
-            />
-            <SelectField
-              name="colorBy"
-              options={dbf.meta.keys}
-              label="Color By"
-              f={hForm}
-            />
-            <InputField name="createdBy" label="Created By" f={hForm} />
-            <InputField name="attribution" label="Attribution" f={hForm} />
-            <InputField name="url" label="URL" f={hForm} />
-            <InputField name="pdfLink" label="PDF Link" f={hForm} />
-            <TagsField
-              name="tags"
-              label="Tags"
-              hint="Press enter to add tags"
-              f={hForm}
-            />
-            <SelectField
-              name="license"
-              options={Object.keys(LICENSES)}
-              label="License"
-              f={hForm}
-            />
-            <InputField
-              name="createdDate"
-              label="Created Date"
-              type="date"
-              f={hForm}
-            />
-            <SelectField
-              name="downloadAccess"
-              options={ACCESS}
-              label="Download Access"
-              f={hForm}
-            />
-            <Button colorScheme="blue" type="submit">
-              Create
-            </Button>
-          </Stack>
-        </Box>
-      </SimpleGrid>
-    </form>
+    <FormProvider {...hForm}>
+      <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
+        <SimpleGrid columns={{ base: 1, md: 7 }} spacing={4} h="100%">
+          <Box gridColumn="1/6" h="100%">
+            <DataPreview />
+            <Heading size="md" mb={4}>
+              📝 Column Description
+            </Heading>
+            {dbf.meta.keys.map((key) => (
+              <HStack spacing={4} key={key} maxW="32rem" mb={4}>
+                <FormLabel w="15rem">{key}</FormLabel>
+                <InputField name={`layerColumnDescription.${key}`} />
+              </HStack>
+            ))}
+          </Box>
+          <Box gridColumn="6/8" h="100%">
+            <Heading size="md" mb={4}>
+              🗺️ Layer Information
+            </Heading>
+            <Stack spacing={4}>
+              <InputField name="layerName" label="Name" />
+              <TextareaField name="layerDescription" label="Description" />
+              <SelectField
+                name="layerType"
+                options={LAYER_TYPES}
+                label="Layer Type"
+              />
+              <SelectField
+                name="titleColumn"
+                options={dbf.meta.keys}
+                label="Title Column"
+              />
+              <SelectMultipleField
+                name="summaryColumns"
+                label="Summary Columns"
+                options={dbf.meta.keys.map((option) => ({
+                  label: option,
+                  value: option,
+                }))}
+              />
+              <SelectField
+                name="colorBy"
+                options={dbf.meta.keys}
+                label="Color By"
+              />
+              <InputField name="createdBy" label="Created By" />
+              <InputField name="attribution" label="Attribution" />
+              <InputField name="url" label="URL" />
+              <InputField name="pdfLink" label="PDF Link" />
+              <TagsField
+                name="tags"
+                label="Tags"
+                hint="Press enter to add tags"
+              />
+              <SelectField
+                name="license"
+                options={Object.keys(LICENSES)}
+                label="License"
+              />
+              <InputField name="createdDate" label="Created Date" type="date" />
+              <SelectField
+                name="downloadAccess"
+                options={ACCESS}
+                label="Download Access"
+              />
+              <Button colorScheme="blue" type="submit">
+                Create
+              </Button>
+            </Stack>
+          </Box>
+        </SimpleGrid>
+      </form>
+    </FormProvider>
   );
 }

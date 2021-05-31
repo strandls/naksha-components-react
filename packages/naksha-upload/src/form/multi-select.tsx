@@ -1,10 +1,13 @@
-import { FormControl, FormHelperText, FormLabel } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
+} from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import React from "react";
-import { Controller, UseFormMethods } from "react-hook-form";
+import { useController } from "react-hook-form";
 import MultiSelect from "react-multi-select-component";
-
-import ErrorMessage from "./error-message";
 
 const MultiSelectBox = styled.div`
   .multi-select {
@@ -15,7 +18,6 @@ const MultiSelectBox = styled.div`
 interface SelectMultipleFieldProps {
   name: string;
   label: string;
-  f: UseFormMethods<Record<string, any>>;
   options: any[];
   hint?: string;
 }
@@ -24,27 +26,22 @@ export default function SelectMultipleField({
   name,
   label,
   options,
-  f,
   hint,
 }: SelectMultipleFieldProps) {
+  const { field, fieldState } = useController({ name });
+
   return (
-    <FormControl isInvalid={f.errors[name] && true}>
+    <FormControl isInvalid={fieldState.invalid}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
-      <Controller
-        control={f.control}
-        name={name}
-        render={({ onChange, value }) => (
-          <MultiSelectBox>
-            <MultiSelect
-              labelledBy={name}
-              onChange={onChange}
-              options={options}
-              value={value}
-            />
-          </MultiSelectBox>
-        )}
-      />
-      <ErrorMessage name={name} errors={f.errors} />
+      <MultiSelectBox>
+        <MultiSelect
+          labelledBy={name}
+          onChange={field.onChange}
+          options={options}
+          value={field.value}
+        />
+      </MultiSelectBox>
+      <FormErrorMessage children={fieldState?.error?.message} />
       {hint && <FormHelperText>{hint}</FormHelperText>}
     </FormControl>
   );

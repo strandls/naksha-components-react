@@ -1,19 +1,16 @@
 import {
   FormControl,
+  FormErrorMessage,
   FormHelperText,
   FormLabel,
   Input,
 } from "@chakra-ui/react";
 import React from "react";
-import { UseFormMethods } from "react-hook-form";
-import { getByPath } from "@ibp/naksha-commons";
-
-import ErrorMessage from "./error-message";
+import { useController } from "react-hook-form";
 
 interface InputFieldProps {
   name: string;
   label?: string;
-  f: UseFormMethods<Record<string, any>>;
   type?: string;
   hint?: string;
 }
@@ -21,16 +18,20 @@ interface InputFieldProps {
 export default function InputField({
   name,
   label,
-  f,
   type,
   hint,
 }: InputFieldProps) {
+  const { field, fieldState } = useController({
+    name,
+    defaultValue: "", // to prevent uncontrolled to controlled error
+  });
+
   return (
-    <FormControl isInvalid={getByPath(f.errors, `${name}.message`)}>
+    <FormControl isInvalid={fieldState.invalid}>
       {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
-      <Input name={name} type={type} ref={f.register} />
-      <ErrorMessage name={name} errors={f.errors} />
-      {hint && <FormHelperText>{hint}</FormHelperText>}
+      <Input id={name} placeholder={label} type={type} {...field} />
+      <FormErrorMessage children={fieldState?.error?.message} />
+      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
     </FormControl>
   );
 }
