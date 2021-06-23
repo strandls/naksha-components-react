@@ -37,6 +37,7 @@ export interface NakshaMapboxListProps {
   layers?: GeoserverLayer[];
   onLayerDownload?;
   markers?: ExtendedMarkerProps[];
+  lang?;
 
   children?;
 }

@@ -1,17 +1,19 @@
 import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 import React, { useMemo } from "react";
+import { useTranslation } from "@ibp/naksha-commons";
 
 import useLayerUpload from "../hooks/use-layer-upload";
 
 export default function FormUploadMessage() {
   const { uploadStatus } = useLayerUpload();
+  const { t } = useTranslation();
   const data: any = useMemo(
     () =>
       uploadStatus === null
-        ? { status: "info", message: "Uploading Layer..." }
+        ? { status: "info", message: t("upload_progress") }
         : uploadStatus
-        ? { status: "success", message: "Layer was uploaded successfully" }
-        : { status: "error", message: "Error Uploading Layer" },
+        ? { status: "success", message: t("upload_success") }
+        : { status: "error", message: t("upload_error") },
     [uploadStatus]
   );
 

@@ -1,14 +1,16 @@
 import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import { useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 
-import { FILE_TYPES } from "../icons/constants";
 import useLayerUpload from "../hooks/use-layer-upload";
+import { FILE_TYPES } from "../icons/constants";
 import FilePreview from "./file-preview";
 import { parseDBF, parseSHP, parseSHX } from "./parsers";
 
 export default function LayerUploadDropzone() {
   const { updateShapeFile } = useLayerUpload();
+  const { t } = useTranslation();
 
   const onDrop = (files) => {
     for (const file of files) {
@@ -42,13 +44,13 @@ export default function LayerUploadDropzone() {
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <Box>Drop the files here...</Box>
+          <Box>{t("drag_active")}</Box>
         ) : (
           <Box textAlign="center">
-            Drag 'n' drop some files here, or click to select files
+            {t("drop_message")}
             <br />
             <Text color="gray.500">
-              Only {Object.values(FILE_TYPES).toString()} are allowed
+              {Object.values(FILE_TYPES).toString()} {t("only")}
             </Text>
           </Box>
         )}

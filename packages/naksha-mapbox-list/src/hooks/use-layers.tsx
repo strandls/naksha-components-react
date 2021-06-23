@@ -1,5 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react";
-import { BaseLayer } from "@ibp/naksha-commons";
+import { BaseLayer, TranslationProvider } from "@ibp/naksha-commons";
 import React, {
   createContext,
   MutableRefObject,
@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 import { useImmer } from "use-immer";
+import LocaleStrings from "../i18n/strings";
 
 import { IUseDisclosure, NakshaMapboxListProps } from "../interfaces";
 import { defaultNakshaProps } from "../static/constants";
@@ -91,7 +92,9 @@ export const LayersProvider = (props: NakshaMapboxListProps) => {
         setHoverPopup,
       }}
     >
-      {props.children}
+      <TranslationProvider localeStrings={LocaleStrings} lang={props.lang}>
+        {props.children}
+      </TranslationProvider>
     </LayersContext.Provider>
   );
 };

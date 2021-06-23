@@ -1,6 +1,7 @@
 import { CloseButton, IconButton } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import React, { useEffect } from "react";
+import { useTranslation } from "@ibp/naksha-commons";
 
 import useLayerManager from "../../hooks/use-layer-manager";
 import { useLayers } from "../../hooks/use-layers";
@@ -29,6 +30,7 @@ const TabContainer = styled.div`
 export default function Sidebar() {
   const { ToC } = useLayers();
   const { getGeoserverLayers } = useLayerManager();
+  const { t } = useTranslation();
 
   useEffect(() => {
     getGeoserverLayers();
@@ -49,7 +51,7 @@ export default function Sidebar() {
       size="sm"
       variant="outline"
       onClick={ToC?.onOpen}
-      aria-label="List Layers"
+      aria-label={t("list_layers")}
       icon={<IconLayers />}
     />
   );

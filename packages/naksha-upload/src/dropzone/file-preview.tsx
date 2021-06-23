@@ -1,10 +1,11 @@
 import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import { useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 
+import useLayerUpload from "../hooks/use-layer-upload";
 import DBFIcon from "../icons/dbf";
 import SHPIcon from "../icons/shp";
 import SHXIcon from "../icons/shx";
-import useLayerUpload from "../hooks/use-layer-upload";
 
 const SingleFile = ({ name, icon: Icon }) => (
   <Flex
@@ -22,6 +23,7 @@ const SingleFile = ({ name, icon: Icon }) => (
 
 export default function FilePreview() {
   const { shapeFiles, canContinue, setScreen } = useLayerUpload();
+  const { t } = useTranslation();
 
   return (
     <Flex
@@ -32,7 +34,7 @@ export default function FilePreview() {
     >
       <Box>
         <Heading as="h2" size="md" mb={2}>
-          📄 Your Files
+          📄 {t("your_files")}
         </Heading>
         {shapeFiles.dbf.file && (
           <SingleFile name={shapeFiles.dbf.file.name} icon={DBFIcon} />
@@ -51,7 +53,7 @@ export default function FilePreview() {
         disabled={!canContinue}
         onClick={() => setScreen(1)}
       >
-        Continue
+        {t("continue")}
       </Button>
     </Flex>
   );
