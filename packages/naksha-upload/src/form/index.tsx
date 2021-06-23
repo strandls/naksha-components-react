@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { formatDate, LICENSES } from "@ibp/naksha-commons";
+import { formatDate, LICENSES, useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -27,6 +27,7 @@ export default function LayerUploadForm() {
     shapeFiles: { dbf, shp },
     uploadLayer,
   } = useLayerUpload();
+  const { t } = useTranslation();
 
   const hForm = useForm<any>({
     resolver: yupResolver(
@@ -87,7 +88,7 @@ export default function LayerUploadForm() {
           <Box gridColumn="1/6" h="100%">
             <DataPreview />
             <Heading size="md" mb={4}>
-              📝 Column Description
+              📝 {t("column_description")}
             </Heading>
             {dbf.meta.keys.map((key) => (
               <HStack spacing={4} key={key} maxW="32rem" mb={4}>
@@ -98,24 +99,24 @@ export default function LayerUploadForm() {
           </Box>
           <Box gridColumn="6/8" h="100%">
             <Heading size="md" mb={4}>
-              🗺️ Layer Information
+              🗺️ {t("layer_information")}
             </Heading>
             <Stack spacing={4}>
-              <InputField name="layerName" label="Name" />
-              <TextareaField name="layerDescription" label="Description" />
+              <InputField name="layerName" label={t("name")} />
+              <TextareaField name="layerDescription" label={t("description")} />
               <SelectField
                 name="layerType"
                 options={LAYER_TYPES}
-                label="Layer Type"
+                label={t("layer_type")}
               />
               <SelectField
                 name="titleColumn"
                 options={dbf.meta.keys}
-                label="Title Column"
+                label={t("title_column")}
               />
               <SelectMultipleField
                 name="summaryColumns"
-                label="Summary Columns"
+                label={t("summary_columns")}
                 options={dbf.meta.keys.map((option) => ({
                   label: option,
                   value: option,
@@ -124,30 +125,34 @@ export default function LayerUploadForm() {
               <SelectField
                 name="colorBy"
                 options={dbf.meta.keys}
-                label="Color By"
+                label={t("color_by")}
               />
-              <InputField name="createdBy" label="Created By" />
-              <InputField name="attribution" label="Attribution" />
-              <InputField name="url" label="URL" />
-              <InputField name="pdfLink" label="PDF Link" />
+              <InputField name="createdBy" label={t("created_by")} />
+              <InputField name="attribution" label={t("attribution")} />
+              <InputField name="url" label={t("url")} />
+              <InputField name="pdfLink" label={t("pdf_link")} />
               <TagsField
                 name="tags"
-                label="Tags"
+                label={t("tags")}
                 hint="Press enter to add tags"
               />
               <SelectField
                 name="license"
                 options={Object.keys(LICENSES)}
-                label="License"
+                label={t("license")}
               />
-              <InputField name="createdDate" label="Created Date" type="date" />
+              <InputField
+                name="createdDate"
+                label={t("created_date")}
+                type="date"
+              />
               <SelectField
                 name="downloadAccess"
                 options={ACCESS}
-                label="Download Access"
+                label={t("download_access")}
               />
               <Button colorScheme="blue" type="submit">
-                Create
+                {t("create")}
               </Button>
             </Stack>
           </Box>

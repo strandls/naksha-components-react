@@ -7,6 +7,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 import Highlight from "react-highlighter";
 
@@ -26,6 +27,7 @@ const Item = ({ layer, q }: ItemProps) => {
   const { toggleLayer, handleOnLayerDownload } = useLayerManager();
   const { isOpen, onToggle } = useDisclosure();
   const showLegend = layer.source.type !== "grid";
+  const { t } = useTranslation();
 
   const removeLayer = () => toggleLayer(layer.id, false);
 
@@ -89,7 +91,7 @@ const Item = ({ layer, q }: ItemProps) => {
           onClick={onToggle}
           leftIcon={isOpen ? <IconChevronUp /> : <IconChevronDown />}
         >
-          Legend
+          {t("legend")}
         </Button>
         <Button
           size="sm"
@@ -98,7 +100,7 @@ const Item = ({ layer, q }: ItemProps) => {
           onClick={removeLayer}
           leftIcon={<IconRemoveCircle />}
         >
-          Remove
+          {t("remove")}
         </Button>
       </Stack>
       {showLegend && isOpen && <Legend layer={layer} />}

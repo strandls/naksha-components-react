@@ -10,8 +10,11 @@ import {
   PopoverTrigger,
   Portal,
 } from "@chakra-ui/react";
+import { LICENSES, useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 
+import { useLayers } from "../../../hooks/use-layers";
+import { overflowStyle1 } from "../../../static/constants";
 import {
   IconCredit,
   IconDownload,
@@ -20,9 +23,6 @@ import {
   IconLicense,
   IconTag,
 } from "../../icons";
-import { useLayers } from "../../../hooks/use-layers";
-import { overflowStyle1 } from "../../../static/constants";
-import { LICENSES } from "@ibp/naksha-commons";
 import ManagePublishing from "./manage-publishing";
 
 interface ListItemProps {
@@ -40,6 +40,7 @@ const ListItem = ({ icon: Icon, children, title }: ListItemProps) => (
 
 export default function ItemInfo({ layer, onDownload, mb = 0 }) {
   const { managePublishing } = useLayers();
+  const { t } = useTranslation();
 
   return (
     <Box color="gray.600" mb={mb}>
@@ -78,7 +79,7 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
             disabled={!layer.isDownloadable}
             onClick={onDownload}
           >
-            Download
+            {t("download")}
           </Button>
           <Popover>
             <PopoverTrigger>
@@ -88,7 +89,7 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
                 size="sm"
                 leftIcon={<IconInfo />}
               >
-                More Info
+                {t("more_info")}
               </Button>
             </PopoverTrigger>
             <Portal>
@@ -99,25 +100,25 @@ export default function ItemInfo({ layer, onDownload, mb = 0 }) {
                     <tbody>
                       <tr>
                         <td>
-                          <b>Created By</b>
+                          <b>{t("created_by")}</b>
                         </td>
                         <td>{layer.createdBy}</td>
                       </tr>
                       <tr>
                         <td>
-                          <b>Uploaded</b>
+                          <b>{t("uploaded")}</b>
                         </td>
                         <td>{layer.author.name}</td>
                       </tr>
                       <tr>
                         <td>
-                          <b>URL</b>
+                          <b>{t("url")}</b>
                         </td>
                         <td>{layer.url}</td>
                       </tr>
                       <tr>
                         <td>
-                          <b>Created On</b>
+                          <b>{t("created_on")}</b>
                         </td>
                         <td>{new Date(layer.createdDate).toDateString()}</td>
                       </tr>

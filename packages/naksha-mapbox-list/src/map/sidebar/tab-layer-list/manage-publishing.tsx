@@ -1,18 +1,20 @@
 import { IconButton } from "@chakra-ui/react";
+import { useTranslation } from "@ibp/naksha-commons";
 import React, { useEffect, useState } from "react";
 
 import useLayerManager from "../../../hooks/use-layer-manager";
 import { IconDelete, IconEyeOff, IconEyeOn } from "../../icons";
 
-const ACTIONS = {
-  PUBLISH: "Publish",
-  PENDING: "Pending",
-  DELETE: "Delete",
-};
-
 export default function ManagePublishing({ layerStatus, layerId }) {
   const [isPublished, setIsPublished] = useState(layerStatus === "Active");
   const { toggleLayerPublishing, deleteLayer } = useLayerManager();
+  const { t } = useTranslation();
+
+  const ACTIONS = {
+    PUBLISH: t("publish"),
+    PENDING: t("pending"),
+    DELETE: t("delete"),
+  };
 
   useEffect(() => {
     toggleLayerPublishing(layerId, isPublished);
@@ -20,7 +22,7 @@ export default function ManagePublishing({ layerStatus, layerId }) {
 
   const onLayerDelete = async () => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm("Are you sure?")) {
+    if (confirm(t("are_you_sure"))) {
       await deleteLayer(layerId);
     }
   };

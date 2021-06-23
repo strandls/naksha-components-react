@@ -1,11 +1,12 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-import { defaultMapStyles } from "@ibp/naksha-commons";
+import { defaultMapStyles, useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 
 import { useLayers } from "../../hooks/use-layers";
 
 export default function LayerSettings() {
   const { baseLayer, setBaseLayer } = useLayers();
+  const { t } = useTranslation();
 
   const onBaseLayerChange = (e) => {
     setBaseLayer(e.target.value);
@@ -13,7 +14,7 @@ export default function LayerSettings() {
 
   return (
     <FormControl>
-      <FormLabel htmlFor="email">Base Style</FormLabel>
+      <FormLabel htmlFor="email">{t("base_style")}</FormLabel>
       <Select value={baseLayer} onChange={onBaseLayerChange}>
         {defaultMapStyles.map((s) => (
           <option key={s.key} value={s.key}>

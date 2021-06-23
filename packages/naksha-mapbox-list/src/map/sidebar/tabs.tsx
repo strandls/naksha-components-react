@@ -1,4 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 
 import { IconLayers, IconSettings } from "../icons";
@@ -7,17 +8,19 @@ import LayerSelected from "./tab-layer-selected";
 import LayerSettings from "./tab-layer-settings";
 
 export default function SidebarTabs() {
+  const { t } = useTranslation();
+
   return (
     <Tabs className="sidebar-tabs">
       <TabList>
         <Tab>
-          <IconLayers /> Layers
+          <IconLayers /> {t("layers")}
         </Tab>
         <Tab>
-          <IconLayers /> Selected
+          <IconLayers /> {t("selected")}
         </Tab>
         <Tab>
-          <IconSettings /> Settings
+          <IconSettings /> {t("settings")}
         </Tab>
       </TabList>
       <TabPanels flexGrow={1}>

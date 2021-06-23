@@ -7,6 +7,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { useTranslation } from "@ibp/naksha-commons";
 import React from "react";
 
 import { useLayers } from "../../hooks/use-layers";
@@ -33,13 +34,14 @@ const TabContainer = styled.div`
 
 export default function InfobarPanel() {
   const { infobarData = [], layers = [] } = useLayers();
+  const { t } = useTranslation();
   const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return isOpen ? (
     <TabContainer>
       <CloseButton m={1} onClick={onClose} position="absolute" right="0" />
       <HStack alignItems="center" px={4} py={2} spacing={2}>
-        <IconInfo /> <Text>Information</Text>
+        <IconInfo /> <Text>{t("information")}</Text>
       </HStack>
       <Accordion defaultIndex={[0]} allowMultiple={true}>
         {infobarData.map(({ properties = {}, layer }) => (
@@ -61,7 +63,7 @@ export default function InfobarPanel() {
       size="sm"
       variant="outline"
       onClick={onToggle}
-      aria-label="List Layers"
+      aria-label={t("list_layers")}
       icon={<IconInfo />}
     />
   );

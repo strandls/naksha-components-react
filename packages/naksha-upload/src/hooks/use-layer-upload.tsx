@@ -1,11 +1,14 @@
+import { TranslationProvider } from "@ibp/naksha-commons";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useImmer } from "use-immer";
+import LocaleStrings from "../i18n/strings";
 
 export interface LayerUploadProps {
   nakshaEndpoint: string;
   bearerToken: string;
   callback?;
   children?;
+  lang?;
 }
 
 interface LayerUploadContextProps extends LayerUploadProps {
@@ -98,7 +101,9 @@ export const LayerUploadProvider = (props: LayerUploadProps) => {
         uploadLayer,
       }}
     >
-      {props.children}
+      <TranslationProvider localeStrings={LocaleStrings} lang={props.lang}>
+        {props.children}
+      </TranslationProvider>
     </LayerUploadContext.Provider>
   );
 };
