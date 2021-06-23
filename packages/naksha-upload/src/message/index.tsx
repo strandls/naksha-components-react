@@ -1,12 +1,12 @@
 import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 import React, { useMemo } from "react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 
 import useLayerUpload from "../hooks/use-layer-upload";
 
 export default function FormUploadMessage() {
   const { uploadStatus } = useLayerUpload();
-  const { t } = useTranslation();
+  const { t } = useT();
   const data: any = useMemo(
     () =>
       uploadStatus === null

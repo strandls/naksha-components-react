@@ -1,11 +1,11 @@
 import { Box, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React from "react";
 
 import { IconSearch } from "../icons";
 
 export default function Search({ onChange, name }) {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   return (
     <Box p={4} shadow="md">

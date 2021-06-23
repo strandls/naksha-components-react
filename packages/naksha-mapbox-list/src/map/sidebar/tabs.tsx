@@ -1,5 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React from "react";
 
 import { IconLayers, IconSettings } from "../icons";
@@ -8,7 +8,7 @@ import LayerSelected from "./tab-layer-selected";
 import LayerSettings from "./tab-layer-settings";
 
 export default function SidebarTabs() {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   return (
     <Tabs className="sidebar-tabs">

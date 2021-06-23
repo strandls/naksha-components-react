@@ -1,5 +1,5 @@
 import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -10,7 +10,7 @@ import { parseDBF, parseSHP, parseSHX } from "./parsers";
 
 export default function LayerUploadDropzone() {
   const { updateShapeFile } = useLayerUpload();
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const onDrop = (files) => {
     for (const file of files) {

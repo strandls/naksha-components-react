@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { formatDate, LICENSES, useTranslation } from "@ibp/naksha-commons";
+import { formatDate, LICENSES, useT } from "@ibp/naksha-commons";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -27,7 +27,7 @@ export default function LayerUploadForm() {
     shapeFiles: { dbf, shp },
     uploadLayer,
   } = useLayerUpload();
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const hForm = useForm<any>({
     resolver: yupResolver(

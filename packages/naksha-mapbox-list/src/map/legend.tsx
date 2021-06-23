@@ -1,5 +1,5 @@
 import { Box, Divider, Stack } from "@chakra-ui/react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React from "react";
 
 import { useLayers } from "../hooks/use-layers";
@@ -9,7 +9,7 @@ export default function Legend() {
   const {
     legend: { visible, stops, squareSize },
   } = useLayers();
-  const { t } = useTranslation();
+  const { t } = useT();
 
   return visible ? (
     <Box

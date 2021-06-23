@@ -1,12 +1,12 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-import { defaultMapStyles, useTranslation } from "@ibp/naksha-commons";
+import { defaultMapStyles, useT } from "@ibp/naksha-commons";
 import React from "react";
 
 import { useLayers } from "../../hooks/use-layers";
 
 export default function LayerSettings() {
   const { baseLayer, setBaseLayer } = useLayers();
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const onBaseLayerChange = (e) => {
     setBaseLayer(e.target.value);

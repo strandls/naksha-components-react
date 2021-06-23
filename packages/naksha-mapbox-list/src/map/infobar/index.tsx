@@ -7,7 +7,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React from "react";
 
 import { useLayers } from "../../hooks/use-layers";
@@ -34,7 +34,7 @@ const TabContainer = styled.div`
 
 export default function InfobarPanel() {
   const { infobarData = [], layers = [] } = useLayers();
-  const { t } = useTranslation();
+  const { t } = useT();
   const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
 
   return isOpen ? (

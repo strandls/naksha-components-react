@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Heading } from "@chakra-ui/react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React from "react";
 
 import useLayerUpload from "../hooks/use-layer-upload";
@@ -23,7 +23,7 @@ const SingleFile = ({ name, icon: Icon }) => (
 
 export default function FilePreview() {
   const { shapeFiles, canContinue, setScreen } = useLayerUpload();
-  const { t } = useTranslation();
+  const { t } = useT();
 
   return (
     <Flex

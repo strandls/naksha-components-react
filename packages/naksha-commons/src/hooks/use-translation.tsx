@@ -36,6 +36,6 @@ export const TranslationProvider = ({
   );
 };
 
-export function useTranslation() {
+export function useT() {
   return useContext(CounterContext);
 }

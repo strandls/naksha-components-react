@@ -7,7 +7,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React from "react";
 import Highlight from "react-highlighter";
 
@@ -27,7 +27,7 @@ const Item = ({ layer, q }: ItemProps) => {
   const { toggleLayer, handleOnLayerDownload } = useLayerManager();
   const { isOpen, onToggle } = useDisclosure();
   const showLegend = layer.source.type !== "grid";
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const removeLayer = () => toggleLayer(layer.id, false);
 

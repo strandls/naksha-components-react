@@ -1,5 +1,5 @@
 import { Box, Heading } from "@chakra-ui/react";
-import { useTranslation } from "@ibp/naksha-commons";
+import { useT } from "@ibp/naksha-commons";
 import React, { useMemo } from "react";
 
 import useLayerUpload from "../hooks/use-layer-upload";
@@ -7,7 +7,7 @@ import DataTable from "./data-table";
 
 export default function DataPreview() {
   const { shapeFiles } = useLayerUpload();
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const columns = useMemo(
     () =>

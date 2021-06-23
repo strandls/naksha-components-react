@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
   Portal,
 } from "@chakra-ui/react";
-import { LICENSES, useTranslation } from "@ibp/naksha-commons";
+import { LICENSES, useT } from "@ibp/naksha-commons";
 import React from "react";
 
 import { useLayers } from "../../../hooks/use-layers";
@@ -40,7 +40,7 @@ const ListItem = ({ icon: Icon, children, title }: ListItemProps) => (
 
 export default function ItemInfo({ layer, onDownload, mb = 0 }) {
   const { managePublishing } = useLayers();
-  const { t } = useTranslation();
+  const { t } = useT();
 
   return (
     <Box color="gray.600" mb={mb}>
